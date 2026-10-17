@@ -79,3 +79,10 @@ jobs:
           git add -A
           git commit -qm "Paczka danych $(date -u +%Y-%m-%dT%H:%MZ)"
           git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dane/pilot
+      - name: Log błędu na gałęzi dane/log
+        if: failure()
+        run: |
+          mkdir -p errlog && cp -f log.txt raport.txt errlog/ 2>/dev/null || true
+          echo "run ${{ github.run_id }} $(date -u)" > errlog/run.txt
+          cd errlog && git init -q -b dane/log && git config user.name gha && git config user.email gha@users.noreply.github.com
+          git add -A && git commit -qm "log błędu" && git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dane/log

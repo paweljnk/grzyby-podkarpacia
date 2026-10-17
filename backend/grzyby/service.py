@@ -104,9 +104,19 @@ def _ind_json(ind) -> dict:
     return d
 
 
+def display_name(adres: str | None, sid: int) -> str:
+    """Czytelna nazwa z adresu leśnego BDL (RR-NN-O-LL-ODDZ-WYDZ-...): 'oddz. 163k, leśn. 09'."""
+    if not adres:
+        return f"Wydzielenie {sid}"
+    parts = [x.strip() for x in adres.split("-")]
+    if len(parts) >= 6 and parts[4].isdigit():
+        return f"oddz. {parts[4]}{parts[5]}, leśn. {parts[3]}"
+    return adres
+
+
 def _place_header(row: repo.StandRow) -> dict:
     return {
-        "id": row.stand.id, "nazwa": row.adres_lesny or f"Wydzielenie {row.stand.id}",
+        "id": row.stand.id, "nazwa": display_name(row.adres_lesny, row.stand.id), "adres_lesny": row.adres_lesny,
         "obszar_id": row.obszar_id, "lat": round(row.lat, 5), "lon": round(row.lon, 5),
         "odleglosc_km": round(row.odleglosc_km, 1) if row.odleglosc_km is not None else None,
         "odleglosc_opis": "w linii prostej (brak danych o drogach publicznych)",

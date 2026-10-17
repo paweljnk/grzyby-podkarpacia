@@ -74,3 +74,9 @@ def test_snapshot_roundtrip(tmp_path):
         with connect() as conn, conn.cursor() as cur:
             cur.execute("DELETE FROM forest.wydzielenie WHERE source_id='test_snap'")
             cur.execute("DELETE FROM meta.snapshot")
+
+
+def test_display_name_from_forest_address():
+    from grzyby.service import display_name
+    assert display_name("04-08-2-09-163   -k   -00", 1) == "oddz. 163k, leśn. 09"
+    assert display_name("DEMO BAL-001", 2) == "DEMO BAL-001" and display_name(None, 3) == "Wydzielenie 3"
