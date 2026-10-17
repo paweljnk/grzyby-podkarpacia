@@ -3,6 +3,7 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "e2e",
   timeout: 60_000,
+  workers: 1,               // test offline (service worker) nie może dzielić serwera z innymi testami równolegle
   use: {
     baseURL: process.env.E2E_BASE_URL ?? "http://127.0.0.1:8000",
     viewport: { width: 390, height: 844 },

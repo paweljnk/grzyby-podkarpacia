@@ -225,17 +225,20 @@ zrodla:
   soilgrids:
     nazwa: ISRIC SoilGrids 2.0
     dostawca: ISRIC
-    url: https://rest.isric.org/soilgrids/v2.0/
-    typ_uslugi: REST / WCS
+    url: https://maps.isric.org/mapserv?map=/map/phh2o.map
+    typ_uslugi: WCS 2.0.1 (REST API wstrzymane)
     zasieg: globalny
     rozdzielczosc: 250 m
     aktualnosc: null
     licencja: CC BY 4.0
     atrybucja: ISRIC — World Soil Information, SoilGrids
-    uzyte_pola: []
-    metoda: NIE przez REST (wstrzymane) — pobranie rastrów (WCS/WebDAV) dla bbox; tylko uzupełnienie opisu taksacyjnego,
-      z widoczną niepewnością
-    do_weryfikacji: true
+    uzyte_pola:
+    - phh2o_0-5cm_mean
+    - phh2o_0-5cm_Q0.05
+    - phh2o_0-5cm_Q0.95
+    metoda: 'WCS GetCoverage dla prostokąta województwa: phh2o_0-5cm_mean, Q0.05, Q0.95; próbkowanie w punkcie wewnątrz
+      każdego wydzielenia; pochodzenie ''model'''
+    do_weryfikacji: false
     probe:
       typ: http_get
       url: https://rest.isric.org/soilgrids/v2.0/docs
@@ -243,10 +246,10 @@ zrodla:
       2026-10-17). Dostęp alternatywny: WCS/WebDAV ISRIC lub zasoby Google Earth Engine (projects/soilgrids-isric/...).
       Licencja CC BY 4.0 potwierdzona.'
     weryfikacja:
-      data_utc: '2026-10-17T10:40:00+00:00'
+      data_utc: '2026-10-17T17:00:00+00:00'
       status: ok
       powod: null
-      schemat: docs/schemas/soilgrids.json
+      schemat: dane/recon (soilgrids_test_coverage)
       kanal: GitHub Actions (US)
     ostatni_import: null
   open_meteo_forecast:
@@ -431,4 +434,68 @@ zrodla:
         projektu
       schemat: docs/schemas/wikimedia_commons.json
       kanal: GitHub Actions (US)
+    ostatni_import: null
+  bdl_rest:
+    nazwa: BDL — usługi ArcGIS REST (wydzielenia LP i poza LP wg PUL, siedliska leśne, zakazy wstępu)
+    dostawca: BULiGL / Lasy Państwowe
+    url: https://mapserver.bdl.lasy.gov.pl/arcgis/rest/services
+    typ_uslugi: ArcGIS MapServer Query (stronicowanie, maks. 2000 obiektów na stronę)
+    zasieg: Polska; import w granicach województwa podkarpackiego (przecięcie z PRG)
+    rozdzielczosc: wydzielenie / poligon siedliska (wektor)
+    aktualnosc: LP — a_year 2026; poza LP — rok planu (PUL) 1994–2026; siedliska — valid_year 2025; zakazy — bieżące
+    licencja: CC BY 4.0 (dane.gov.pl, zbiór 629 „Bank Danych o Lasach”); warunki BDL — powiadomić operatora o przetworzeniu
+    atrybucja: Bank Danych o Lasach (BULiGL / Lasy Państwowe), CC BY 4.0
+    uzyte_pola:
+    - adress_forest
+    - arodes_int_num
+    - subarea_id
+    - species_cd_d
+    - part_cd
+    - species_age
+    - site_type_cd
+    - area_type_cd
+    - owner_cat_name
+    - a_year
+    - soil_subtype_cd
+    - soil_species
+    - moisture_cd
+    - data_source
+    - valid_year
+    - data
+    - data_koncowa
+    metoda: 'Usługi WMS_BDL_mapa_drzewostanow (warstwy 1, 5, 6), WMS_BDL_mapa_siedlisk (7), WMS_zakazy_wstepu_do_lasu
+      (0); jednostki: nadleśnictwo (LP) i kafel 0,25° (poza LP, siedliska); pliki etapowe z wznawianiem (config/zasieg.yaml)'
+    do_weryfikacji: false
+    probe:
+      typ: http_get
+      url: https://mapserver.bdl.lasy.gov.pl/arcgis/rest/services/WMS_BDL_mapa_drzewostanow/MapServer?f=json
+    uwagi: Zweryfikowane 2026-10-17 (gałąź dane/recon). Pełny skład gatunkowy niedostępny w usługach — docs/dane_siedliskowe.md.
+    weryfikacja:
+      data_utc: '2026-10-17T18:00:00+00:00'
+      status: ok
+      powod: null
+      schemat: dane/recon
+      kanal: GitHub Actions (US)
+    ostatni_import: null
+  esa_worldcover_2021:
+    nazwa: ESA WorldCover 2021 v200 (warstwa referencyjna lasów do oceny pokrycia)
+    dostawca: ESA / konsorcjum WorldCover
+    url: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/
+    typ_uslugi: pliki COG (S3)
+    zasieg: globalny, kafle 3x3 stopnie
+    rozdzielczosc: 10 m; agregacja do siatki 1 km
+    aktualnosc: 2021
+    licencja: CC BY 4.0
+    atrybucja: © ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA
+      WorldCover consortium
+    uzyte_pola:
+    - klasa 10 Tree cover
+    metoda: odsetek klasy 10 w pikselach ~100 m → powierzchnia w komórkach 1 km w granicach województwa
+    do_weryfikacji: false
+    probe:
+      typ: http_head
+      url: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N48E021_Map.tif
+    uwagi: '''Tree cover'' ≠ las wg ustawy (obejmuje zadrzewienia, sady, parki) — w województwie ok. 54% powierzchni
+      wobec ~38% lesistości.'
+    weryfikacja: null
     ostatni_import: null
