@@ -15,8 +15,8 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: sudo apt-get install -y poppler-utils >/dev/null 2>&1 || true; pip install httpx
-      - run: python scripts/recon.py recon || true
-      - run: python scripts/recon2.py recon || true
+      - run: echo runda3
+      - run: python scripts/recon3.py recon || true
       - name: Publikacja
         run: |
           cd recon && git init -q -b dane/recon && git config user.name gha && git config user.email gha@users.noreply.github.com
