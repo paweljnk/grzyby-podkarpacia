@@ -1,8 +1,12 @@
 {
   "source_id": "soilgrids",
-  "sprawdzono_utc": "2026-10-17T06:32:46+00:00",
+  "sprawdzono_utc": "2026-10-17T15:19:16+00:00",
   "url": "https://rest.isric.org/soilgrids/v2.0/docs",
   "typ": "http_get",
-  "status": "niedostepne",
-  "powod": "https://rest.isric.org/soilgrids/v2.0/docs: odmowa połączenia przez proxy (403 Forbidden)"
+  "wynik": {
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "rozmiar_b": 972
+  },
+  "status": "ok"
 }

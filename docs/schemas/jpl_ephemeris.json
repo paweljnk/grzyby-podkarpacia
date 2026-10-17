@@ -1,8 +1,12 @@
 {
   "source_id": "jpl_ephemeris",
-  "sprawdzono_utc": "2026-10-17T06:32:48+00:00",
+  "sprawdzono_utc": "2026-10-17T15:19:19+00:00",
   "url": "https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de421.bsp",
   "typ": "http_head",
-  "status": "niedostepne",
-  "powod": "https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de421.bsp: odmowa połączenia przez proxy (403 Forbidden)"
+  "wynik": {
+    "http_status": 200,
+    "content_length": "16788480",
+    "last_modified": "Tue, 12 Feb 2008 20:41:01 GMT"
+  },
+  "status": "ok"
 }

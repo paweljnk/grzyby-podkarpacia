@@ -1,0 +1,1951 @@
+{
+    "collections":[
+        {
+            "id":"rdlp",
+            "title":"RDLP",
+            "description":"Granice regionalnych dyrekcji Las\u00f3w Pa\u0144stwowych",
+            "keywords":[
+                "RDLP",
+                "bdl"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"http://www.naturalearthdata.com/",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/rdlp?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/rdlp?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/rdlp?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/rdlp/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/rdlp/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/rdlp/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/rdlp/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/rdlp/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"nadlesnictwa",
+            "title":"Nadle\u015bnictwa",
+            "description":"Granice nadle\u015bnictw",
+            "keywords":[
+                "bdl",
+                "nadle\u015bnictwa"
+            ],
+            "links":[
+                {
+                    "type":"text/csv",
+                    "rel":"canonical",
+                    "title":"data",
+                    "href":"https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"text/csv",
+                    "rel":"alternate",
+                    "title":"data",
+                    "href":"https://raw.githubusercontent.com/mapserver/mapserver/branch-7-0/msautotest/wxs/data/obs.csv",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/nadlesnictwa?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/nadlesnictwa?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/nadlesnictwa?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/nadlesnictwa/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/nadlesnictwa/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/nadlesnictwa/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/nadlesnictwa/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/nadlesnictwa/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"lesnictwa",
+            "title":"Le\u015bnictwa",
+            "description":"Granice le\u015bnictw",
+            "keywords":[
+                "le\u015bnictwa",
+                "bdl"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"http://www.naturalearthdata.com/",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/lesnictwa?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/lesnictwa?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/lesnictwa?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/lesnictwa/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/lesnictwa/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/lesnictwa/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/lesnictwa/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/lesnictwa/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Bialystok_wydzielenia",
+            "title":"RDLP Bia\u0142ystok wydzielenia",
+            "description":"RDLP Bia\u0142ystok wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Bia\u0142ystok wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Bialystok_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Bialystok_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Bialystok_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Bialystok_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Bialystok_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Bialystok_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Bialystok_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Bialystok_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Katowice_wydzielenia",
+            "title":"RDLP Katowice wydzielenia",
+            "description":"RDLP Katowice wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Katowice wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Katowice_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Katowice_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Katowice_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Katowice_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Katowice_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Katowice_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Katowice_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Katowice_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Krakow_wydzielenia",
+            "title":"RDLP Krak\u00f3w wydzielenia",
+            "description":"RDLP Krak\u00f3w wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Krak\u00f3w wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krakow_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krakow_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krakow_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krakow_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krakow_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krakow_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krakow_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krakow_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Krosno_wydzielenia",
+            "title":"RDLP Krosno wydzielenia",
+            "description":"RDLP Krosno wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Krosno wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krosno_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krosno_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krosno_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krosno_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krosno_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krosno_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krosno_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krosno_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Lublin_wydzielenia",
+            "title":"RDLP Lublin wydzielenia",
+            "description":"RDLP Lublin wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Lublin wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lublin_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lublin_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lublin_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lublin_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lublin_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lublin_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lublin_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lublin_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Lodz_wydzielenia",
+            "title":"RDLP \u0141\u00f3d\u017a wydzielenia",
+            "description":"RDLP \u0141\u00f3d\u017a wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP \u0141\u00f3d\u017a wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lodz_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lodz_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lodz_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lodz_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lodz_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lodz_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lodz_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lodz_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Olsztyn_wydzielenia",
+            "title":"RDLP Olsztyn wydzielenia",
+            "description":"RDLP Olsztyn wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Olsztyn wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Olsztyn_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Olsztyn_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Olsztyn_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Olsztyn_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Olsztyn_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Olsztyn_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Olsztyn_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Olsztyn_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Pila_wydzielenia",
+            "title":"RDLP Pi\u0142a wydzielenia",
+            "description":"RDLP Pi\u0142a wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Pi\u0142a wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Pila_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Pila_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Pila_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Pila_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Pila_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Pila_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Pila_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Pila_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Poznan_wydzielenia",
+            "title":"RDLP Pozna\u0144 wydzielenia",
+            "description":"RDLP Pozna\u0144 wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Pozna\u0144 wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Poznan_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Poznan_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Poznan_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Poznan_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Poznan_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Poznan_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Poznan_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Poznan_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Szczecin_wydzielenia",
+            "title":"RDLP Szczecin wydzielenia",
+            "description":"RDLP Szczecin wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Szczecin wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecin_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecin_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecin_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecin_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecin_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecin_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecin_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecin_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Szczecinek_wydzielenia",
+            "title":"RDLP Szczecinek wydzielenia",
+            "description":"RDLP Szczecinek wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Szczecinek wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecinek_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecinek_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecinek_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecinek_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecinek_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecinek_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecinek_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecinek_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Torun_wydzielenia",
+            "title":"RDLP Toru\u0144 wydzielenia",
+            "description":"RDLP Toru\u0144 wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Toru\u0144 wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Torun_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Torun_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Torun_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Torun_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Torun_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Torun_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Torun_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Torun_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Wroclaw_wydzielenia",
+            "title":"RDLP Wroc\u0142aw wydzielenia",
+            "description":"RDLP Wroc\u0142aw wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Wroc\u0142aw wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Wroclaw_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Wroclaw_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Wroclaw_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Wroclaw_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Wroclaw_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Wroclaw_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Wroclaw_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Wroclaw_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Zielona_Gora_wydzielenia",
+            "title":"RDLP Zielona G\u00f3ra wydzielenia",
+            "description":"RDLP Zielona G\u00f3ra wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Zielona G\u00f3ra wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Zielona_Gora_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Zielona_Gora_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Zielona_Gora_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Zielona_Gora_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Zielona_Gora_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Zielona_Gora_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Zielona_Gora_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Zielona_Gora_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Gdansk_wydzielenia",
+            "title":"RDLP Gda\u0144sk wydzielenia",
+            "description":"RDLP Gda\u0144sk wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Gda\u0144sk wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Gdansk_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Gdansk_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Gdansk_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Gdansk_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Gdansk_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Gdansk_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Gdansk_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Gdansk_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Radom_wydzielenia",
+            "title":"RDLP Radom wydzielenia",
+            "description":"RDLP Radom wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Radom wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Radom_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Radom_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Radom_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Radom_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Radom_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Radom_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Radom_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Radom_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"RDLP_Warszawa_wydzielenia",
+            "title":"RDLP Warszawa wydzielenia",
+            "description":"RDLP Warszawa wydzielenia",
+            "keywords":[
+                "bdl",
+                "RDLP Warszawa wydzielenia"
+            ],
+            "links":[
+                {
+                    "type":"text/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://demo.mapserver.org",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Warszawa_wydzielenia?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Warszawa_wydzielenia?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Warszawa_wydzielenia?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Warszawa_wydzielenia/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Warszawa_wydzielenia/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"items as GeoJSON",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Warszawa_wydzielenia/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"items as RDF (GeoJSON-LD)",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Warszawa_wydzielenia/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Warszawa_wydzielenia/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            13,
+                            48,
+                            25,
+                            56
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+    ],
+    "links":[
+        {
+            "type":"application/json",
+            "rel":"self",
+            "title":"This document as JSON",
+            "href":"https://ogcapi.bdl.lasy.gov.pl/collections?f=json"
+        },
+        {
+            "type":"application/ld+json",
+            "rel":"alternate",
+            "title":"This document as RDF (JSON-LD)",
+            "href":"https://ogcapi.bdl.lasy.gov.pl/collections?f=jsonld"
+        },
+        {
+            "type":"text/html",
+            "rel":"alternate",
+            "title":"This document as HTML",
+            "href":"https://ogcapi.bdl.lasy.gov.pl/collections?f=html"
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 {
   "source_id": "copernicus_dem_glo30",
-  "sprawdzono_utc": "2026-10-17T06:32:44+00:00",
+  "sprawdzono_utc": "2026-10-17T15:19:12+00:00",
   "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N49_00_E022_00_DEM/Copernicus_DSM_COG_10_N49_00_E022_00_DEM.tif",
   "typ": "s3_cog",
   "wynik": {

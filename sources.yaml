@@ -27,10 +27,9 @@ zrodla:
       url: https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries
     uwagi: Alternatywa — paczka PRG do pobrania (SHP) z geoportal.gov.pl / opendata.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:42+00:00'
-      status: niedostepne
-      powod: 'https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries: odmowa połączenia
-        przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:17:59+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/prg_wojewodztwa.json
     ostatni_import: null
   bdl_ogcapi:
@@ -53,9 +52,9 @@ zrodla:
       W WMS są warstwy wydzieleń 'w PGL LP' i 'poza PGL LP wg UPUL'. Listy kolekcji OGC API, schematu pól i licencji/regulaminu
       nie udało się odczytać (host niedostępny z tego środowiska, narzędzie WebFetch bez DNS).
     weryfikacja:
-      data_utc: '2026-10-17T06:32:43+00:00'
-      status: niedostepne
-      powod: 'https://ogcapi.bdl.lasy.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:18:39+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/bdl_ogcapi.json
     ostatni_import: null
   bdl_wms:
@@ -76,9 +75,9 @@ zrodla:
       url: https://mapserver.bdl.lasy.gov.pl/
     uwagi: Dokładne ścieżki usług do odczytania z dokumentacji BDL po odblokowaniu dostępu.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:43+00:00'
+      data_utc: '2026-10-17T15:19:10+00:00'
       status: niedostepne
-      powod: 'https://mapserver.bdl.lasy.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)'
+      powod: 'https://mapserver.bdl.lasy.gov.pl/: HTTP 403 — dostęp zabroniony / wymaga uwierzytelnienia'
       schemat: docs/schemas/bdl_wms.json
     ostatni_import: null
   gdos_crfop:
@@ -102,9 +101,9 @@ zrodla:
       Nazwy typeName — z GetCapabilities. Dane Geoserwisu NIE stanowią prawnego ustalenia przebiegu granic form
       ochrony. Zasady zbioru wynikają z aktów ustanawiających.'
     weryfikacja:
-      data_utc: '2026-10-17T06:32:43+00:00'
+      data_utc: '2026-10-17T15:19:11+00:00'
       status: niedostepne
-      powod: 'https://sdi.gdos.gov.pl/wfs: odmowa połączenia przez proxy (403 Forbidden)'
+      powod: 'https://sdi.gdos.gov.pl/wfs: HTTP 403 — dostęp zabroniony / wymaga uwierzytelnienia'
       schemat: docs/schemas/gdos_crfop.json
     ostatni_import: null
   copernicus_dem_glo30:
@@ -132,7 +131,7 @@ zrodla:
       wysokość drzewostanu, a nachylenie na krawędziach lasu jest zaburzone. Rozwiązanie tymczasowe do czasu pobrania
       NMT GUGiK (DTM). Treść licencji: readme bucketu odsyła do licencji Copernicus DEM.'
     weryfikacja:
-      data_utc: '2026-10-17T06:32:44+00:00'
+      data_utc: '2026-10-17T15:19:12+00:00'
       status: ok
       powod: null
       schemat: docs/schemas/copernicus_dem_glo30.json
@@ -155,10 +154,9 @@ zrodla:
       url: https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF
     uwagi: Preferowane źródło rzeźby terenu (DTM). Zastąpi Copernicus DEM po odblokowaniu dostępu.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:45+00:00'
-      status: niedostepne
-      powod: 'https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF: odmowa
-        połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:19:13+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/gugik_nmt.json
     ostatni_import: null
   bdot10k:
@@ -179,9 +177,9 @@ zrodla:
       url: https://opendata.geoportal.gov.pl/
     uwagi: Źródło dla lasów niepaństwowych (pokrycie PTLZ) i terenów zamkniętych.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:46+00:00'
-      status: niedostepne
-      powod: 'https://opendata.geoportal.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:19:14+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/bdot10k.json
     ostatni_import: null
   copernicus_hrl_forest:
@@ -202,9 +200,9 @@ zrodla:
       url: https://land.copernicus.eu/
     uwagi: Wymaga konta; nie można pobrać automatycznie bez poświadczeń.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:46+00:00'
-      status: niedostepne
-      powod: 'https://land.copernicus.eu/: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:19:15+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/copernicus_hrl_forest.json
     ostatni_import: null
   soilgrids:
@@ -228,9 +226,9 @@ zrodla:
       2026-10-17). Dostęp alternatywny: WCS/WebDAV ISRIC lub zasoby Google Earth Engine (projects/soilgrids-isric/...).
       Licencja CC BY 4.0 potwierdzona.'
     weryfikacja:
-      data_utc: '2026-10-17T06:32:46+00:00'
-      status: niedostepne
-      powod: 'https://rest.isric.org/soilgrids/v2.0/docs: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:19:16+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/soilgrids.json
     ostatni_import: null
   open_meteo_forecast:
@@ -254,10 +252,9 @@ zrodla:
       glebowych prognozy (soil_moisture_3_to_9cm, soil_temperature_6cm) NIEPOTWIERDZONE — strony modeli ECMWF podają
       warstwy 0–7/7–28/28–100/100–255 cm; zweryfikować próbką.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:46+00:00'
-      status: niedostepne
-      powod: 'https://api.open-meteo.com/v1/forecast?latitude=49.35&longitude=22.3&daily=precipitation_sum,temperature_2m_mean&hourly=soil_moisture_0_to_1cm&forecast_days=2&timezone=Europe%2FWarsaw:
-        odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:19:17+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/open_meteo_forecast.json
     ostatni_import: null
   open_meteo_archive:
@@ -281,10 +278,9 @@ zrodla:
       ET₀ (FAO-56 Penman-Monteith, suma z poprzedzającej godziny). Pełnej listy nazw nie odczytano — weryfikacja
       próbką.'
     weryfikacja:
-      data_utc: '2026-10-17T06:32:47+00:00'
-      status: niedostepne
-      powod: 'https://archive-api.open-meteo.com/v1/archive?latitude=49.35&longitude=22.3&start_date=2026-09-01&end_date=2026-09-03&daily=precipitation_sum&timezone=Europe%2FWarsaw:
-        odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:19:17+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/open_meteo_archive.json
     ostatni_import: null
   imgw_synop:
@@ -306,9 +302,9 @@ zrodla:
     uwagi: Regulaminu danepubliczne.imgw.pl nie odczytano (2026-10-17). Inne serwisy IMGW wymagają wskazania IMGW-PIB
       jako źródła i oznaczenia danych przetworzonych — przyjmujemy to samo do czasu odczytania regulaminu.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:47+00:00'
-      status: niedostepne
-      powod: 'https://danepubliczne.imgw.pl/api/data/synop: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:19:18+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/imgw_synop.json
     ostatni_import: null
   gbif:
@@ -329,10 +325,9 @@ zrodla:
       url: https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2
     uwagi: Obciążenie próby, zaokrąglone współrzędne.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:47+00:00'
-      status: niedostepne
-      powod: 'https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2: odmowa
-        połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:19:19+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/gbif.json
     ostatni_import: null
   jpl_ephemeris:
@@ -353,9 +348,9 @@ zrodla:
       url: https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de421.bsp
     uwagi: null
     weryfikacja:
-      data_utc: '2026-10-17T06:32:48+00:00'
-      status: niedostepne
-      powod: 'https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de421.bsp: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:19:19+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/jpl_ephemeris.json
     ostatni_import: null
   openfreemap:
@@ -376,9 +371,9 @@ zrodla:
       url: https://tiles.openfreemap.org/styles/liberty
     uwagi: null
     weryfikacja:
-      data_utc: '2026-10-17T06:32:48+00:00'
-      status: niedostepne
-      powod: 'https://tiles.openfreemap.org/styles/liberty: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T15:19:19+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/openfreemap.json
     ostatni_import: null
   wikimedia_commons:
@@ -391,12 +386,26 @@ zrodla:
     aktualnosc: bieżąca
     licencja: per plik — przyjmujemy tylko CC0, domenę publiczną, CC BY i CC BY-SA (lista w atlas/config_zdjecia.yaml)
     atrybucja: per plik — autor i licencja w podpisie każdego zdjęcia
-    uzyte_pola: [extmetadata.Artist, extmetadata.LicenseShortName, extmetadata.LicenseUrl, extmetadata.ImageDescription, descriptionurl, thumburl, sha1, mime]
+    uzyte_pola:
+    - extmetadata.Artist
+    - extmetadata.LicenseShortName
+    - extmetadata.LicenseUrl
+    - extmetadata.ImageDescription
+    - descriptionurl
+    - thumburl
+    - sha1
+    - mime
     metoda: kandydaci z kategorii gatunku → status do_weryfikacji → ręczne zatwierdzenie (ujęcie, osoba) → publikacja
     do_weryfikacji: true
     probe:
       typ: http_get
       url: https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=categorymembers&gcmtitle=Category:Boletus%20edulis&gcmtype=file&gcmlimit=2&prop=imageinfo&iiprop=url|extmetadata|size|mime|sha1&iiurlwidth=1024
-    uwagi: Nazwy pól wg dokumentacji MediaWiki; parser pomija pliki bez autora lub licencji. CC BY-SA — przeróbki (kadry) udostępniamy na tej samej licencji.
-    weryfikacja: null
+    uwagi: Nazwy pól wg dokumentacji MediaWiki; parser pomija pliki bez autora lub licencji. CC BY-SA — przeróbki
+      (kadry) udostępniamy na tej samej licencji.
+    weryfikacja:
+      data_utc: '2026-10-17T15:19:19+00:00'
+      status: niedostepne
+      powod: 'https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=categorymembers&gcmtitle=Category:Boletus%20edulis&gcmtype=file&gcmlimit=2&prop=imageinfo&iiprop=url|extmetadata|size|mime|sha1&iiurlwidth=1024:
+        HTTP 403 — dostęp zabroniony / wymaga uwierzytelnienia'
+      schemat: docs/schemas/wikimedia_commons.json
     ostatni_import: null

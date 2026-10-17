@@ -1,0 +1,113 @@
+2026-10-17 15:17:59,215 INFO grzyby.etl.probe: Próbka: prg_wojewodztwa
+2026-10-17 15:17:59,985 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=GetCapabilities "HTTP/1.1 200 OK"
+2026-10-17 15:18:00,410 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW12_Przystan_morska "HTTP/1.1 200 OK"
+2026-10-17 15:18:01,425 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW11_Port_morski "HTTP/1.1 200 OK"
+2026-10-17 15:18:02,415 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW10_Reda "HTTP/1.1 200 OK"
+2026-10-17 15:18:03,485 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW09_Pas_techniczny "HTTP/1.1 200 OK"
+2026-10-17 15:18:04,496 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW08_Pas_ochronny "HTTP/1.1 200 OK"
+2026-10-17 15:18:05,506 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW07_Pas_nadbrzezny "HTTP/1.1 200 OK"
+2026-10-17 15:18:06,413 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW06_Morskie_linie_brzegowe "HTTP/1.1 200 OK"
+2026-10-17 15:18:07,508 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW05_Strefa_przylegla "HTTP/1.1 200 OK"
+2026-10-17 15:18:08,420 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW04_Wylaczna_strefa_ekonomiczna "HTTP/1.1 200 OK"
+2026-10-17 15:18:09,479 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW03_Morskie_wody_wewnetrzne "HTTP/1.1 200 OK"
+2026-10-17 15:18:10,465 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW02_Morze_terytorialne_RP "HTTP/1.1 200 OK"
+2026-10-17 15:18:11,415 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AW01_Linia_podstawowa_morza_terytorialnego "HTTP/1.1 200 OK"
+2026-10-17 15:18:12,435 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU11_Urzad_zeglugi_srodladowej "HTTP/1.1 200 OK"
+2026-10-17 15:18:13,451 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU10_Urzad_morski "HTTP/1.1 200 OK"
+2026-10-17 15:18:14,460 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU09_Regionalny_zarzad_gospodarki_wodnej_PGWWP "HTTP/1.1 200 OK"
+2026-10-17 15:18:15,422 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU08_Zarzad_zlewni_PGWWP "HTTP/1.1 200 OK"
+2026-10-17 15:18:16,501 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU07_Regionalna_dyrekcja_lasow_panstwowych "HTTP/1.1 200 OK"
+2026-10-17 15:18:17,497 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU06_Nadlesnictwo "HTTP/1.1 200 OK"
+2026-10-17 15:18:18,491 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU05_Izba_administracji_skarbowej "HTTP/1.1 200 OK"
+2026-10-17 15:18:19,443 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU04_Urzad_celno-skarbowy "HTTP/1.1 200 OK"
+2026-10-17 15:18:20,411 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU03_Wyspecjalizowany_urzad_skarbowy "HTTP/1.1 200 OK"
+2026-10-17 15:18:21,496 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU02_Urzad_skarbowy "HTTP/1.1 200 OK"
+2026-10-17 15:18:22,503 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AU01_Archiwum_panstwowe "HTTP/1.1 200 OK"
+2026-10-17 15:18:23,422 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK13_Obszar_dzialania_szefa_obrony_cywilnej_gminy "HTTP/1.1 200 OK"
+2026-10-17 15:18:24,416 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK12_Obszar_dzialania_szefa_obrony_cywilnej_powiatu "HTTP/1.1 200 OK"
+2026-10-17 15:18:25,417 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK11_Obszar_dzialania_szefa_obrony_cywilnej_wojewodztwa "HTTP/1.1 200 OK"
+2026-10-17 15:18:26,439 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK10_Dywizjon_strazy_granicznej "HTTP/1.1 200 OK"
+2026-10-17 15:18:27,458 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK09_Placowka_strazy_granicznej "HTTP/1.1 200 OK"
+2026-10-17 15:18:28,433 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK08_Oddzial_strazy_granicznej "HTTP/1.1 200 OK"
+2026-10-17 15:18:29,419 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK07_Komenda_powiatowa_strazy_pozarnej "HTTP/1.1 200 OK"
+2026-10-17 15:18:30,423 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK06_Komenda_wojewodzka_strazy_pozarnej "HTTP/1.1 200 OK"
+2026-10-17 15:18:31,466 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK05_Komisariat_policji "HTTP/1.1 200 OK"
+2026-10-17 15:18:32,423 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK04_Komenda_rejonowa_policji "HTTP/1.1 200 OK"
+2026-10-17 15:18:33,424 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK03_Komenda_stoleczna_policji "HTTP/1.1 200 OK"
+2026-10-17 15:18:34,420 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK02_Komenda_powiatowa_policji "HTTP/1.1 200 OK"
+2026-10-17 15:18:35,414 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AK01_Komenda_wojewodzka_policji "HTTP/1.1 200 OK"
+2026-10-17 15:18:36,458 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AP03_Prokuratura_rejonowa "HTTP/1.1 200 OK"
+2026-10-17 15:18:37,456 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AP02_Prokuratura_okregowa "HTTP/1.1 200 OK"
+2026-10-17 15:18:38,444 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AP01_Prokuratura_regionalna "HTTP/1.1 200 OK"
+2026-10-17 15:18:39,416 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries?service=WFS&request=DescribeFeatureType&typeName=ms%3AS04_Wojewodzki_sad_administracyjny "HTTP/1.1 200 OK"
+2026-10-17 15:18:39,464 INFO grzyby.etl.probe: Próbka: bdl_ogcapi
+2026-10-17 15:18:40,715 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/?f=json "HTTP/1.1 200 OK"
+2026-10-17 15:18:40,842 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections?f=json "HTTP/1.1 200 OK"
+2026-10-17 15:18:45,192 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/rdlp/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:18:50,740 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/nadlesnictwa/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:18:53,242 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/lesnictwa/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:18:54,663 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Bialystok_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:18:55,634 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Katowice_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:18:56,446 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krakow_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:18:57,507 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Krosno_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:18:58,439 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lublin_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:18:59,648 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Lodz_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:00,632 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Olsztyn_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:01,658 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Pila_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:02,567 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Poznan_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:03,650 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecin_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:04,642 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Szczecinek_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:05,599 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Torun_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:06,688 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Wroclaw_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:07,646 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Zielona_Gora_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:08,574 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Gdansk_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:09,736 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Radom_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:10,580 INFO httpx: HTTP Request: GET https://ogcapi.bdl.lasy.gov.pl/collections/RDLP_Warszawa_wydzielenia/items?f=json&limit=3&bbox=21.75%2C50.05%2C22.25%2C50.45 "HTTP/1.1 200 OK"
+2026-10-17 15:19:10,628 INFO grzyby.etl.probe: Próbka: bdl_wms
+2026-10-17 15:19:11,857 INFO httpx: HTTP Request: GET https://mapserver.bdl.lasy.gov.pl/ "HTTP/1.1 403 Forbidden"
+2026-10-17 15:19:11,903 INFO grzyby.etl.probe: Próbka: gdos_crfop
+2026-10-17 15:19:12,283 INFO httpx: HTTP Request: GET https://sdi.gdos.gov.pl/wfs?service=WFS&request=GetCapabilities "HTTP/1.1 403 Forbidden"
+2026-10-17 15:19:12,330 INFO grzyby.etl.probe: Próbka: copernicus_dem_glo30
+2026-10-17 15:19:12,847 INFO httpx: HTTP Request: HEAD https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N49_00_E022_00_DEM/Copernicus_DSM_COG_10_N49_00_E022_00_DEM.tif "HTTP/1.1 200 OK"
+2026-10-17 15:19:13,456 INFO grzyby.etl.probe: Próbka: gugik_nmt
+2026-10-17 15:19:14,447 INFO httpx: HTTP Request: GET https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF?service=WCS&request=GetCapabilities "HTTP/1.1 200 OK"
+2026-10-17 15:19:14,498 INFO grzyby.etl.probe: Próbka: bdot10k
+2026-10-17 15:19:15,079 INFO httpx: HTTP Request: GET https://opendata.geoportal.gov.pl/ "HTTP/1.1 200 OK"
+2026-10-17 15:19:15,125 INFO grzyby.etl.probe: Próbka: copernicus_hrl_forest
+2026-10-17 15:19:15,818 INFO httpx: HTTP Request: GET https://land.copernicus.eu/ "HTTP/1.1 302 Found"
+2026-10-17 15:19:16,073 INFO httpx: HTTP Request: GET https://land.copernicus.eu/en "HTTP/1.1 200 OK"
+2026-10-17 15:19:16,455 INFO grzyby.etl.probe: Próbka: soilgrids
+2026-10-17 15:19:17,167 INFO httpx: HTTP Request: GET https://rest.isric.org/soilgrids/v2.0/docs "HTTP/1.1 200 OK"
+2026-10-17 15:19:17,220 INFO grzyby.etl.probe: Próbka: open_meteo_forecast
+2026-10-17 15:19:17,948 INFO httpx: HTTP Request: GET https://api.open-meteo.com/v1/forecast?latitude=49.35&longitude=22.3&daily=precipitation_sum,temperature_2m_mean&hourly=soil_moisture_0_to_1cm&forecast_days=2&timezone=Europe%2FWarsaw "HTTP/1.1 200 OK"
+2026-10-17 15:19:17,994 INFO grzyby.etl.probe: Próbka: open_meteo_archive
+2026-10-17 15:19:18,432 INFO httpx: HTTP Request: GET https://archive-api.open-meteo.com/v1/archive?latitude=49.35&longitude=22.3&start_date=2026-09-01&end_date=2026-09-03&daily=precipitation_sum&timezone=Europe%2FWarsaw "HTTP/1.1 200 OK"
+2026-10-17 15:19:18,477 INFO grzyby.etl.probe: Próbka: imgw_synop
+2026-10-17 15:19:18,990 INFO httpx: HTTP Request: GET https://danepubliczne.imgw.pl/api/data/synop "HTTP/1.1 200 OK"
+2026-10-17 15:19:19,036 INFO grzyby.etl.probe: Próbka: gbif
+2026-10-17 15:19:19,454 INFO httpx: HTTP Request: GET https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2 "HTTP/1.1 200 OK"
+2026-10-17 15:19:19,499 INFO grzyby.etl.probe: Próbka: jpl_ephemeris
+2026-10-17 15:19:19,747 INFO httpx: HTTP Request: HEAD https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de421.bsp "HTTP/1.1 200 OK"
+2026-10-17 15:19:19,791 INFO grzyby.etl.probe: Próbka: openfreemap
+2026-10-17 15:19:19,933 INFO httpx: HTTP Request: GET https://tiles.openfreemap.org/styles/liberty "HTTP/1.1 200 OK"
+2026-10-17 15:19:19,979 INFO grzyby.etl.probe: Próbka: wikimedia_commons
+2026-10-17 15:19:20,030 INFO httpx: HTTP Request: GET https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=categorymembers&gcmtitle=Category:Boletus%20edulis&gcmtype=file&gcmlimit=2&prop=imageinfo&iiprop=url|extmetadata|size|mime|sha1&iiurlwidth=1024 "HTTP/1.1 403 Forbidden"
+prg_wojewodztwa          ok           
+bdl_ogcapi               ok           
+bdl_wms                  niedostepne  https://mapserver.bdl.lasy.gov.pl/: HTTP 403 — dostęp zabroniony / wymaga uwierzytelnienia
+gdos_crfop               niedostepne  https://sdi.gdos.gov.pl/wfs: HTTP 403 — dostęp zabroniony / wymaga uwierzytelnienia
+copernicus_dem_glo30     ok           
+gugik_nmt                ok           
+bdot10k                  ok           
+copernicus_hrl_forest    ok           
+soilgrids                ok           
+open_meteo_forecast      ok           
+open_meteo_archive       ok           
+imgw_synop               ok           
+gbif                     ok           
+jpl_ephemeris            ok           
+openfreemap              ok           
+wikimedia_commons        niedostepne  https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=categorymembers&gcmtitle=Category:Boletus%20edulis&gcmtype=file&gcmlimit=2&prop=imageinfo&iiprop=url|extmetadata|size|mime|sha1&iiurlwidth=1024: HTTP 403 — dostęp zabroniony / wymaga uwierzytelnienia
+openapi 200
+collections 200
+runner: US

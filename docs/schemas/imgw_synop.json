@@ -1,8 +1,27 @@
 {
   "source_id": "imgw_synop",
-  "sprawdzono_utc": "2026-10-17T06:32:47+00:00",
+  "sprawdzono_utc": "2026-10-17T15:19:18+00:00",
   "url": "https://danepubliczne.imgw.pl/api/data/synop",
   "typ": "http_get",
-  "status": "niedostepne",
-  "powod": "https://danepubliczne.imgw.pl/api/data/synop: odmowa połączenia przez proxy (403 Forbidden)"
+  "wynik": {
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "rozmiar_b": 14188,
+    "schemat": [
+      {
+        "id_stacji": "string",
+        "stacja": "string",
+        "data_pomiaru": "string",
+        "godzina_pomiaru": "string",
+        "temperatura": "string",
+        "predkosc_wiatru": "string",
+        "kierunek_wiatru": "string",
+        "wilgotnosc_wzgledna": "string",
+        "suma_opadu": "string",
+        "cisnienie": "string"
+      },
+      "<62 elementów>"
+    ]
+  },
+  "status": "ok"
 }

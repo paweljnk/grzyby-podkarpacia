@@ -1,8 +1,42 @@
 {
   "source_id": "openfreemap",
-  "sprawdzono_utc": "2026-10-17T06:32:48+00:00",
+  "sprawdzono_utc": "2026-10-17T15:19:19+00:00",
   "url": "https://tiles.openfreemap.org/styles/liberty",
   "typ": "http_get",
-  "status": "niedostepne",
-  "powod": "https://tiles.openfreemap.org/styles/liberty: odmowa połączenia przez proxy (403 Forbidden)"
+  "wynik": {
+    "http_status": 200,
+    "content_type": "application/json",
+    "rozmiar_b": 43079,
+    "schemat": {
+      "version": "integer",
+      "sources": {
+        "ne2_shaded": {
+          "maxzoom": "integer",
+          "tileSize": "integer",
+          "tiles": [
+            "string",
+            "<1 elementów>"
+          ],
+          "type": "string"
+        },
+        "openmaptiles": {
+          "type": "string",
+          "url": "string"
+        }
+      },
+      "sprite": "string",
+      "glyphs": "string",
+      "layers": [
+        {
+          "id": "string",
+          "type": "string",
+          "paint": {
+            "background-color": "string"
+          }
+        },
+        "<111 elementów>"
+      ]
+    }
+  },
+  "status": "ok"
 }

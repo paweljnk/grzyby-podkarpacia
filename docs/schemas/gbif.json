@@ -1,8 +1,152 @@
 {
   "source_id": "gbif",
-  "sprawdzono_utc": "2026-10-17T06:32:47+00:00",
+  "sprawdzono_utc": "2026-10-17T15:19:19+00:00",
   "url": "https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2",
   "typ": "http_get",
-  "status": "niedostepne",
-  "powod": "https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2: odmowa połączenia przez proxy (403 Forbidden)"
+  "wynik": {
+    "http_status": 200,
+    "content_type": "application/json",
+    "rozmiar_b": 12079,
+    "schemat": {
+      "offset": "integer",
+      "limit": "integer",
+      "endOfRecords": "boolean",
+      "count": "integer",
+      "results": [
+        {
+          "key": "integer",
+          "datasetKey": "string",
+          "publishingOrgKey": "string",
+          "datasetCategory": [
+            "string",
+            "<1 elementów>"
+          ],
+          "installationKey": "string",
+          "hostingOrganizationKey": "string",
+          "publishingCountry": "string",
+          "protocol": "string",
+          "lastCrawled": "string",
+          "lastParsed": "string",
+          "crawlId": "integer",
+          "extensions": {
+            "http://rs.gbif.org/terms/1.0/Multimedia": "array"
+          },
+          "basisOfRecord": "string",
+          "occurrenceStatus": "string",
+          "classifications": {
+            "7ddf754f-d193-4cc9-b351-99906754a03b": "object",
+            "d7dddbf4-2cf0-4f39-9b2a-bb099caae36c": "object"
+          },
+          "taxonKey": "integer",
+          "kingdomKey": "integer",
+          "phylumKey": "integer",
+          "classKey": "integer",
+          "orderKey": "integer",
+          "familyKey": "integer",
+          "genusKey": "integer",
+          "speciesKey": "integer",
+          "acceptedTaxonKey": "integer",
+          "scientificName": "string",
+          "scientificNameAuthorship": "string",
+          "acceptedScientificName": "string",
+          "kingdom": "string",
+          "phylum": "string",
+          "order": "string",
+          "family": "string",
+          "genus": "string",
+          "species": "string",
+          "genericName": "string",
+          "specificEpithet": "string",
+          "taxonRank": "string",
+          "taxonomicStatus": "string",
+          "iucnRedListCategory": "string",
+          "dateIdentified": "string",
+          "decimalLatitude": "number",
+          "decimalLongitude": "number",
+          "coordinateUncertaintyInMeters": "number",
+          "continent": "string",
+          "stateProvince": "string",
+          "gadm": {
+            "level0": "object",
+            "level1": "object",
+            "level2": "object",
+            "level3": "object"
+          },
+          "year": "integer",
+          "month": "integer",
+          "day": "integer",
+          "eventDate": "string",
+          "startDayOfYear": "integer",
+          "endDayOfYear": "integer",
+          "issues": [
+            "string",
+            "<3 elementów>"
+          ],
+          "modified": "string",
+          "lastInterpreted": "string",
+          "references": "string",
+          "license": "string",
+          "isSequenced": "boolean",
+          "identifiers": [
+            "object",
+            "<1 elementów>"
+          ],
+          "media": [
+            "object",
+            "<1 elementów>"
+          ],
+          "facts": [
+            "<pusta lista>"
+          ],
+          "relations": [
+            "<pusta lista>"
+          ],
+          "isInCluster": "boolean",
+          "datasetName": "string",
+          "recordedBy": "string",
+          "identifiedBy": "string",
+          "dnaSequenceID": [
+            "<pusta lista>"
+          ],
+          "nucleotideSequence": [
+            "<pusta lista>"
+          ],
+          "geodeticDatum": "string",
+          "class": "string",
+          "countryCode": "string",
+          "recordedByIDs": [
+            "<pusta lista>"
+          ],
+          "identifiedByIDs": [
+            "<pusta lista>"
+          ],
+          "gbifRegion": "string",
+          "country": "string",
+          "publishedByGbifRegion": "string",
+          "rightsHolder": "string",
+          "identifier": "string",
+          "http://unknown.org/nick": "string",
+          "verbatimEventDate": "string",
+          "http://unknown.org/crawl_attempt": "string",
+          "http://unknown.org/status": "string",
+          "http://unknown.org/allowCoordinatesFlipping": "string",
+          "collectionCode": "string",
+          "gbifID": "string",
+          "verbatimLocality": "string",
+          "occurrenceID": "string",
+          "taxonID": "string",
+          "http://unknown.org/captive_cultivated": "string",
+          "catalogNumber": "string",
+          "institutionCode": "string",
+          "eventTime": "string",
+          "identificationID": "string"
+        },
+        "<2 elementów>"
+      ],
+      "facets": [
+        "<pusta lista>"
+      ]
+    }
+  },
+  "status": "ok"
 }
