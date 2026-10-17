@@ -1,0 +1,126 @@
+
+== Obszary pilotażowe [ref.obszar_pilotazowy] — rekordów: 2
+   nazwa                            braki:      0 (  0.0%)
+   typ_terenu                       braki:      0 (  0.0%)
+   geom_origin                      braki:      0 (  0.0%)
+
+== Granica województwa (PRG) [ref.wojewodztwo] — rekordów: 1
+   source_id                        braki:      0 (  0.0%)
+   teryt                            braki:      1 (100.0%)
+   nazwa                            braki:      1 (100.0%)
+   attrs                            braki:      0 (  0.0%)
+   -- surowe atrybuty źródła (attrs) --
+   attrs.gml_id                     braki:      1 (100.0%)
+   attrs.IIP_IDENTY                 braki:      0 (  0.0%)
+   attrs.IIP_PRZEST                 braki:      0 (  0.0%)
+   attrs.IIP_WERSJA                 braki:      0 (  0.0%)
+   attrs.JPT_ID                     braki:      0 (  0.0%)
+   attrs.JPT_JOR_ID                 braki:      0 (  0.0%)
+   attrs.JPT_KJ_I_1                 braki:      0 (  0.0%)
+   attrs.JPT_KJ_I_2                 braki:      1 (100.0%)
+   attrs.JPT_KJ_I_3                 braki:      1 (100.0%)
+   attrs.JPT_KJ_IIP                 braki:      0 (  0.0%)
+   attrs.JPT_KOD__1                 braki:      1 (100.0%)
+   attrs.JPT_KOD_JE                 braki:      0 (  0.0%)
+   attrs.JPT_NAZWA_                 braki:      0 (  0.0%)
+   attrs.JPT_NAZWA1                 braki:      1 (100.0%)
+   attrs.JPT_OPIS                   braki:      1 (100.0%)
+   attrs.JPT_ORGAN_                 braki:      1 (100.0%)
+   attrs.JPT_ORGAN1                 braki:      0 (  0.0%)
+   attrs.JPT_POWI_1                 braki:      0 (  0.0%)
+   attrs.JPT_POWIER                 braki:      0 (  0.0%)
+   attrs.JPT_SJR_KO                 braki:      0 (  0.0%)
+   attrs.JPT_SPS_KO                 braki:      0 (  0.0%)
+   attrs.JPT_WAZNA_                 braki:      0 (  0.0%)
+   attrs.REGON                      braki:      0 (  0.0%)
+   attrs.SHAPE_AREA                 braki:      0 (  0.0%)
+   attrs.SHAPE_LENG                 braki:      0 (  0.0%)
+   attrs.WAZNY_DO                   braki:      1 (100.0%)
+   attrs.WAZNY_OD                   braki:      0 (  0.0%)
+   attrs.WERSJA_DO                  braki:      1 (100.0%)
+   attrs.WERSJA_OD                  braki:      0 (  0.0%)
+   ostatni import: prg_wojewodztwa [podkarpackie] status=ok rekordy=1 (2026-10-17 17:43 CEST)
+
+== Wydzielenia leśne (BDL) [forest.wydzielenie] — rekordów: 6256
+   source_id                        braki:      0 (  0.0%)
+   external_id                      braki:      0 (  0.0%)
+   obszar_id                        braki:      0 (  0.0%)
+   adres_lesny                      braki:      0 (  0.0%)
+   gatunek_panujacy                 braki:      0 (  0.0%)
+   gatunek_panujacy_pochodzenie     braki:      0 (  0.0%)
+   udzial_gatunkow                  braki:   6256 (100.0%)
+   udzial_gatunkow_pochodzenie      braki:   6256 (100.0%)
+   wiek                             braki:      0 (  0.0%)
+   wiek_pochodzenie                 braki:      0 (  0.0%)
+   typ_siedliskowy                  braki:      0 (  0.0%)
+   typ_siedliskowy_pochodzenie      braki:      0 (  0.0%)
+   gleba                            braki:   6256 (100.0%)
+   gleba_pochodzenie                braki:   6256 (100.0%)
+   attrs                            braki:      0 (  0.0%)
+   -- surowe atrybuty źródła (attrs) --
+   attrs.adr_for                    braki:      0 (  0.0%)
+   attrs.a_i_num                    braki:      0 (  0.0%)
+   attrs.area_type                  braki:      0 (  0.0%)
+   attrs.a_year                     braki:      0 (  0.0%)
+   attrs.forest_fun                 braki:      0 (  0.0%)
+   attrs._kolekcja                  braki:      0 (  0.0%)
+   attrs.nazwa                      braki:      0 (  0.0%)
+   attrs.part_cd                    braki:      0 (  0.0%)
+   attrs.prot_categ                 braki:    350 (  5.6%)
+   attrs.rotat_age                  braki:      0 (  0.0%)
+   attrs.silvicult                  braki:      0 (  0.0%)
+   attrs.site_type                  braki:      0 (  0.0%)
+   attrs.spec_age                   braki:      0 (  0.0%)
+   attrs.species_cd                 braki:      0 (  0.0%)
+   attrs.stand_stru                 braki:      0 (  0.0%)
+   attrs.sub_area                   braki:      0 (  0.0%)
+   ostatni import: bdl_ogcapi [baligrod] status=ok rekordy=2769 (2026-10-17 17:44 CEST)
+   ostatni import: bdl_ogcapi [glogow_malopolski] status=ok rekordy=3487 (2026-10-17 17:44 CEST)
+
+== Rzeźba terenu — statystyki wydzieleń [terrain.wydzielenie_teren] — rekordów: 6256
+   wydzielenie_id                   braki:      0 (  0.0%)
+   dem_source_id                    braki:      0 (  0.0%)
+   rozdzielczosc_m                  braki:      0 (  0.0%)
+   n_pikseli                        braki:      0 (  0.0%)
+   wys_min                          braki:      0 (  0.0%)
+   wys_sr                           braki:      0 (  0.0%)
+   wys_max                          braki:      0 (  0.0%)
+   nachylenie_sr_deg                braki:      0 (  0.0%)
+   nachylenie_max_deg               braki:      0 (  0.0%)
+   ekspozycja_sr_deg                braki:    128 (  2.0%)
+   ekspozycja_klasa                 braki:      0 (  0.0%)
+   pochodzenie                      braki:      0 (  0.0%)
+   ostatni import: copernicus_dem_glo30 [baligrod] status=ok rekordy=2769 (2026-10-17 17:44 CEST)
+   ostatni import: copernicus_dem_glo30 [glogow_malopolski] status=ok rekordy=3487 (2026-10-17 17:44 CEST)
+
+== Rastry rzeźby terenu [terrain.raster] — rekordów: 6
+   source_id                        braki:      0 (  0.0%)
+   obszar_id                        braki:      0 (  0.0%)
+   warstwa                          braki:      0 (  0.0%)
+   sciezka                          braki:      0 (  0.0%)
+   crs                              braki:      0 (  0.0%)
+   rozdzielczosc_m                  braki:      0 (  0.0%)
+   szerokosc_px                     braki:      0 (  0.0%)
+   wysokosc_px                      braki:      0 (  0.0%)
+   n_nodata                         braki:      0 (  0.0%)
+   stat_min                         braki:      0 (  0.0%)
+   stat_max                         braki:      0 (  0.0%)
+   stat_sr                          braki:      0 (  0.0%)
+   zasieg                           braki:      0 (  0.0%)
+   pochodzenie                      braki:      0 (  0.0%)
+   ostatni import: copernicus_dem_glo30 [baligrod] status=ok rekordy=3 (2026-10-17 17:44 CEST)
+   ostatni import: copernicus_dem_glo30 [glogow_malopolski] status=ok rekordy=3 (2026-10-17 17:44 CEST)
+
+== Formy ochrony przyrody (GDOŚ) [protection.forma_ochrony] — rekordów: 0
+   ostatni import: gdos_crfop [pilotaz] status=skipped rekordy=0 (2026-10-17 17:44 CEST)
+     MappingMissing: config/bdl_mapping.yaml: gdos_crfop.warstwy puste — uzupełnij po `make probe`
+
+== Rastry — piksele bez danych (NaN poza zasięgiem/na brzegach)
+   copernicus_dem_glo30:baligrod:ekspozycja         pikseli:   2112264 brak:   198690 ( 9.4%) zakres: 0.0..360.0
+   copernicus_dem_glo30:baligrod:nachylenie         pikseli:   2112264 brak:   176638 ( 8.4%) zakres: 0.0..52.6
+   copernicus_dem_glo30:baligrod:wysokosc           pikseli:   2112264 brak:   170825 ( 8.1%) zakres: 324.5..1246.9
+   copernicus_dem_glo30:glogow_malopolski:ekspozycja pikseli:   3697220 brak:   287802 ( 7.8%) zakres: 0.0..360.0
+   copernicus_dem_glo30:glogow_malopolski:nachylenie pikseli:   3697220 brak:   285706 ( 7.7%) zakres: 0.0..30.3
+   copernicus_dem_glo30:glogow_malopolski:wysokosc  pikseli:   3697220 brak:   278020 ( 7.5%) zakres: 152.3..388.4
+
+Puste warstwy (1): protection.forma_ochrony

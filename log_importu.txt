@@ -1,0 +1,8 @@
+2026-10-17 17:44:15,325 INFO grzyby.etl.vector: BDL glogow_malopolski: 3487 wydzieleń (prefiks 04-08-)
+2026-10-17 17:44:46,671 INFO grzyby.etl.vector: BDL baligrod: 2769 wydzieleń (prefiks 04-01-)
+2026-10-17 17:44:46,724 INFO grzyby.etl.dem: Kafel Copernicus_DSM_COG_10_N50_00_E021_00_DEM
+2026-10-17 17:44:47,231 INFO grzyby.etl.dem: Kafel Copernicus_DSM_COG_10_N50_00_E022_00_DEM
+2026-10-17 17:44:52,122 INFO grzyby.etl.dem: Kafel Copernicus_DSM_COG_10_N49_00_E022_00_DEM
+2026-10-17 17:44:55,966 WARNING grzyby.etl.vector: GDOŚ pominięte: config/bdl_mapping.yaml: gdos_crfop.warstwy puste — uzupełnij po `make probe`
+OK — paczka kompletna
+{'wygenerowano': '2026-10-17T15:45:14+00:00', 'wiersze': {'ref.obszar_pilotazowy': 2, 'ref.wojewodztwo': 1, 'forest.wydzielenie': 6256, 'terrain.wydzielenie_teren': 6256, 'terrain.raster': 6, 'weather.komorka': 23, 'weather.dzien': 1771, 'forest.wydzielenie_komorka': 6256, 'protection.forma_ochrony': 0, 'access.zakaz': 0}}
