@@ -1,0 +1,28 @@
+# Zasady zdjęć atlasu (Etap 4b).
+licencje_dozwolone:            # porównanie po znormalizowanej nazwie (LicenseShortName z Wikimedia Commons)
+  - "CC0"
+  - "Public domain"
+  - "CC BY 2.0"
+  - "CC BY 2.5"
+  - "CC BY 3.0"
+  - "CC BY 4.0"
+  - "CC BY-SA 2.0"
+  - "CC BY-SA 2.5"
+  - "CC BY-SA 3.0"
+  - "CC BY-SA 4.0"
+# odrzucane: NC/ND, GFDL-only, brak licencji
+ujecia_wymagane: [mlody, dojrzaly, spod, trzon, przekroj]
+ujecia_opis:
+  mlody: owocnik młody
+  dojrzaly: owocnik dojrzały
+  spod: spód kapelusza (rurki / blaszki / listewki)
+  trzon: trzon z podstawą
+  przekroj: przekrój (barwa miąższu)
+szerokosc_px: 1024
+kategorie_commons:             # kategorie Wikimedia Commons do wyszukania kandydatów (do weryfikacji przy imporcie)
+  boletus_edulis: ["Category:Boletus edulis"]
+  imleria_badia: ["Category:Imleria badia"]
+  cantharellus_cibarius: ["Category:Cantharellus cibarius"]
+  tylopilus_felleus: ["Category:Tylopilus felleus"]
+  rubroboletus_satanas: ["Category:Rubroboletus satanas"]
+  hygrophoropsis_aurantiaca: ["Category:Hygrophoropsis aurantiaca"]

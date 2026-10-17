@@ -18,3 +18,15 @@ test("zrzuty ekranów", async ({ page }) => {
   await page.getByTestId("month").waitFor();
   await page.screenshot({ path: "../docs/zrzuty/5_kalendarz.png" });
 });
+
+test("zrzuty atlasu", async ({ page }) => {
+  await page.goto("/#/atlas");
+  await page.getByTestId("atlas-species").first().waitFor();
+  await page.screenshot({ path: "../docs/zrzuty/6_atlas.png" });
+  await page.goto("/#/atlas/para/kurka_lisowka");
+  await page.getByTestId("pair-table").waitFor();
+  await page.screenshot({ path: "../docs/zrzuty/7_atlas_para.png", fullPage: true });
+  await page.goto("/#/atlas/bezpieczenstwo");
+  await page.getByTestId("myths").waitFor();
+  await page.screenshot({ path: "../docs/zrzuty/8_atlas_bezpieczenstwo.png" });
+});

@@ -58,6 +58,18 @@ def import_run(conn, source_id: str, target: str, area: str | None = None, param
         run._close(run.status, run.message)
 
 
+def migrate() -> list[str]:
+    """Stosuje db/init/*.sql (wszystkie idempotentne: IF NOT EXISTS) — dla baz utworzonych starszą wersją."""
+    from .config import ROOT
+    applied = []
+    with psycopg.connect(database_url(), autocommit=True) as conn:
+        conn.execute("SET client_min_messages = warning")
+        for f in sorted((ROOT / "db" / "init").glob("*.sql")):
+            conn.execute(f.read_text(encoding="utf-8"))
+            applied.append(f.name)
+    return applied
+
+
 def last_import(conn, source_id: str) -> dict[str, Any] | None:
     with conn.cursor() as cur:
         cur.execute(

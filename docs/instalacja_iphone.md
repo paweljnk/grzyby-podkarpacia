@@ -87,8 +87,30 @@ Druga możliwość: nazwany tunel Cloudflare z własną domeną (wymaga konta Cl
 
 Komputer musi być włączony i nie może usypiać, gdy korzystasz z aplikacji w telefonie.
 
+## Zdjęcia do atlasu (Wikimedia Commons)
+
+Atlas działa od razu (opisy, porównania sobowtórów, bezpieczeństwo), ale bez zdjęć — brakujące ujęcia są
+oznaczone „brak zdjęcia”. Zdjęcia pobiera się na komputerze z dostępem do internetu. Każde zdjęcie przed
+publikacją musi **ręcznie zatwierdzić osoba z wiedzą mykologiczną** — niezatwierdzone nie pojawiają się w aplikacji.
+
+```bash
+# 1. kandydaci (tylko licencje CC0 / CC BY / CC BY-SA; zapis do ./data/atlas/<gatunek>/)
+docker compose -f docker-compose.home.yml exec app python -m grzyby.cli atlas kandydaci wszystkie
+# 2. przegląd: id | gatunek | ujęcie | licencja | autor | strona pliku na Commons
+docker compose -f docker-compose.home.yml exec app python -m grzyby.cli atlas lista
+# 3. zatwierdzenie (ujęcia: mlody, dojrzaly, spod, trzon, przekroj, inne); opcjonalnie znaczniki cech
+docker compose -f docker-compose.home.yml exec app python -m grzyby.cli atlas zatwierdz 12 --ujecie spod \
+    --przez "Imię Nazwisko" --adnotacje '[{"x":0.5,"y":0.6,"tekst":"listewki zbiegające na trzon"}]'
+#    albo odrzucenie
+docker compose -f docker-compose.home.yml exec app python -m grzyby.cli atlas odrzuc 13 --przez "Imię Nazwisko" --powod "inny gatunek"
+```
+
+Pliki kandydatów obejrzysz w katalogu `data/atlas/` albo na stronie pliku w Commons (link z listy).
+Każde zdjęcie ma w aplikacji podpis z autorem i licencją. Kadrów zdjęć CC BY-SA nie wolno publikować na innej licencji.
+W iPhonie: zakładka **Atlas → „Zapisz atlas offline”**, zanim pojedziesz do lasu.
+
 ## Ograniczenia wersji PWA na iPhonie
 
 - Nie nagrywa śladu GPS przy wygaszonym ekranie (to będzie wymagało aplikacji Capacitor — Etap 5).
 - W lesie bez zasięgu działają tylko ostatnio oglądane ekrany (pełny tryb offline obszaru — Etap 5).
-- Atlasu grzybów jeszcze nie ma (Etap 4b).
+- Zdjęcia atlasu trzeba pobrać i zatwierdzić (sekcja wyżej); bez tego atlas pokazuje tylko tekst.

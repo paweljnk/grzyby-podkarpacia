@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { api, type Query } from "./api";
 import { MapView } from "./MapView";
 import type { Dataset, SpeciesItem } from "./types";
+import { AtlasIndex, AtlasPair, AtlasSafety, AtlasSpecies } from "./atlas";
 import { CompareView, MonthView, PlaceView, RankingView, SearchView } from "./views";
 
 const store = {
@@ -40,9 +41,14 @@ export default function App() {
   }, []);
   useEffect(() => { setCompare([]); store.set("compare", []); }, [q.dataset]);
 
-  const [, route, arg] = hash.split("/");
+  const [, route, arg, arg2] = hash.split("/");
   let view;
-  if (route === "miejsce" && arg) view = <PlaceView id={+arg} q={q} setQ={setQ} go={go} compareIds={compareIds} toggleCompare={toggleCompare} />;
+  if (route === "atlas") {
+    view = arg === "gatunek" && arg2 ? <AtlasSpecies id={arg2} go={go} />
+      : arg === "para" && arg2 ? <AtlasPair id={arg2} go={go} />
+      : arg === "bezpieczenstwo" ? <AtlasSafety go={go} />
+      : <AtlasIndex go={go} />;
+  } else if (route === "miejsce" && arg) view = <PlaceView id={+arg} q={q} setQ={setQ} go={go} compareIds={compareIds} toggleCompare={toggleCompare} />;
   else if (route === "ranking") view = <RankingView q={q} setQ={setQ} open={open} compareIds={compareIds} toggleCompare={toggleCompare} />;
   else if (route === "szukaj") view = <SearchView q={q} species={species} setQ={setQ} go={go} />;
   else if (route === "kalendarz") view = <MonthView q={q} placeId={arg ? +arg : undefined} go={go} />;
@@ -65,7 +71,7 @@ export default function App() {
           </select>
         </div>
         {sp && <p className="tiny sp-sci"><i>{sp.nazwa_naukowa}</i>{sp.weryfikacja === "wersja_robocza" && " · reguły gatunku: wersja robocza (niezatwierdzona przez mykologa)"}</p>}
-        {realEmpty && q.dataset === "real" && (
+        {realEmpty && q.dataset === "real" && route !== "atlas" && (
           <div className="banner banner-warn" role="status">
             Brak rzeczywistych danych o drzewostanach w tym wdrożeniu.{" "}
             <button className="link" onClick={() => setQ({ dataset: "demo" })} data-testid="use-demo">Pokaż dane demonstracyjne</button>
@@ -74,7 +80,7 @@ export default function App() {
       </header>
       <main>{view}</main>
       <nav className="tabs" aria-label="Nawigacja">
-        {[["#/mapa", "Mapa", "🗺️"], ["#/szukaj", "Szukaj", "🔎"], ["#/ranking", "Ranking", "📋"], ["#/kalendarz", "Kalendarz", "📅"], ["#/porownanie", `Porównaj${compareIds.length ? ` (${compareIds.length})` : ""}`, "⚖️"]].map(([h, label, ic]) => (
+        {[["#/mapa", "Mapa", "🗺️"], ["#/szukaj", "Szukaj", "🔎"], ["#/ranking", "Ranking", "📋"], ["#/kalendarz", "Kalendarz", "📅"], ["#/porownanie", `Porównaj${compareIds.length ? ` (${compareIds.length})` : ""}`, "⚖️"], ["#/atlas", "Atlas", "📖"]].map(([h, label, ic]) => (
           <a key={h} href={h} className={hash.startsWith(h) ? "active" : ""} data-testid={`tab-${h.slice(2)}`}><span aria-hidden>{ic}</span>{label}</a>
         ))}
       </nav>

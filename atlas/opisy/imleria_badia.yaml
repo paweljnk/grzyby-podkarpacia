@@ -1,0 +1,13 @@
+id: imleria_badia
+nazwa_polska: podgrzybek brunatny
+nazwa_naukowa: Imleria badia (Fr.) Vizzini
+status: jadalny
+grupa: rurkowe
+cechy:
+  kapelusz: Ciemnobrązowy do kasztanowego, w wilgoci lepki i błyszczący, w suchą pogodę matowy, zamszowy.
+  hymenofor: Pory kremowe, potem żółtawe do żółtozielonkawych; po uciśnięciu SINIEJĄ.
+  trzon: Brązowawy, z podłużnymi włókienkami, BEZ siateczki.
+  miazsz: Białawy do bladożółtego, po przekrojeniu zwykle lekko sinieje, zwłaszcza nad rurkami.
+  siedlisko: Głównie bory sosnowe i świerkowe, także lasy mieszane; gleby kwaśne.
+zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]
+weryfikacja: {status: wersja_robocza, zatwierdzil: null, data: null}

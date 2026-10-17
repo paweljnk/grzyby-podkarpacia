@@ -1,0 +1,15 @@
+id: borowik_goryczak
+jadalny: boletus_edulis
+sobowtor: tylopilus_felleus
+kategoria_sobowtora: niejadalny (gorzki)
+ryzyko_pomylki: wysokie
+skutek_pomylki: Zepsuta potrawa (silna gorycz); nie jest to zatrucie śmiertelne.
+cechy:
+  - {cecha: Pory (spód kapelusza), ujecie: spod, jadalny: "białe → żółtawe → oliwkowe", sobowtor: "białawe → RÓŻOWE", waga: kluczowa, zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]}
+  - {cecha: Siateczka na trzonie, ujecie: trzon, jadalny: "jasna, delikatna, w górnej części", sobowtor: "CIEMNA, brązowa, grubooczkowa", waga: kluczowa, zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]}
+  - {cecha: Kapelusz, ujecie: dojrzaly, jadalny: "brązowy, często z jaśniejszym brzegiem", sobowtor: "ochrowo- do oliwkowobrązowego, matowy", waga: pomocnicza, zrodla: [gruminska_wojewoda_1985]}
+  - {cecha: Miąższ po przekrojeniu, ujecie: przekroj, jadalny: "biały, bez zmian", sobowtor: "biały, czasem lekko różowieje", waga: slaba, zrodla: [gruminska_wojewoda_1985]}
+uwagi:
+  - U MŁODYCH goryczaków pory są jeszcze białe — wtedy pomyłka jest najłatwiejsza. Patrz na siateczkę trzonu.
+zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]
+weryfikacja: {status: wersja_robocza, zatwierdzil: null, data: null}

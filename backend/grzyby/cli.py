@@ -15,6 +15,22 @@ def main() -> int:
     imp.add_argument("layer", choices=["prg", "bdl", "dem", "gdos", "weather", "all"])
     sub.add_parser("demo", help="wygeneruj DANE DEMONSTRACYJNE w schemacie demo")
     sub.add_parser("check-data")
+    at = sub.add_parser("atlas", help="atlas: kandydaci zdjęć, zatwierdzanie, kontrola treści")
+    asub = at.add_subparsers(dest="acmd", required=True)
+    k = asub.add_parser("kandydaci", help="pobierz kandydatów z Wikimedia Commons (status do_weryfikacji)")
+    k.add_argument("gatunek", help="id gatunku albo 'wszystkie'")
+    li = asub.add_parser("lista")
+    li.add_argument("--status", default="do_weryfikacji")
+    z = asub.add_parser("zatwierdz")
+    z.add_argument("id", type=int)
+    z.add_argument("--ujecie", required=True, choices=["mlody", "dojrzaly", "spod", "trzon", "przekroj", "inne"])
+    z.add_argument("--przez", required=True, help="imię i nazwisko osoby z wiedzą mykologiczną")
+    z.add_argument("--adnotacje", default="[]", help='JSON: [{"x":0.4,"y":0.7,"tekst":"siateczka"}]')
+    o = asub.add_parser("odrzuc")
+    o.add_argument("id", type=int)
+    o.add_argument("--przez", required=True)
+    o.add_argument("--powod", required=True)
+    asub.add_parser("sprawdz", help="kontrola spójności treści atlasu")
     args = p.parse_args()
 
     if args.cmd == "probe":
@@ -35,6 +51,32 @@ def main() -> int:
     if args.cmd == "demo":
         from .demo import generate
         print(generate())
+        return 0
+    if args.cmd == "atlas":
+        import json
+        from . import atlas
+        from .etl import commons
+        if args.acmd == "kandydaci":
+            ids = atlas.mvp_species_with_doubles() if args.gatunek == "wszystkie" else [args.gatunek]
+            for sid in ids:
+                print(sid, commons.fetch_candidates(sid))
+        elif args.acmd == "lista":
+            from .db import connect
+            with connect() as conn, conn.cursor() as cur:
+                cur.execute("SELECT id, gatunek_id, ujecie, licencja, autor, zrodlo_url FROM atlas.zdjecie WHERE status=%s ORDER BY gatunek_id, id",
+                            (args.status,))
+                for r in cur.fetchall():
+                    print(*r, sep=" | ")
+        elif args.acmd == "zatwierdz":
+            commons.approve(args.id, args.ujecie, args.przez, json.loads(args.adnotacje))
+            print("zatwierdzono", args.id)
+        elif args.acmd == "odrzuc":
+            commons.reject(args.id, args.przez, args.powod)
+            print("odrzucono", args.id)
+        elif args.acmd == "sprawdz":
+            errs = atlas.validate()
+            print("\n".join(errs) or "OK")
+            return 1 if errs else 0
         return 0
     if args.cmd == "check-data":
         from .check_data import main as check

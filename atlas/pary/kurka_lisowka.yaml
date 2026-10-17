@@ -1,0 +1,16 @@
+id: kurka_lisowka
+jadalny: cantharellus_cibarius
+sobowtor: hygrophoropsis_aurantiaca
+kategoria_sobowtora: niejadalna / o niepewnej jadalności
+ryzyko_pomylki: srednie
+skutek_pomylki: Możliwe dolegliwości żołądkowo-jelitowe.
+cechy:
+  - {cecha: Spód kapelusza, ujecie: spod, jadalny: "LISTEWKI — grube, tępe, niskie, rozwidlone, zbiegające", sobowtor: "prawdziwe BLASZKI — cienkie, gęste, ostre, wielokrotnie rozwidlone", waga: kluczowa, zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]}
+  - {cecha: Miąższ, ujecie: przekroj, jadalny: "zwarty, białawy, w trzonie włóknisty", sobowtor: "miękki, cienki, pomarańczowawy", waga: kluczowa, zrodla: [gruminska_wojewoda_1985]}
+  - {cecha: Barwa, ujecie: dojrzaly, jadalny: "żółta, jednolita", sobowtor: "pomarańczowa, blaszki zwykle intensywniejsze niż kapelusz", waga: pomocnicza, zrodla: [gruminska_wojewoda_1985]}
+  - {cecha: Trzon, ujecie: trzon, jadalny: "pełny, zwarty, zwężony ku dołowi", sobowtor: "cienki, często wygięty", waga: pomocnicza, zrodla: [gruminska_wojewoda_1985]}
+  - {cecha: Podłoże, ujecie: null, jadalny: "na ziemi (mikoryza)", sobowtor: "na ściółce i rozkładającym się drewnie", waga: slaba, zrodla: [funga_nordica_2012]}
+uwagi:
+  - Kurkę mylą też ludzie z innymi pomarańczowymi grzybami blaszkowymi — sprawdzaj zawsze, czy pod kapeluszem są listewki, a nie blaszki.
+zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]
+weryfikacja: {status: wersja_robocza, zatwierdzil: null, data: null}

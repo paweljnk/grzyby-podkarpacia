@@ -1,0 +1,16 @@
+id: borowik_szatanski
+jadalny: boletus_edulis
+sobowtor: rubroboletus_satanas
+kategoria_sobowtora: trujący
+ryzyko_pomylki: niskie
+skutek_pomylki: Silne zatrucie żołądkowo-jelitowe.
+cechy:
+  - {cecha: Pory, ujecie: spod, jadalny: "białe → żółtawe → oliwkowe", sobowtor: "CZERWONE do pomarańczowoczerwonych", waga: kluczowa, zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]}
+  - {cecha: Trzon i siateczka, ujecie: trzon, jadalny: "jasny, jasna siateczka", sobowtor: "baryłkowaty, czerwony w dolnej części, CZERWONA siateczka", waga: kluczowa, zrodla: [gruminska_wojewoda_1985]}
+  - {cecha: Kapelusz, ujecie: dojrzaly, jadalny: "brązowy", sobowtor: "białawy do szarawego", waga: pomocnicza, zrodla: [gruminska_wojewoda_1985]}
+  - {cecha: Miąższ po przekrojeniu, ujecie: przekroj, jadalny: "nie zmienia barwy", sobowtor: "NIEBIESZCZEJE", waga: kluczowa, zrodla: [gruminska_wojewoda_1985]}
+uwagi:
+  - Ryzyko oceniono jako niskie, bo gatunek jest w Polsce rzadki i wyraźnie odmienny — ale skutki pomyłki są poważne.
+  - Wiele borowików z czerwonymi porami lub siniejącym miąższem bywa mylonych ze sobą — początkujący nie powinni zbierać żadnych grzybów rurkowych z czerwonymi porami.
+zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]
+weryfikacja: {status: wersja_robocza, zatwierdzil: null, data: null}

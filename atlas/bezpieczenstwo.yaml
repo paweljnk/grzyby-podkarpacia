@@ -1,0 +1,104 @@
+# Treści bezpieczeństwa atlasu. Źródła: klucze z sekcji `zrodla` niżej.
+# Status całego atlasu: wersja robocza do czasu zatwierdzenia przez osobę z wiedzą mykologiczną.
+komunikat: >-
+  Atlas służy do nauki. Nie zjadaj grzyba, którego nie rozpoznajesz ze 100% pewnością.
+  W razie wątpliwości oddaj zbiór do sprawdzenia grzyboznawcy.
+weryfikacja:
+  status: wersja_robocza
+  zatwierdzil: null
+  data: null
+
+atlas_nie_robi:
+  - Nie rozpoznaje gatunku ze zdjęcia.
+  - Nie ocenia jadalności żadnego konkretnego okazu.
+  - Nie łączy rankingu miejsc z atlasem — wskaźnik rekomendacji nie oznacza, że w danym miejscu rosną grzyby jadalne.
+  - Pojedyncza cecha nigdy nie wystarcza do oznaczenia; okazy bywają nietypowe (wiek, pogoda, uszkodzenia).
+
+zasady_zbioru:
+  - tekst: Zbieraj cały owocnik razem z podstawą trzonu (wykręcaj, nie odcinaj). Odcięcie trzonu usuwa najważniejsze cechy muchomorów — pochwę i bulwę.
+    zrodla: [psse_golub_dobrzyn, wsse_bydgoszcz]
+  - tekst: Nie zbieraj okazów bardzo młodych — nie mają jeszcze wykształconych cech gatunku. Nie zbieraj też przerośniętych i zepsutych.
+    zrodla: [wsse_bydgoszcz_zasady]
+  - tekst: Nie zbieraj grzybów przy ruchliwych drogach i zakładach przemysłowych — gromadzą metale ciężkie.
+    zrodla: [wsse_bydgoszcz_zasady]
+  - tekst: Przenoś grzyby w przewiewnych koszykach, nie w foliowych torbach (szybciej się psują).
+    zrodla: [wsse_bydgoszcz_zasady]
+  - tekst: Każdy nowy gatunek ucz się rozpoznawać pod okiem doświadczonej osoby. Aplikacje do rozpoznawania grzybów nie zastąpią grzyboznawcy.
+    zrodla: [psse_piotrkow]
+  - tekst: Grzyby do sprawdzenia przynoś świeże (do 48 godzin od zbioru, przechowywane w temperaturze do 10°C), nie przetworzone, nie spleśniałe i nie rozmoczone.
+    zrodla: [psse_rzeszow]
+
+mity:
+  - mit: Czernienie srebrnej łyżeczki lub cebuli gotowanej z grzybami wskazuje grzyb trujący.
+    prawda: To nie jest metoda sprawdzania. Grzyby śmiertelnie trujące nie wywołują wiarygodnie takiej reakcji.
+    zrodla: [psse_opoczno, psse_mragowo]
+  - mit: Przyjemny smak i zapach świadczą o tym, że grzyb jest jadalny.
+    prawda: Grzyby śmiertelnie trujące (np. muchomor zielonawy) mogą mieć przyjemny, słodkawy smak. Nie próbuj grzybów jako metody sprawdzania.
+    zrodla: [psse_opoczno, psse_mragowo]
+  - mit: Jeśli ślimaki lub zwierzęta jedzą grzyba, jest on jadalny dla człowieka.
+    prawda: Zwierzęta inaczej reagują na toksyny grzybów niż człowiek; żerowanie ślimaków nie jest dowodem jadalności.
+    zrodla: []
+    uwaga_zrodla: Brak zweryfikowanego źródła — uzupełnić przed publikacją.
+  - mit: Gotowanie, suszenie lub marynowanie usuwa truciznę.
+    prawda: Toksyny muchomora zielonawego (amatoksyny) nie są niszczone przez obróbkę termiczną.
+    zrodla: []
+    uwaga_zrodla: Źródło z wyszukiwania było serwisem nieoficjalnym — uzupełnić źródło oficjalne lub naukowe.
+  - mit: Trujące grzyby są zawsze kolorowe.
+    prawda: Najgroźniejszy w Polsce muchomor zielonawy ma barwę oliwkowozieloną do białawej; odmiany białe są niepozorne.
+    zrodla: []
+    uwaga_zrodla: Brak zweryfikowanego źródła — uzupełnić przed publikacją.
+
+zatrucie:
+  kroki:
+    - Zadzwoń pod 112 albo jedź na najbliższy SOR — przy każdym podejrzeniu zatrucia grzybami, także gdy objawy są łagodne.
+    - Objawy zatrucia muchomorem zielonawym pojawiają się zwykle dopiero po 6–24 godzinach. Pozorna poprawa po pierwszych objawach NIE oznacza wyzdrowienia — uszkodzenie wątroby postępuje.
+    - Zachowaj resztki grzybów, obierki lub potrawy (także wymiociny) do identyfikacji przez grzyboznawcę.
+    - Jeśli grzyby jadło kilka osób, wszystkie powinny zgłosić się do lekarza, nawet bez objawów.
+  telefony:
+    - nazwa: Numer alarmowy
+      numer: "112"
+      zrodlo: null
+      status_numeru: urzędowy
+    - nazwa: Informacja toksykologiczna (Kraków), całodobowo
+      numer: "12 411 99 99"
+      zrodlo: itox_lista
+      status_numeru: do_weryfikacji
+    - nazwa: Ośrodek toksykologiczny dla woj. podkarpackiego (Rzeszów)
+      numer: "17 866 44 06"
+      zrodlo: itox_lista
+      status_numeru: do_weryfikacji
+  uwaga: >-
+    Numery ośrodków toksykologicznych pochodzą z nieoficjalnego zestawienia bez daty aktualizacji (sprawdzone
+    wyszukiwaniem 2026-10-17). Przed publikacją potwierdzić je na stronach szpitali lub WSSE.
+  zrodla_czas_objawow: [psse_mragowo]
+
+punkty_grzyboznawcze:
+  data_listy: "2026-10-17"
+  kompletnosc: niepelna
+  uwaga: >-
+    Pełnej listy punktów i godzin pracy nie pobrano (strony gov.pl niedostępne z serwera aplikacji).
+    Każda powiatowa stacja sanitarno-epidemiologiczna w woj. podkarpackim zatrudnia klasyfikatorów grzybów.
+    Przed wizytą zadzwoń — godziny pracy w sezonie się zmieniają.
+  punkty:
+    - nazwa: Wojewódzka Stacja Sanitarno-Epidemiologiczna w Rzeszowie
+      adres: ul. Wierzbowa 16, Rzeszów
+      telefon: "17 85 22 111 wew. 343 lub 358"
+      uwagi: Bezpłatne porady grzyboznawcy i klasyfikatora; najlepiej wcześniej zadzwonić. Tylko dla osób prywatnych zbierających na własne potrzeby.
+      zrodlo: wsse_rzeszow_porady
+    - nazwa: Powiatowa Stacja Sanitarno-Epidemiologiczna w Rzeszowie
+      adres: null
+      telefon: null
+      uwagi: Bezpłatne porady grzybowe; grzyby świeże, do 48 h od zbioru.
+      zrodlo: psse_rzeszow
+
+zrodla:
+  wsse_rzeszow_porady: {opis: "WSSE w Rzeszowie — Bezpłatne porady grzybowe", url: "https://www.gov.pl/web/wsse-rzeszow/wsse-w-rzeszowie-udziela-bezplatnych-porad-grzybowych", sprawdzono: "2026-10-17 (wyszukiwarka)"}
+  wsse_rzeszow_bezpieczne: {opis: "WSSE w Rzeszowie — Bezpieczne grzybobranie", url: "https://www.gov.pl/web/wsse-rzeszow/obziz-bezpieczne-grzybobranie", sprawdzono: "2026-10-17 (wyszukiwarka)"}
+  psse_rzeszow: {opis: "PSSE w Rzeszowie — Bezpłatne porady grzybowe", url: "https://www.gov.pl/web/psse-rzeszow/bezplatne-porady-grzybowe", sprawdzono: "2026-10-17 (wyszukiwarka)"}
+  psse_opoczno: {opis: "PSSE w Opocznie — Bezpieczne grzybobranie (2024)", url: "https://www.gov.pl/web/psse-opoczno/bezpieczne-grzybobranie", sprawdzono: "2026-10-17 (wyszukiwarka)"}
+  psse_mragowo: {opis: "PSSE w Mrągowie — Bezpieczne grzybobranie", url: "https://www.gov.pl/web/psse-mragowo/bezpieczne-grzybobranie", sprawdzono: "2026-10-17 (wyszukiwarka)"}
+  psse_piotrkow: {opis: "PSSE w Piotrkowie Trybunalskim — Poznaj grzyby, unikniesz zatrucia", url: "https://www.gov.pl/web/psse-piotrkow-trybunalski/poznaj-grzyby---unikniesz-zatrucia", sprawdzono: "2026-10-17 (wyszukiwarka)"}
+  psse_golub_dobrzyn: {opis: "PSSE w Golubiu-Dobrzyniu — Co warto wiedzieć na temat bezpiecznego grzybobrania", url: "https://www.gov.pl/web/psse-golub-dobrzyn/co-warto-wiedziec-na-temat-bezpiecznego-grzybobrania", sprawdzono: "2026-10-17 (wyszukiwarka)"}
+  wsse_bydgoszcz: {opis: "WSSE w Bydgoszczy — Grzyby", url: "https://www.gov.pl/web/wsse-bydgoszcz/grzyby", sprawdzono: "2026-10-17 (wyszukiwarka)"}
+  wsse_bydgoszcz_zasady: {opis: "WSSE w Bydgoszczy — Bezpieczne grzybobranie", url: "https://www.gov.pl/web/wsse-bydgoszcz/bezpieczne-grzybobranie3", sprawdzono: "2026-10-17 (wyszukiwarka)"}
+  itox_lista: {opis: "itox.pl — Zatrucia, numery alarmowe (zestawienie nieoficjalne, bez daty)", url: "https://itox.pl/zatrucia-numery-alarmowe/", sprawdzono: "2026-10-17 (wyszukiwarka)"}

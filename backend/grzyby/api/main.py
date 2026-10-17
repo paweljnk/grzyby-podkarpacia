@@ -30,6 +30,12 @@ DISCLAIMER = ("Wskaźnik rekomendacji 0–100 ocenia potencjał siedliska i waru
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    if os.environ.get("GRZYBY_AUTOMIGRATE", "1") == "1":
+        try:
+            from ..db import migrate
+            log.info("Migracje: %s", migrate())
+        except Exception as e:
+            log.warning("Migracja nieudana: %s", e)
     if os.environ.get("GRZYBY_DEMO_AUTOREFRESH", "1") == "1":
         try:
             from ..demo import ensure_fresh
@@ -40,7 +46,11 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="Grzyby Podkarpacia API", version="0.3.0", lifespan=lifespan)
+app = FastAPI(title="Grzyby Podkarpacia API", version="0.4.0", lifespan=lifespan)
+
+from .atlas_routes import router as atlas_router  # noqa: E402
+
+app.include_router(atlas_router)
 Dataset = Literal["real", "demo"]
 
 

@@ -1,0 +1,14 @@
+id: rubroboletus_satanas
+nazwa_polska: borowik szatański
+nazwa_naukowa: Rubroboletus satanas (Lenz) Kuan Zhao & Zhu L. Yang
+status: trujacy
+status_uwagi: Powoduje silne zatrucia żołądkowo-jelitowe. Gatunek rzadki w Polsce; status ochrony prawnej sprawdzić w aktualnym rozporządzeniu — nie zbierać.
+grupa: rurkowe
+cechy:
+  kapelusz: Białawy, szarawy do jasnooliwkowego — nie brązowy.
+  hymenofor: Pory u dojrzałych CZERWONE do pomarańczowoczerwonych (u bardzo młodych mogą być żółtawe).
+  trzon: Baryłkowaty, gruby, w środkowej i dolnej części czerwony, z CZERWONĄ siateczką.
+  miazsz: Bladożółtawy, po przekrojeniu słabo do umiarkowanie NIEBIESZCZEJE.
+  siedlisko: Ciepłe stanowiska na glebach wapiennych, pod dębami i bukami.
+zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]
+weryfikacja: {status: wersja_robocza, zatwierdzil: null, data: null}

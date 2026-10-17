@@ -1,0 +1,14 @@
+id: podgrzybek_goryczak
+jadalny: imleria_badia
+sobowtor: tylopilus_felleus
+kategoria_sobowtora: niejadalny (gorzki)
+ryzyko_pomylki: srednie
+skutek_pomylki: Zepsuta potrawa (silna gorycz); nie jest to zatrucie śmiertelne.
+cechy:
+  - {cecha: Pory i reakcja na ucisk, ujecie: spod, jadalny: "kremowe → żółtozielonkawe, po ucisku SINIEJĄ", sobowtor: "białawe → RÓŻOWE, nie sinieją", waga: kluczowa, zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]}
+  - {cecha: Trzon, ujecie: trzon, jadalny: "włóknisty, BEZ siateczki", sobowtor: "z wyraźną CIEMNĄ siateczką", waga: kluczowa, zrodla: [gruminska_wojewoda_1985]}
+  - {cecha: Kapelusz, ujecie: dojrzaly, jadalny: "ciemnokasztanowy, w wilgoci lepki", sobowtor: "jaśniejszy, ochrowobrązowy, matowy", waga: pomocnicza, zrodla: [gruminska_wojewoda_1985]}
+  - {cecha: Miąższ po przekrojeniu, ujecie: przekroj, jadalny: "lekko sinieje", sobowtor: "nie sinieje", waga: pomocnicza, zrodla: [gruminska_wojewoda_1985]}
+uwagi: []
+zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]
+weryfikacja: {status: wersja_robocza, zatwierdzil: null, data: null}

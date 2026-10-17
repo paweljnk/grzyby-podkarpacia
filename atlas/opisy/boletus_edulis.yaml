@@ -1,0 +1,13 @@
+id: boletus_edulis
+nazwa_polska: borowik szlachetny
+nazwa_naukowa: Boletus edulis Bull.
+status: jadalny
+grupa: rurkowe
+cechy:
+  kapelusz: Brązowy w różnych odcieniach (od jasnobrązowego do kasztanowego), często z jaśniejszym brzegiem; gładki, w wilgoci lekko lepki.
+  hymenofor: Rurki i pory u młodych białe, z wiekiem żółtawe, w końcu oliwkowozielone; nie różowieją.
+  trzon: Gruby, beczułkowaty lub maczugowaty, jasny, w górnej części z delikatną, JASNĄ (białawą) siateczką.
+  miazsz: Biały, zwarty, po przekrojeniu nie zmienia barwy.
+  siedlisko: Lasy iglaste i liściaste; mikoryza m.in. ze świerkiem, sosną, bukiem, dębem i brzozą.
+zrodla: [gruminska_wojewoda_1985, funga_nordica_2012]
+weryfikacja: {status: wersja_robocza, zatwierdzil: null, data: null}

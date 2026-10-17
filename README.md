@@ -5,7 +5,7 @@ w województwie podkarpackim. Nie twierdzi, że grzyby gdzieś teraz rosną, i n
 żadnego okazu. Oznaczenie gatunku zawsze potwierdza grzyboznawca (punkty PSSE).
 
 Stan: Etap 1 (pilotaż danych), Etap 2 (baza wiedzy o gatunkach MVP), Etap 3 (pogoda, Księżyc i biodynamika,
-model rekomendacji, API) i Etap 4 (PWA) — zbudowane. Źródła BDL, GDOŚ, PRG i Open-Meteo są w tym środowisku
+model rekomendacji, API), Etap 4 (PWA) i Etap 4b (atlas z sobowtórami, bezpieczeństwo, offline) — zbudowane. Źródła BDL, GDOŚ, PRG i Open-Meteo są w tym środowisku
 niedostępne (polityka sieci), dlatego aplikację można oglądać na **jawnie oznaczonych danych demonstracyjnych**.
 
 ## Instalacja na iPhonie
@@ -50,6 +50,7 @@ Za proxy HTTPS (kontener chmurowy): plik `.env` z
 | `config/model.yaml`, `config/kalendarz.yaml`, `config/pogoda.yaml` | wagi, progi i reguły (założenia projektowe) |
 | `backend/grzyby/{weather,model,api}` | agregacja pogody, model rekomendacji, API |
 | `frontend/` | PWA: React + TypeScript + Vite + MapLibre; testy e2e w `frontend/e2e` |
+| `atlas/` | treści atlasu: opisy gatunków, pary sobowtórów, bezpieczeństwo, zasady zdjęć (wersja robocza) |
 | `docs/zrzuty/` | zrzuty ekranów 390×844 (dane demo) |
 | `data/` | surowe pliki, cache, rastry pochodne (poza repozytorium) |
 

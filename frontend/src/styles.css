@@ -92,7 +92,30 @@ button:disabled { opacity: .5; }
 .footer ul { padding-left: 16px; } .footer li { margin: 4px 0; }
 .disclaimer { font-size: 12px; }
 
-.tabs { position: fixed; bottom: 0; left: 0; right: 0; display: grid; grid-template-columns: repeat(5, 1fr); background: var(--surface); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); z-index: 10; }
+.tabs { position: fixed; bottom: 0; left: 0; right: 0; display: grid; grid-template-columns: repeat(6, 1fr); background: var(--surface); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); z-index: 10; }
 .tabs a { display: flex; flex-direction: column; align-items: center; font-size: 11px; padding: 6px 0; color: var(--muted); text-decoration: none; min-height: 52px; justify-content: center; }
 .tabs a.active { color: var(--brand); font-weight: 700; }
 @media (prefers-color-scheme: dark) { .tabs a.active { color: #9fd18f; } }
+
+/* atlas */
+.atlas-notice { background: #2f4a2c; color: #fff; font-weight: 600; }
+.atlas-list { list-style: none; padding: 0; margin: 0; }
+.atlas-item { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; text-align: left; background: var(--surface); color: var(--text); border: 1px solid var(--line); margin: 6px 0; }
+.st { font-size: 12px; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); }
+.st-trujacy, .st-smiertelnie_trujacy { color: #fff; background: var(--bad); border-color: var(--bad); }
+.st-niejadalny, .st-niepewny { color: var(--warn); background: var(--warn-bg); }
+.ph-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+.ph { margin: 0; font-size: 12px; }
+.ph-img { position: relative; }
+.ph-img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; display: block; background: var(--line); }
+.ph-missing { aspect-ratio: 4 / 3; border: 2px dashed var(--line); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--muted); }
+.mark { position: absolute; transform: translate(-50%, -50%); width: 22px; height: 22px; border-radius: 50%; background: #ffd34d; color: #000; font-weight: 700; display: grid; place-items: center; font-size: 12px; border: 2px solid #000; }
+.pair-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0; table-layout: fixed; }
+.pair-table th, .pair-table td { border: 1px solid var(--line); padding: 6px; vertical-align: top; text-align: left; overflow-wrap: anywhere; }
+.pair-table thead th { background: var(--surface); }
+.pair-table tr.w-kluczowa > th { border-left: 4px solid var(--brand); }
+.side-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.poison { background: var(--surface); border: 2px solid var(--bad); border-radius: 12px; padding: 8px 12px; }
+.call { display: block; padding: 10px; margin: 6px 0; border-radius: 10px; background: var(--bg); color: var(--text); text-decoration: none; font-weight: 700; font-size: 18px; }
+.call-112 { background: var(--bad); color: #fff; }
+.myths li { margin: 8px 0; }

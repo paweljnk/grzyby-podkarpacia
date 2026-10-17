@@ -381,3 +381,22 @@ zrodla:
       powod: 'https://tiles.openfreemap.org/styles/liberty: odmowa połączenia przez proxy (403 Forbidden)'
       schemat: docs/schemas/openfreemap.json
     ostatni_import: null
+  wikimedia_commons:
+    nazwa: Wikimedia Commons (zdjęcia do atlasu)
+    dostawca: Wikimedia Foundation / autorzy zdjęć
+    url: https://commons.wikimedia.org/w/api.php
+    typ_uslugi: MediaWiki API (generator=categorymembers, prop=imageinfo, extmetadata)
+    zasieg: globalny
+    rozdzielczosc: miniatury 1024 px
+    aktualnosc: bieżąca
+    licencja: per plik — przyjmujemy tylko CC0, domenę publiczną, CC BY i CC BY-SA (lista w atlas/config_zdjecia.yaml)
+    atrybucja: per plik — autor i licencja w podpisie każdego zdjęcia
+    uzyte_pola: [extmetadata.Artist, extmetadata.LicenseShortName, extmetadata.LicenseUrl, extmetadata.ImageDescription, descriptionurl, thumburl, sha1, mime]
+    metoda: kandydaci z kategorii gatunku → status do_weryfikacji → ręczne zatwierdzenie (ujęcie, osoba) → publikacja
+    do_weryfikacji: true
+    probe:
+      typ: http_get
+      url: https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=categorymembers&gcmtitle=Category:Boletus%20edulis&gcmtype=file&gcmlimit=2&prop=imageinfo&iiprop=url|extmetadata|size|mime|sha1&iiurlwidth=1024
+    uwagi: Nazwy pól wg dokumentacji MediaWiki; parser pomija pliki bez autora lub licencji. CC BY-SA — przeróbki (kadry) udostępniamy na tej samej licencji.
+    weryfikacja: null
+    ostatni_import: null

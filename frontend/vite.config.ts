@@ -26,6 +26,11 @@ export default defineConfig({
       workbox: {
         navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
+          // Atlas: zdjęcia zatwierdzone są niezmienne — z pamięci podręcznej (działa w lesie bez zasięgu).
+          { urlPattern: /\/api\/atlas\/zdjecie\//, handler: "CacheFirst",
+            options: { cacheName: "atlas-zdjecia", expiration: { maxEntries: 500, maxAgeSeconds: 365 * 86400 }, cacheableResponse: { statuses: [200] } } },
+          { urlPattern: /\/api\/atlas/, handler: "NetworkFirst",
+            options: { cacheName: "atlas", networkTimeoutSeconds: 4, expiration: { maxEntries: 100, maxAgeSeconds: 365 * 86400 } } },
           { urlPattern: /\/api\/(gatunki|zrodla)/, handler: "StaleWhileRevalidate", options: { cacheName: "api-static" } },
           { urlPattern: /\/api\//, handler: "NetworkFirst",
             options: { cacheName: "api", networkTimeoutSeconds: 8, expiration: { maxEntries: 200, maxAgeSeconds: 7 * 86400 } } },
