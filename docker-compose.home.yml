@@ -1,0 +1,54 @@
+# Uruchomienie w domu (komputer + tunel HTTPS do iPhone'a).
+# Wymaga tylko Dockera. Instrukcja: docs/instalacja_iphone.md
+#
+#   docker compose -f docker-compose.home.yml up -d --build          # aplikacja: http://localhost:8000
+#   docker compose -f docker-compose.home.yml --profile tunel up -d  # + adres HTTPS dla telefonu
+#   docker compose -f docker-compose.home.yml logs tunel | grep trycloudflare
+name: grzyby-dom
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: grzyby
+      POSTGRES_USER: grzyby
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-grzyby}
+      TZ: UTC
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U grzyby -d grzyby"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+    # port bazy NIE jest publikowany na zewnątrz
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    image: grzyby-app:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://grzyby:${POSTGRES_PASSWORD:-grzyby}@db:5432/grzyby
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  # Tunel HTTPS Cloudflare bez konta ("quick tunnel"): adres *.trycloudflare.com zmienia się po każdym
+  # uruchomieniu tunelu. Stały adres: zob. Tailscale Funnel w docs/instalacja_iphone.md.
+  tunel:
+    image: cloudflare/cloudflared:2025.9.1
+    profiles: ["tunel"]
+    command: ["tunnel", "--no-autoupdate", "--url", "http://app:8000"]
+    depends_on: [app]
+    restart: unless-stopped
+
+volumes:
+  pgdata:

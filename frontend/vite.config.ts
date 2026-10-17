@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["icon.svg"],
+      includeAssets: ["icon.svg", "apple-touch-icon.png"],
       manifest: {
         name: "Grzyby Podkarpacia",
         short_name: "Grzyby",
@@ -17,7 +17,11 @@ export default defineConfig({
         background_color: "#f6f4ee",
         display: "standalone",
         start_url: "/",
-        icons: [{ src: "icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" }],
+        icons: [
+          { src: "icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
+          { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+          { src: "apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+        ],
       },
       workbox: {
         navigateFallbackDenylist: [/^\/api\//],

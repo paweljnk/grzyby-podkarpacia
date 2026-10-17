@@ -8,7 +8,11 @@ Stan: Etap 1 (pilotaż danych), Etap 2 (baza wiedzy o gatunkach MVP), Etap 3 (po
 model rekomendacji, API) i Etap 4 (PWA) — zbudowane. Źródła BDL, GDOŚ, PRG i Open-Meteo są w tym środowisku
 niedostępne (polityka sieci), dlatego aplikację można oglądać na **jawnie oznaczonych danych demonstracyjnych**.
 
-## Szybki start
+## Instalacja na iPhonie
+
+Krok po kroku (komputer w domu + tunel HTTPS, wystarczy Docker): [docs/instalacja_iphone.md](docs/instalacja_iphone.md).
+
+## Szybki start (deweloperski)
 
 ```bash
 make up            # PostGIS 16 + kontener ETL (Python 3.12)
