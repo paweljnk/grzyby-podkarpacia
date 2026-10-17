@@ -1,0 +1,8 @@
+{
+  "source_id": "bdl_wms",
+  "sprawdzono_utc": "2026-10-17T06:32:43+00:00",
+  "url": "https://mapserver.bdl.lasy.gov.pl/",
+  "typ": "http_get",
+  "status": "niedostepne",
+  "powod": "https://mapserver.bdl.lasy.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)"
+}

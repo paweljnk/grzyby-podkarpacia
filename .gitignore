@@ -1,0 +1,8 @@
+backend/certs/*.crt
+data/raw/
+data/cache/
+data/derived/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/

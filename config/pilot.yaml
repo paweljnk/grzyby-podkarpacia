@@ -1,0 +1,22 @@
+# Obszary pilotażowe Etapu 1.
+#
+# bbox_roboczy_wgs84 = [lon_min, lat_min, lon_max, lat_max] to ZAŁOŻENIE PROJEKTOWE:
+# prostokąt z zapasem wokół siedziby nadleśnictwa, używany wyłącznie do kadrowania rastrów
+# i zapytań bbox, dopóki nie pobierzemy granicy nadleśnictwa z BDL. Nie jest to granica
+# nadleśnictwa i nie wolno go tak prezentować.
+obszary:
+  - id: glogow_malopolski
+    nazwa: Nadleśnictwo Głogów Małopolski
+    typ_terenu: nizinny          # Kotlina Sandomierska, bory sosnowe
+    bbox_roboczy_wgs84: [21.75, 50.05, 22.25, 50.45]
+  - id: baligrod
+    nazwa: Nadleśnictwo Baligród
+    typ_terenu: gorski           # Bieszczady, buczyny karpackie, jodła
+    bbox_roboczy_wgs84: [22.05, 49.15, 22.55, 49.45]
+
+# Parametry analizy rzeźby terenu (założenia projektowe, opisane w docs/zalozenia.md).
+teren:
+  rozdzielczosc_docelowa_m: 25     # agregacja do 10–25 m wg założeń; GLO-30 ma ok. 30 m, więc 25 m to tylko siatka zapisu
+  resampling: bilinear
+  prog_plaskiego_terenu_deg: 2.0   # poniżej tej średniej nachylenia ekspozycja = 'plasko'
+  min_pikseli_w_wydzieleniu: 1

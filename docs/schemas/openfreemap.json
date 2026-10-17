@@ -1,0 +1,8 @@
+{
+  "source_id": "openfreemap",
+  "sprawdzono_utc": "2026-10-17T06:32:48+00:00",
+  "url": "https://tiles.openfreemap.org/styles/liberty",
+  "typ": "http_get",
+  "status": "niedostepne",
+  "powod": "https://tiles.openfreemap.org/styles/liberty: odmowa połączenia przez proxy (403 Forbidden)"
+}

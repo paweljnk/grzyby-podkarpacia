@@ -1,0 +1,368 @@
+# Rejestr źródeł danych — Grzyby Podkarpacia.
+#
+# Zasady:
+#  - Pole `weryfikacja` aktualizuje automatycznie `make probe` (data, status HTTP, plik ze schematem).
+#  - Pole `ostatni_import` aktualizuje importer na podstawie meta.import_log.
+#  - Wartości z dokumentacji, których nie potwierdziła próbka, mają `do_weryfikacji: true`.
+#  - `null` oznacza: nie wiemy / nie sprawdzone. Nie wstawiamy wartości zastępczych.
+#
+# Ten plik jest zapisywany programowo (PyYAML), więc uwagi trzymaj w polach `uwagi`, nie w komentarzach
+# wewnątrz wpisów — komentarze nagłówka są zachowywane, komentarze w środku nie.
+zrodla:
+  prg_wojewodztwa:
+    nazwa: PRG — Państwowy Rejestr Granic (granice województw)
+    dostawca: GUGiK
+    url: https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries
+    typ_uslugi: WFS
+    zasieg: Polska
+    rozdzielczosc: wektor (skala źródłowa do weryfikacji)
+    aktualnosc: null
+    licencja: dane otwarte GUGiK (ustawa Prawo geodezyjne i kartograficzne, bezpłatne udostępnianie PRG)
+    atrybucja: Główny Urząd Geodezji i Kartografii
+    uzyte_pola: []
+    metoda: WFS GetFeature, filtr TERYT województwa = 18
+    do_weryfikacji: true
+    probe:
+      typ: wfs_capabilities
+      url: https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries
+    uwagi: Alternatywa — paczka PRG do pobrania (SHP) z geoportal.gov.pl / opendata.
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:42+00:00'
+      status: niedostepne
+      powod: 'https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries: odmowa połączenia
+        przez proxy (403 Forbidden)'
+      schemat: docs/schemas/prg_wojewodztwa.json
+    ostatni_import: null
+  bdl_ogcapi:
+    nazwa: Bank Danych o Lasach — OGC API
+    dostawca: Biuro Urządzania Lasu i Geodezji Leśnej / Lasy Państwowe
+    url: https://ogcapi.bdl.lasy.gov.pl/
+    typ_uslugi: OGC API Features
+    zasieg: lasy w Polsce (LP — pełne opisy taksacyjne; lasy niepaństwowe — zakres do weryfikacji)
+    rozdzielczosc: wydzielenie leśne (wektor)
+    aktualnosc: null
+    licencja: null
+    atrybucja: null
+    uzyte_pola: []
+    metoda: OGC API Features /collections/{id}/items, bbox obszaru pilotażowego, stronicowanie rel=next
+    do_weryfikacji: true
+    probe:
+      typ: ogcapi
+      url: https://ogcapi.bdl.lasy.gov.pl/
+    uwagi: Licencję i warunki wykorzystania sprawdzić w regulaminie BDL przed publikacją aplikacji.
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:43+00:00'
+      status: niedostepne
+      powod: 'https://ogcapi.bdl.lasy.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/bdl_ogcapi.json
+    ostatni_import: null
+  bdl_wms:
+    nazwa: Bank Danych o Lasach — usługi WMS/WFS (mapserver)
+    dostawca: BULiGL
+    url: https://mapserver.bdl.lasy.gov.pl/
+    typ_uslugi: WMS/WFS
+    zasieg: Polska
+    rozdzielczosc: wydzielenie
+    aktualnosc: null
+    licencja: null
+    atrybucja: null
+    uzyte_pola: []
+    metoda: rezerwowa wobec OGC API; także warstwy zakazów wstępu i zagrożenia pożarowego (do weryfikacji)
+    do_weryfikacji: true
+    probe:
+      typ: http_get
+      url: https://mapserver.bdl.lasy.gov.pl/
+    uwagi: Dokładne ścieżki usług do odczytania z dokumentacji BDL po odblokowaniu dostępu.
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:43+00:00'
+      status: niedostepne
+      powod: 'https://mapserver.bdl.lasy.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/bdl_wms.json
+    ostatni_import: null
+  gdos_crfop:
+    nazwa: GDOŚ — Centralny Rejestr Form Ochrony Przyrody
+    dostawca: Generalna Dyrekcja Ochrony Środowiska
+    url: https://sdi.gdos.gov.pl/wfs
+    typ_uslugi: WFS/WMS
+    zasieg: Polska
+    rozdzielczosc: wektor
+    aktualnosc: null
+    licencja: null
+    atrybucja: Generalna Dyrekcja Ochrony Środowiska
+    uzyte_pola: []
+    metoda: WFS GetFeature po warstwach (parki narodowe, rezerwaty, parki krajobrazowe, Natura 2000), bbox
+    do_weryfikacji: true
+    probe:
+      typ: wfs_capabilities
+      url: https://sdi.gdos.gov.pl/wfs
+    uwagi: Zasady zbioru grzybów wynikają z aktów ustanawiających — warstwa daje tylko granice.
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:43+00:00'
+      status: niedostepne
+      powod: 'https://sdi.gdos.gov.pl/wfs: odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/gdos_crfop.json
+    ostatni_import: null
+  copernicus_dem_glo30:
+    nazwa: Copernicus DEM GLO-30 Public (COG na AWS Open Data)
+    dostawca: Copernicus / ESA; hosting AWS Open Data (Sinergise)
+    url: https://copernicus-dem-30m.s3.amazonaws.com/
+    typ_uslugi: pliki COG (S3, HTTPS)
+    zasieg: globalny, kafle 1x1 stopień
+    rozdzielczosc: 1 sekunda kątowa (~30 m N-S; ~20 m E-W na 50°N, siatka 1.5x szersza powyżej 50°N)
+    aktualnosc: dane źródłowe TanDEM-X 2011–2015; pliki COG z 2022-05-09 (LastModified S3)
+    licencja: Copernicus DEM — licencja GLO-30 Public (bezpłatna, z obowiązkiem oznaczenia)
+    atrybucja: © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the
+      European Union and ESA; all rights reserved
+    uzyte_pola:
+    - wysokosc (band 1
+    - float32
+    - m n.p.m. EGM2008)
+    metoda: pobranie kafli COG przez HTTPS, przycięcie do bbox, reprojekcja do EPSG:2180 25 m (bilinear), nachylenie
+      i ekspozycja metodą Horna
+    do_weryfikacji: false
+    probe:
+      typ: s3_cog
+      url: https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N49_00_E022_00_DEM/Copernicus_DSM_COG_10_N49_00_E022_00_DEM.tif
+    uwagi: 'To model DSM (powierzchnia z koronami drzew i budynkami), nie NMT. W lasach wysokość jest zawyżona o
+      wysokość drzewostanu, a nachylenie na krawędziach lasu jest zaburzone. Rozwiązanie tymczasowe do czasu pobrania
+      NMT GUGiK (DTM). Treść licencji: readme bucketu odsyła do licencji Copernicus DEM.'
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:44+00:00'
+      status: ok
+      powod: null
+      schemat: docs/schemas/copernicus_dem_glo30.json
+    ostatni_import: '2026-10-17T06:37:32.262174+00:00'
+  gugik_nmt:
+    nazwa: NMT GUGiK (numeryczny model terenu)
+    dostawca: GUGiK
+    url: https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF
+    typ_uslugi: WCS / pobieranie arkuszy
+    zasieg: Polska
+    rozdzielczosc: 1 m (agregować do 10–25 m)
+    aktualnosc: null
+    licencja: dane otwarte GUGiK
+    atrybucja: Główny Urząd Geodezji i Kartografii
+    uzyte_pola: []
+    metoda: WCS GetCoverage w kaflach, agregacja średnią do 25 m
+    do_weryfikacji: true
+    probe:
+      typ: wcs_capabilities
+      url: https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF
+    uwagi: Preferowane źródło rzeźby terenu (DTM). Zastąpi Copernicus DEM po odblokowaniu dostępu.
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:45+00:00'
+      status: niedostepne
+      powod: 'https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF: odmowa
+        połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/gugik_nmt.json
+    ostatni_import: null
+  bdot10k:
+    nazwa: BDOT10k (pokrycie terenu, tereny wojskowe, drogi)
+    dostawca: GUGiK
+    url: https://opendata.geoportal.gov.pl/
+    typ_uslugi: pliki do pobrania (per powiat) / WFS
+    zasieg: Polska
+    rozdzielczosc: skala 1:10 000
+    aktualnosc: null
+    licencja: dane otwarte GUGiK
+    atrybucja: Główny Urząd Geodezji i Kartografii
+    uzyte_pola: []
+    metoda: do ustalenia po weryfikacji
+    do_weryfikacji: true
+    probe:
+      typ: http_get
+      url: https://opendata.geoportal.gov.pl/
+    uwagi: Źródło dla lasów niepaństwowych (pokrycie PTLZ) i terenów zamkniętych.
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:46+00:00'
+      status: niedostepne
+      powod: 'https://opendata.geoportal.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/bdot10k.json
+    ostatni_import: null
+  copernicus_hrl_forest:
+    nazwa: Copernicus HRL Tree Cover Density / Forest Type
+    dostawca: Copernicus Land Monitoring Service
+    url: https://land.copernicus.eu/
+    typ_uslugi: pobieranie (wymaga konta EU Login)
+    zasieg: Europa
+    rozdzielczosc: 10 m (2018+) / 20 m
+    aktualnosc: null
+    licencja: Copernicus — pełny, otwarty i bezpłatny dostęp (do weryfikacji wersji)
+    atrybucja: null
+    uzyte_pola: []
+    metoda: ręczne pobranie wymaga logowania — pomijane w automatycznym pilotażu
+    do_weryfikacji: true
+    probe:
+      typ: http_get
+      url: https://land.copernicus.eu/
+    uwagi: Wymaga konta; nie można pobrać automatycznie bez poświadczeń.
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:46+00:00'
+      status: niedostepne
+      powod: 'https://land.copernicus.eu/: odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/copernicus_hrl_forest.json
+    ostatni_import: null
+  soilgrids:
+    nazwa: ISRIC SoilGrids 2.0
+    dostawca: ISRIC
+    url: https://rest.isric.org/soilgrids/v2.0/
+    typ_uslugi: REST / WCS
+    zasieg: globalny
+    rozdzielczosc: 250 m
+    aktualnosc: null
+    licencja: CC BY 4.0
+    atrybucja: ISRIC — World Soil Information, SoilGrids
+    uzyte_pola: []
+    metoda: tylko uzupełnienie opisu taksacyjnego, z widoczną niepewnością
+    do_weryfikacji: true
+    probe:
+      typ: http_get
+      url: https://rest.isric.org/soilgrids/v2.0/docs
+    uwagi: null
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:46+00:00'
+      status: niedostepne
+      powod: 'https://rest.isric.org/soilgrids/v2.0/docs: odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/soilgrids.json
+    ostatni_import: null
+  open_meteo_forecast:
+    nazwa: Open-Meteo Forecast API
+    dostawca: Open-Meteo
+    url: https://api.open-meteo.com/v1/forecast
+    typ_uslugi: REST JSON
+    zasieg: globalny (modele o różnej rozdzielczości)
+    rozdzielczosc: zależna od modelu (komórka siatki, nie punkt)
+    aktualnosc: bieżąca
+    licencja: dane CC BY 4.0; darmowe API tylko do użytku niekomercyjnego
+    atrybucja: Weather data by Open-Meteo.com
+    uzyte_pola: []
+    metoda: Etap 3 — zapytania per komórka siatki
+    do_weryfikacji: true
+    probe:
+      typ: http_get
+      url: https://api.open-meteo.com/v1/forecast?latitude=49.35&longitude=22.3&daily=precipitation_sum,temperature_2m_mean&hourly=soil_moisture_0_to_1cm&forecast_days=2&timezone=Europe%2FWarsaw
+    uwagi: null
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:46+00:00'
+      status: niedostepne
+      powod: 'https://api.open-meteo.com/v1/forecast?latitude=49.35&longitude=22.3&daily=precipitation_sum,temperature_2m_mean&hourly=soil_moisture_0_to_1cm&forecast_days=2&timezone=Europe%2FWarsaw:
+        odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/open_meteo_forecast.json
+    ostatni_import: null
+  open_meteo_archive:
+    nazwa: Open-Meteo Historical Weather API (ERA5 / ERA5-Land)
+    dostawca: Open-Meteo (dane Copernicus C3S)
+    url: https://archive-api.open-meteo.com/v1/archive
+    typ_uslugi: REST JSON
+    zasieg: globalny
+    rozdzielczosc: ERA5 ~25 km, ERA5-Land ~9 km
+    aktualnosc: opóźnienie kilku dni
+    licencja: CC BY 4.0 (Open-Meteo); dane ERA5 — licencja Copernicus
+    atrybucja: Weather data by Open-Meteo.com; Copernicus Climate Change Service
+    uzyte_pola: []
+    metoda: Etap 3
+    do_weryfikacji: true
+    probe:
+      typ: http_get
+      url: https://archive-api.open-meteo.com/v1/archive?latitude=49.35&longitude=22.3&start_date=2026-09-01&end_date=2026-09-03&daily=precipitation_sum&timezone=Europe%2FWarsaw
+    uwagi: null
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:47+00:00'
+      status: niedostepne
+      powod: 'https://archive-api.open-meteo.com/v1/archive?latitude=49.35&longitude=22.3&start_date=2026-09-01&end_date=2026-09-03&daily=precipitation_sum&timezone=Europe%2FWarsaw:
+        odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/open_meteo_archive.json
+    ostatni_import: null
+  imgw_synop:
+    nazwa: IMGW-PIB — dane publiczne (synop, opady)
+    dostawca: IMGW-PIB
+    url: https://danepubliczne.imgw.pl/api/data/synop
+    typ_uslugi: REST JSON / archiwum CSV
+    zasieg: stacje w Polsce
+    rozdzielczosc: punkt (stacja)
+    aktualnosc: bieżąca
+    licencja: null
+    atrybucja: null
+    uzyte_pola: []
+    metoda: kontrola i kalibracja danych modelowych (Etap 3)
+    do_weryfikacji: true
+    probe:
+      typ: http_get
+      url: https://danepubliczne.imgw.pl/api/data/synop
+    uwagi: Wymagane oznaczenie źródła — dokładną formułę wziąć z regulaminu danepubliczne.imgw.pl.
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:47+00:00'
+      status: niedostepne
+      powod: 'https://danepubliczne.imgw.pl/api/data/synop: odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/imgw_synop.json
+    ostatni_import: null
+  gbif:
+    nazwa: GBIF Occurrence API
+    dostawca: GBIF
+    url: https://api.gbif.org/v1/occurrence/search
+    typ_uslugi: REST JSON
+    zasieg: globalny
+    rozdzielczosc: punkt z niepewnością (coordinateUncertaintyInMeters)
+    aktualnosc: bieżąca
+    licencja: per rekord — używamy tylko CC0 i CC BY
+    atrybucja: per rekord / zbiór danych; cytować DOI pobrania
+    uzyte_pola: []
+    metoda: Etap 3/6 — tylko kalibracja modelu siedliskowego (dane typu obecność)
+    do_weryfikacji: true
+    probe:
+      typ: http_get
+      url: https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2
+    uwagi: Obciążenie próby, zaokrąglone współrzędne.
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:47+00:00'
+      status: niedostepne
+      powod: 'https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2: odmowa
+        połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/gbif.json
+    ostatni_import: null
+  jpl_ephemeris:
+    nazwa: Efemerydy JPL DE421 / DE440 (dla skyfield)
+    dostawca: NASA JPL
+    url: https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/
+    typ_uslugi: plik BSP
+    zasieg: DE421 1900–2050
+    rozdzielczosc: n/d
+    aktualnosc: stała
+    licencja: domena publiczna (US Government work) — do potwierdzenia
+    atrybucja: NASA JPL
+    uzyte_pola: []
+    metoda: jednorazowe pobranie pliku de421.bsp (Etap 3b)
+    do_weryfikacji: true
+    probe:
+      typ: http_head
+      url: https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de421.bsp
+    uwagi: null
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:48+00:00'
+      status: niedostepne
+      powod: 'https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de421.bsp: odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/jpl_ephemeris.json
+    ostatni_import: null
+  openfreemap:
+    nazwa: OpenFreeMap (podkład wektorowy z OSM)
+    dostawca: OpenFreeMap
+    url: https://tiles.openfreemap.org/styles/liberty
+    typ_uslugi: kafle wektorowe / styl MapLibre
+    zasieg: globalny
+    rozdzielczosc: n/d
+    aktualnosc: bieżąca
+    licencja: dane ODbL (OpenStreetMap)
+    atrybucja: © OpenMapTiles, © OpenStreetMap contributors
+    uzyte_pola: []
+    metoda: Etap 4 — styl MapLibre
+    do_weryfikacji: true
+    probe:
+      typ: http_get
+      url: https://tiles.openfreemap.org/styles/liberty
+    uwagi: null
+    weryfikacja:
+      data_utc: '2026-10-17T06:32:48+00:00'
+      status: niedostepne
+      powod: 'https://tiles.openfreemap.org/styles/liberty: odmowa połączenia przez proxy (403 Forbidden)'
+      schemat: docs/schemas/openfreemap.json
+    ostatni_import: null

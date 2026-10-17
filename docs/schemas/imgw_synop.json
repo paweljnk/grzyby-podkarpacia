@@ -1,0 +1,8 @@
+{
+  "source_id": "imgw_synop",
+  "sprawdzono_utc": "2026-10-17T06:32:47+00:00",
+  "url": "https://danepubliczne.imgw.pl/api/data/synop",
+  "typ": "http_get",
+  "status": "niedostepne",
+  "powod": "https://danepubliczne.imgw.pl/api/data/synop: odmowa połączenia przez proxy (403 Forbidden)"
+}

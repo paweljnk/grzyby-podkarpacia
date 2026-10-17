@@ -1,0 +1,8 @@
+{
+  "source_id": "copernicus_hrl_forest",
+  "sprawdzono_utc": "2026-10-17T06:32:46+00:00",
+  "url": "https://land.copernicus.eu/",
+  "typ": "http_get",
+  "status": "niedostepne",
+  "powod": "https://land.copernicus.eu/: odmowa połączenia przez proxy (403 Forbidden)"
+}

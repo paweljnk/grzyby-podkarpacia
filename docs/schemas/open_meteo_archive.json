@@ -1,0 +1,8 @@
+{
+  "source_id": "open_meteo_archive",
+  "sprawdzono_utc": "2026-10-17T06:32:47+00:00",
+  "url": "https://archive-api.open-meteo.com/v1/archive?latitude=49.35&longitude=22.3&start_date=2026-09-01&end_date=2026-09-03&daily=precipitation_sum&timezone=Europe%2FWarsaw",
+  "typ": "http_get",
+  "status": "niedostepne",
+  "powod": "https://archive-api.open-meteo.com/v1/archive?latitude=49.35&longitude=22.3&start_date=2026-09-01&end_date=2026-09-03&daily=precipitation_sum&timezone=Europe%2FWarsaw: odmowa połączenia przez proxy (403 Forbidden)"
+}

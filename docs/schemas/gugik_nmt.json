@@ -1,0 +1,8 @@
+{
+  "source_id": "gugik_nmt",
+  "sprawdzono_utc": "2026-10-17T06:32:45+00:00",
+  "url": "https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF",
+  "typ": "wcs_capabilities",
+  "status": "niedostepne",
+  "powod": "https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF: odmowa połączenia przez proxy (403 Forbidden)"
+}

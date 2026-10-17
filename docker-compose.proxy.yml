@@ -1,0 +1,17 @@
+# Nakładka dla środowisk z wymuszonym proxy HTTPS (np. kontener deweloperski w chmurze).
+# Użycie: COMPOSE_FILE=docker-compose.yml:docker-compose.proxy.yml make ...
+# Proxy nasłuchuje na 127.0.0.1 hosta, więc kontener ETL używa sieci hosta i łączy się z bazą
+# przez opublikowany port.
+services:
+  etl:
+    build:
+      context: ./backend
+      network: host
+      args:
+        HTTPS_PROXY: ${HTTPS_PROXY:-}
+    network_mode: host
+    environment:
+      DATABASE_URL: postgresql://grzyby:${POSTGRES_PASSWORD:-grzyby}@127.0.0.1:${DB_PORT:-5433}/grzyby
+      HTTPS_PROXY: ${HTTPS_PROXY:-}
+      https_proxy: ${HTTPS_PROXY:-}
+      NO_PROXY: localhost,127.0.0.1

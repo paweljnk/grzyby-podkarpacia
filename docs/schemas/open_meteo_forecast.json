@@ -1,0 +1,8 @@
+{
+  "source_id": "open_meteo_forecast",
+  "sprawdzono_utc": "2026-10-17T06:32:46+00:00",
+  "url": "https://api.open-meteo.com/v1/forecast?latitude=49.35&longitude=22.3&daily=precipitation_sum,temperature_2m_mean&hourly=soil_moisture_0_to_1cm&forecast_days=2&timezone=Europe%2FWarsaw",
+  "typ": "http_get",
+  "status": "niedostepne",
+  "powod": "https://api.open-meteo.com/v1/forecast?latitude=49.35&longitude=22.3&daily=precipitation_sum,temperature_2m_mean&hourly=soil_moisture_0_to_1cm&forecast_days=2&timezone=Europe%2FWarsaw: odmowa połączenia przez proxy (403 Forbidden)"
+}

@@ -1,0 +1,31 @@
+# Mapowanie surowych atrybutów BDL na kolumny znormalizowane forest.wydzielenie.
+#
+# CELOWO PUSTE (null). Nazw pól nie zgadujemy. Wypełnij po uruchomieniu `make probe`
+# na podstawie rzeczywistego schematu zapisanego w docs/schemas/bdl_ogcapi*.json.
+# Dopóki pole = null, kolumna pozostaje NULL z pochodzeniem 'brak'.
+bdl_ogcapi:
+  kolekcja_wydzielen: null        # id kolekcji OGC API z /collections
+  kolekcja_nadlesnictw: null      # id kolekcji z granicami nadleśnictw (jeśli istnieje)
+  pole_nazwy_nadlesnictwa: null
+  pola:
+    external_id: null
+    adres_lesny: null
+    gatunek_panujacy: null
+    udzial_gatunkow: null
+    wiek: null
+    typ_siedliskowy: null
+    gleba: null
+
+# Analogicznie dla form ochrony przyrody (GDOŚ CRFOP).
+gdos_crfop:
+  warstwy: []                     # typeName z GetCapabilities, np. po weryfikacji
+  pola:
+    nazwa: null
+    kod: null
+  rodzaj_wg_warstwy: {}           # {typeName: park_narodowy|rezerwat|park_krajobrazowy|natura2000_oso|natura2000_soo|...}
+
+prg:
+  warstwa_wojewodztw: null        # typeName z GetCapabilities usługi PRG
+  pole_teryt: null
+  pole_nazwy: null
+  teryt_podkarpackie: "18"        # kod TERYT województwa podkarpackiego (TERC)

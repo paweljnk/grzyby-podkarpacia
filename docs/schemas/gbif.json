@@ -1,0 +1,8 @@
+{
+  "source_id": "gbif",
+  "sprawdzono_utc": "2026-10-17T06:32:47+00:00",
+  "url": "https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2",
+  "typ": "http_get",
+  "status": "niedostepne",
+  "powod": "https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2: odmowa połączenia przez proxy (403 Forbidden)"
+}

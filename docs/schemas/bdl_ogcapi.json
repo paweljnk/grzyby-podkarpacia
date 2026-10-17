@@ -1,0 +1,8 @@
+{
+  "source_id": "bdl_ogcapi",
+  "sprawdzono_utc": "2026-10-17T06:32:43+00:00",
+  "url": "https://ogcapi.bdl.lasy.gov.pl/",
+  "typ": "ogcapi",
+  "status": "niedostepne",
+  "powod": "https://ogcapi.bdl.lasy.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)"
+}

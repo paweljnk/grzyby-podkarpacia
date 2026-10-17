@@ -1,0 +1,37 @@
+name: grzyby-podkarpacia
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: grzyby
+      POSTGRES_USER: grzyby
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-grzyby}
+      TZ: UTC
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U grzyby -d grzyby"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  etl:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://grzyby:${POSTGRES_PASSWORD:-grzyby}@db:5432/grzyby
+      GRZYBY_ROOT: /app
+      TZ: Europe/Warsaw
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: ["sleep", "infinity"]
+
+volumes:
+  pgdata:
