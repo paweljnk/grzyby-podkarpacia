@@ -6,7 +6,9 @@ w województwie podkarpackim. Nie twierdzi, że grzyby gdzieś teraz rosną, i n
 
 Stan: Etap 1 (pilotaż danych), Etap 2 (baza wiedzy o gatunkach MVP), Etap 3 (pogoda, Księżyc i biodynamika,
 model rekomendacji, API), Etap 4 (PWA) i Etap 4b (atlas z sobowtórami, bezpieczeństwo, offline) — zbudowane. Źródła BDL, GDOŚ, PRG i Open-Meteo są w tym środowisku
-niedostępne (polityka sieci), dlatego aplikację można oglądać na **jawnie oznaczonych danych demonstracyjnych**.
+niedostępne (polityka sieci), dlatego dane prawdziwe pobiera GitHub Actions (`.github/workflows/dane-baza.yml` — co miesiąc
+całe województwo, gałąź `dane/baza`; `dane.yml` — codziennie pogoda i zakazy wstępu, gałąź `dane/dzienne`). Aplikacja
+wczytuje obie paczki sama. Dane siedliskowe i ich ograniczenia: [docs/dane_siedliskowe.md](docs/dane_siedliskowe.md).
 
 ## Instalacja na iPhonie
 
@@ -19,6 +21,8 @@ Bez Dockera na komputerze (np. firmowy Windows): [docs/instalacja_bez_dockera.md
 make up            # PostGIS 16 + kontener ETL (Python 3.12)
 make probe         # próbki źródeł → docs/schemas/*.json, status w sources.yaml
 make import-pilot  # PRG, BDL, DEM + statystyki strefowe, GDOŚ dla obszarów pilotażowych
+make import-woj    # całe województwo (BDL REST: LP, poza LP, siedliska; DEM; SoilGrids; WorldCover; pokrycie) — przyrostowo, z wznowieniem
+make raport        # raport pokrycia danymi → data/raport_pokrycia.md
 make check-data    # liczba rekordów i braków w każdej warstwie
 make test          # testy jednostkowe (bez sieci)
 make test-db       # testy integracyjne na bazie

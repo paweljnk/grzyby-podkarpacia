@@ -2,7 +2,7 @@
 COMPOSE ?= docker compose
 RUN := $(COMPOSE) run --rm etl
 
-.PHONY: web up down build migrate probe import-pilot import-weather demo-data api check-data test test-db e2e reset-db
+.PHONY: web up down build migrate probe import-pilot import-woj raport import-weather demo-data api check-data test test-db e2e reset-db
 
 up:            ## baza + kontener ETL
 	$(COMPOSE) up -d --build --wait db
@@ -22,6 +22,12 @@ probe:         ## próbki źródeł → docs/schemas/*.json + weryfikacja w sour
 
 import-pilot:  ## PRG, BDL, DEM (+ statystyki strefowe), GDOŚ dla obszarów pilotażowych
 	$(RUN) python -m grzyby.cli import all
+
+import-woj:    ## całe województwo: PRG, BDL REST (LP + poza LP + siedliska), DEM, SoilGrids, WorldCover, pokrycie (przyrostowo)
+	$(RUN) python -m grzyby.cli import wojewodztwo-all
+
+raport:        ## raport pokrycia danymi → data/raport_pokrycia.md
+	$(RUN) python -m grzyby.cli raport data
 
 import-weather: ## pogoda Open-Meteo dla komórek siatki pokrywających wydzielenia
 	$(RUN) python -m grzyby.cli import weather
