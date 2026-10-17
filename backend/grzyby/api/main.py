@@ -58,7 +58,7 @@ async def _snapshot_loop():
     from .. import snapshot
     while True:
         try:
-            res = await asyncio.to_thread(snapshot.load)
+            res = await asyncio.to_thread(snapshot.load_all)
             log.info("Paczka danych: %s", res)
         except Exception as e:  # brak sieci / paczki nie może zatrzymać API
             log.warning("Paczka danych niedostępna: %s", e)

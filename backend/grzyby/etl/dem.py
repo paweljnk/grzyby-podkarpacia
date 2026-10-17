@@ -58,7 +58,7 @@ def area_bbox(conn, area: dict, margin_deg: float = 0.01) -> list[float]:
     with conn.cursor() as cur:
         cur.execute("""SELECT ST_XMin(e), ST_YMin(e), ST_XMax(e), ST_YMax(e)
                        FROM (SELECT ST_Extent(ST_Transform(geom, 4326)) e FROM ref.obszar_pilotazowy
-                             WHERE id=%s AND geom_origin='bdl') s""", (area["id"],))
+                             WHERE id=%s AND geom_origin <> 'bbox_roboczy') s""", (area["id"],))
         r = cur.fetchone()
     if r and r[0] is not None:
         b = [min(b[0], r[0] - margin_deg), min(b[1], r[1] - margin_deg), max(b[2], r[2] + margin_deg), max(b[3], r[3] + margin_deg)]
@@ -192,3 +192,32 @@ def import_dem() -> None:
         last = cur.fetchone()[0]
     update_source(SOURCE_ID, ostatni_import=last.isoformat() if last else None)
     conn.close()
+
+
+def import_dem_province() -> int:
+    """Rzeźba terenu dla całego województwa (zasięg z granicy PRG) i statystyki strefowe wszystkich wydzieleń."""
+    from shapely.ops import transform as shp_transform
+    from pyproj import Transformer
+    from .bdl_province import province
+    cfg = pilot_config()
+    res = float(cfg["teren"]["rozdzielczosc_docelowa_m"])
+    flat = float(cfg["teren"]["prog_plaskiego_terenu_deg"])
+    conn = connect()
+    prov = province(conn)
+    b = shp_transform(Transformer.from_crs("EPSG:2180", "EPSG:4326", always_xy=True).transform, prov).bounds
+    area = {"id": "podkarpackie", "nazwa": "Województwo podkarpackie", "typ_terenu": "mieszany",
+            "bbox_roboczy_wgs84": [b[0] - 0.01, b[1] - 0.01, b[2] + 0.01, b[3] + 0.01]}
+    with HttpClient(min_interval_s=0.5) as client:
+        with import_run(conn, SOURCE_ID, "terrain.raster", area["id"], {"rozdzielczosc_m": res}) as run:
+            tiles = [client.download(f"{BASE_URL}/{t}/{t}.tif", RAW_DIR / "copernicus_dem" / f"{t}.tif")
+                     for t in tiles_for_bbox(area["bbox_roboczy_wgs84"])]
+            paths = build_area_rasters(area, tiles, res, DERIVED_DIR / "teren")
+            with conn.cursor() as cur:
+                _register_rasters(cur, area, paths, res, run.id)
+            run.records = len(paths)
+            conn.commit()
+        with import_run(conn, SOURCE_ID, "terrain.wydzielenie_teren", area["id"]) as run:
+            run.records = compute_zonal_for_area(conn, area["id"], paths, res, flat, run.id)
+            conn.commit()
+    conn.close()
+    return run.records

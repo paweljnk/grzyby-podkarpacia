@@ -21,13 +21,20 @@ from .sources import load_sources
 
 log = logging.getLogger(__name__)
 
-# Kolejność = kolejność wczytywania (rodzice przed dziećmi).
-TABLES = [
-    "ref.obszar_pilotazowy", "ref.wojewodztwo", "forest.wydzielenie", "terrain.wydzielenie_teren", "terrain.raster",
-    "weather.komorka", "weather.dzien", "forest.wydzielenie_komorka", "protection.forma_ochrony", "access.zakaz",
-]
+# Pakiety: 'baza' (comiesięcznie: drzewostany, gleba, teren, pokrycie) i 'dzienne' (pogoda, zakazy wstępu).
+# Kolejność w liście = kolejność wczytywania (rodzice przed dziećmi).
+PACKAGES = {
+    "baza": ["ref.obszar_pilotazowy", "ref.wojewodztwo", "ref.nadlesnictwo", "forest.wydzielenie",
+             "terrain.wydzielenie_teren", "terrain.raster", "weather.komorka", "forest.wydzielenie_komorka",
+             "protection.forma_ochrony", "coverage.siatka"],
+    "dzienne": ["weather.dzien", "access.zakaz"],
+}
+TABLES = PACKAGES["baza"] + PACKAGES["dzienne"]
 SEQUENCES = {"forest.wydzielenie": "id", "ref.wojewodztwo": "id", "protection.forma_ochrony": "id", "access.zakaz": "id"}
-DEFAULT_URL = "https://raw.githubusercontent.com/paweljnk/grzyby-podkarpacia/dane/pilot/"
+# Uproszczenie geometrii TYLKO w paczce dla aplikacji (analizy w GitHub Actions liczone na pełnych geometriach).
+SIMPLIFY_M = {"forest.wydzielenie": 1.0, "ref.nadlesnictwo": 5.0, "ref.wojewodztwo": 5.0, "ref.obszar_pilotazowy": 5.0}
+PART_BYTES = 45 * 1024 * 1024
+DEFAULT_URL = "https://raw.githubusercontent.com/paweljnk/grzyby-podkarpacia/dane/{pakiet}/"
 ATTRIBUTION_SOURCES = ["bdl_ogcapi", "open_meteo_archive", "open_meteo_forecast", "copernicus_dem_glo30", "prg_wojewodztwa"]
 
 
@@ -38,25 +45,44 @@ def _columns(cur, table: str) -> list[str]:
     return [r[0] for r in cur.fetchall()]
 
 
-def export(out_dir: Path) -> dict:
+def export(out_dir: Path, pakiet: str = "baza") -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
     conn = connect()
     files, counts = {}, {}
     with conn.cursor() as cur:
-        for t in TABLES:
-            cols = _columns(cur, t)
-            # import_id odnosi się do meta.import_log tej bazy — w paczce nie ma sensu
-            cols = [c for c in cols if c != "import_id"]
-            buf = io.BytesIO()
-            with cur.copy(f"COPY (SELECT {', '.join(cols)} FROM {t}) TO STDOUT") as cp:
+        for t in PACKAGES[pakiet]:
+            cols = [c for c in _columns(cur, t) if c != "import_id"]
+            sel = [f"ST_ReducePrecision(ST_SimplifyPreserveTopology(geom, {SIMPLIFY_M[t]}), 0.01) AS geom"
+                   if c == "geom" and t in SIMPLIFY_M else c for c in cols]
+            parts, n, part_no = [], 0, 0
+            fh = gz = None
+
+            def new_part():
+                nonlocal fh, gz, part_no
+                part_no += 1
+                path = out_dir / f"{t}.part{part_no:03d}.copy.gz"
+                fh = open(path, "wb")
+                gz = gzip.GzipFile(fileobj=fh, mode="wb", compresslevel=9)
+                parts.append(path)
+
+            new_part()
+            pending = b""
+            with cur.copy(f"COPY (SELECT {', '.join(sel)} FROM {t}) TO STDOUT") as cp:
                 for chunk in cp:
-                    buf.write(chunk)
-            raw = buf.getvalue()
-            path = out_dir / f"{t}.copy.gz"
-            with gzip.open(path, "wb", compresslevel=9) as f:
-                f.write(raw)
-            files[t] = {"plik": path.name, "kolumny": cols, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
-            counts[t] = raw.count(b"\n")
+                    data = pending + bytes(chunk)
+                    cut = data.rfind(b"\n") + 1           # części dzielimy tylko na granicy wierszy
+                    gz.write(data[:cut])
+                    n += data[:cut].count(b"\n")
+                    pending = data[cut:]
+                    if fh.tell() > PART_BYTES:
+                        gz.close(); fh.close()
+                        new_part()
+            gz.write(pending)
+            n += pending.count(b"\n")
+            gz.close(); fh.close()
+            files[t] = {"pliki": [{"plik": p.name, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for p in parts],
+                        "kolumny": cols, "uproszczenie_m": SIMPLIFY_M.get(t)}
+            counts[t] = n
         cur.execute("""SELECT DISTINCT ON (source_id, target, area) source_id, target, area, status, records,
                               finished_at, message
                        FROM meta.import_log ORDER BY source_id, target, area, started_at DESC""")
@@ -65,8 +91,9 @@ def export(out_dir: Path) -> dict:
     conn.close()
     src = load_sources()
     manifest = {
+        "pakiet": pakiet,
         "wygenerowano_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "wersja": 1,
+        "wersja": 2,
         "tabele": files,
         "wiersze": counts,
         "importy": imports,
@@ -88,47 +115,67 @@ def _read(base: str, name: str) -> bytes:
     return (Path(base) / name).read_bytes()
 
 
-def current(conn) -> dict | None:
+def current(conn, pakiet: str | None = None) -> dict | None:
     with conn.cursor() as cur:
-        cur.execute("SELECT wygenerowano, wczytano, zrodlo_url, manifest FROM meta.snapshot ORDER BY id DESC LIMIT 1")
+        if pakiet:
+            cur.execute("""SELECT wygenerowano, wczytano, zrodlo_url, manifest FROM meta.snapshot
+                           WHERE coalesce(manifest->>'pakiet', 'baza') = %s ORDER BY id DESC LIMIT 1""", (pakiet,))
+        else:
+            cur.execute("SELECT wygenerowano, wczytano, zrodlo_url, manifest FROM meta.snapshot ORDER BY id DESC LIMIT 1")
         r = cur.fetchone()
     return dict(zip(["wygenerowano", "wczytano", "zrodlo_url", "manifest"], r)) if r else None
 
 
-def load(base: str | None = None, force: bool = False) -> dict:
-    """Wczytuje paczkę, jeśli jest nowsza niż ostatnio wczytana. Zwraca opis wyniku."""
-    base = base or os.environ.get("GRZYBY_SNAPSHOT_URL", DEFAULT_URL)
+def _files(info: dict) -> list[dict]:
+    return info.get("pliki") or [{"plik": info["plik"], "sha256": info["sha256"]}]   # format v1: jeden plik
+
+
+def load(base: str | None = None, force: bool = False, pakiet: str = "baza") -> dict:
+    """Wczytuje paczkę, jeśli jest nowsza niż ostatnio wczytana. Zastępuje tylko tabele tej paczki."""
+    base = base or os.environ.get(f"GRZYBY_SNAPSHOT_URL_{pakiet.upper()}") or DEFAULT_URL.format(pakiet=pakiet)
     manifest = json.loads(_read(base, "manifest.json"))
+    pakiet = manifest.get("pakiet", pakiet)
     generated = datetime.fromisoformat(manifest["wygenerowano_utc"])
     conn = connect()
-    cur_snap = current(conn)
+    cur_snap = current(conn, pakiet)
     if cur_snap and not force and cur_snap["wygenerowano"] >= generated:
         conn.close()
-        return {"wczytano": False, "powod": "brak nowszej paczki", "wygenerowano": manifest["wygenerowano_utc"]}
-    blobs = {}
-    for t, info in manifest["tabele"].items():
+        return {"pakiet": pakiet, "wczytano": False, "powod": "brak nowszej paczki", "wygenerowano": manifest["wygenerowano_utc"]}
+    tables = [t for t in TABLES if t in manifest["tabele"]]
+    for t in manifest["tabele"]:
         if t not in TABLES:
             raise ValueError(f"nieoczekiwana tabela w paczce: {t}")
-        data = _read(base, info["plik"])
-        if hashlib.sha256(data).hexdigest() != info["sha256"]:
-            raise ValueError(f"{info['plik']}: niezgodna suma SHA-256")
-        blobs[t] = gzip.decompress(data)
+    blobs: dict[str, list[bytes]] = {}
+    for t in tables:
+        blobs[t] = []
+        for f in _files(manifest["tabele"][t]):
+            data = _read(base, f["plik"])
+            if hashlib.sha256(data).hexdigest() != f["sha256"]:
+                raise ValueError(f"{f['plik']}: niezgodna suma SHA-256")
+            blobs[t].append(gzip.decompress(data))
     with conn.cursor() as cur:
-        cur.execute(f"TRUNCATE {', '.join(reversed(TABLES))} CASCADE")
-        for t in TABLES:
-            if t not in blobs:
-                continue
+        cur.execute(f"TRUNCATE {', '.join(reversed(tables))} CASCADE")
+        for t in tables:
             cols = manifest["tabele"][t]["kolumny"]
             with cur.copy(f"COPY {t} ({', '.join(cols)}) FROM STDIN") as cp:
-                cp.write(blobs[t])
+                for b in blobs[t]:
+                    cp.write(b)
         for t, col in SEQUENCES.items():
-            cur.execute(f"SELECT setval(pg_get_serial_sequence('{t}', '{col}'), COALESCE((SELECT max({col}) FROM {t}), 0) + 1, false)")
+            if t in tables:
+                cur.execute(f"SELECT setval(pg_get_serial_sequence('{t}', '{col}'), COALESCE((SELECT max({col}) FROM {t}), 0) + 1, false)")
         cur.execute("INSERT INTO meta.snapshot (wygenerowano, zrodlo_url, manifest) VALUES (%s,%s,%s)",
-                    (generated, base, json.dumps(manifest, default=str)))
+                    (generated, base, json.dumps({**manifest, "pakiet": pakiet}, default=str)))
     conn.commit()
     conn.close()
-    log.info("Wczytano paczkę danych z %s (%s)", base, manifest["wygenerowano_utc"])
-    return {"wczytano": True, "wygenerowano": manifest["wygenerowano_utc"], "wiersze": manifest["wiersze"]}
+    log.info("Wczytano paczkę %s z %s (%s)", pakiet, base, manifest["wygenerowano_utc"])
+    return {"pakiet": pakiet, "wczytano": True, "wygenerowano": manifest["wygenerowano_utc"], "wiersze": manifest["wiersze"]}
+
+
+def load_all(force: bool = False) -> list[dict]:
+    """Baza, potem dzienne. Nowa baza czyści komórki pogody (CASCADE), więc wtedy dzienne wczytujemy zawsze."""
+    r1 = load(pakiet="baza", force=force)
+    r2 = load(pakiet="dzienne", force=force or r1.get("wczytano", False))
+    return [r1, r2]
 
 
 def default_export_dir() -> Path:
@@ -148,6 +195,9 @@ def verify(today=None, min_cell_share: float = 0.8) -> list[str]:
             problems.append("brak wydzieleń")
         cur.execute("SELECT count(*) FROM weather.komorka")
         cells = cur.fetchone()[0]
+        cur.execute("SELECT count(*) FROM ref.nadlesnictwo")
+        if cur.fetchone()[0] == 0:
+            problems.append("brak nadleśnictw")
         for label, d0, d1 in (("ostatnie 14 dni", today - timedelta(days=14), today - timedelta(days=1)),
                               ("dziś i prognoza", today, today + timedelta(days=4))):
             cur.execute("""SELECT count(*) FROM (SELECT komorka_id FROM weather.dzien

@@ -26,6 +26,10 @@ siedlisko:                        # A
   teren_nachylenie_trudne_mnoznik: 0.6
   gleba_zgodna: 1.0
   gleba_niezgodna: 0.4
+  # Wiarygodność wejścia przy liczeniu PEWNOŚCI (nie warunków): źródło BDL = 1, model = 0.5, brak = 0.
+  pewnosc_zrodla: {zrodlowa: 1.0, model: 0.5}
+  teren_pewnosc: 0.8                # DEM to model powierzchni (DSM)
+  udzial_nieznany_min: 0.1          # gdy brak udziału gatunku panującego: przyjmujemy przedział [0.1, 1]
 
 pogoda:                           # B
   wagi: {wilgoc: 0.35, opoznienie: 0.25, temperatura: 0.25, wilgotnosc_gleby: 0.15}
@@ -43,5 +47,7 @@ obserwacje:                       # C (modyfikator)
   jakosc: {wysoka: 1.0, srednia: 0.6, niska: 0.3}
 
 kompletnosc:
-  progi: {wysoka: 0.8, srednia: 0.55}
+  progi: {wysoka: 0.75, srednia: 0.5}
+  # pewność obniża też szerokość przedziału warunków (nieznany skład drzewostanu)
+  kara_za_szerokosc_przedzialu: 0.5
   prognoza_mnoznik_dnia: 0.97     # każdy dzień prognozy w oknie lekko obniża jakość

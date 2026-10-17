@@ -24,10 +24,11 @@ class Factor:
 
 @dataclass
 class Component:
-    wynik: float | None
-    kompletnosc: float
+    wynik: float | None                  # warunki (środek przedziału)
+    kompletnosc: float                   # pewność wejść 0–1 (źródło=1, model=0.5, brak=0) — NIE wpływa na warunki
     czynniki: list[Factor] = field(default_factory=list)
     uzasadnienie: list[str] = field(default_factory=list)
+    zakres: tuple[float, float] | None = None   # przedział warunków, gdy część danych nieznana
 
 
 def _weighted(factors: list[Factor]) -> tuple[float | None, float]:
@@ -57,50 +58,83 @@ class Stand:
     udzial_gatunkow: dict[str, float] | None
     wiek: int | None
     typ_siedliskowy: str | None
-    gleba: str | None
+    gleba: str | None                       # podtyp gleby (kod BDL) albo nazwa
     wys_sr: float | None
     nachylenie_sr: float | None
+    udzial_panujacego: float | None = None  # part_cd/10
+    ph_model: float | None = None           # SoilGrids (model)
+    ph_q05: float | None = None
+    ph_q95: float | None = None
 
 
-def _soil_traits(gleba: str) -> dict | None:
-    g = gleba.strip().lower()
+def soil_from_code(code: str) -> dict | None:
+    """Cechy gleby z kodu podtypu BDL (najdłuższy prefiks w config/gleby_bdl.yaml) albo z nazwy (config/gleby.yaml)."""
+    podtypy = load_yaml("gleby_bdl.yaml")["podtypy"]
+    c = code.strip()
+    for k in sorted(podtypy, key=len, reverse=True):
+        if c.startswith(k):
+            return {**podtypy[k], "kod": c}
+    g = c.lower()
     for t in load_yaml("gleby.yaml")["typy"]:
         if g.startswith(t["prefiks"]):
-            return t
+            return {"nazwa": c, "odczyn": t["odczyn"], "zyznosc": t["zyznosc"], "kod": c}
     return None
 
 
-def habitat(stand: Stand, sp: Species, cfg: dict | None = None) -> Component:
-    cfg = (cfg or load_yaml("model.yaml"))["siedlisko"]
-    w = cfg["wagi"]
+def ph_class(ph: float) -> str:
+    for k in load_yaml("gleby_bdl.yaml")["ph_klasy"]:
+        if ph < k["do"]:
+            return k["odczyn"]
+    return "zasadowy"
+
+
+def _trees_interval(stand: Stand, sp: Species, cfg: dict) -> tuple[float | None, float | None, float, str]:
+    """(dolna, górna granica czynnika drzew, pewność wejścia 0–1, opis). Nieznana część składu → przedział, nie zgadywanie."""
+    strength = {p.drzewo: cfg["sila_zwiazku"][p.sila] for p in sp.drzewa_partnerskie}
+    sat = cfg["udzial_nasycenia"]
     names = {k: v["nazwa"] for k, v in load_yaml("slowniki.yaml")["drzewa"].items()}
+    if stand.udzial_gatunkow:
+        s = sum(share * strength.get(t, 0.0) for t, share in stand.udzial_gatunkow.items())
+        v = min(1.0, s / sat)
+        desc = ", ".join(f"{names.get(t, t)} {round(sh * 100)}%" for t, sh in sorted(stand.udzial_gatunkow.items(), key=lambda x: -x[1]))
+        return v, v, 1.0, f"pełny skład: {desc}"
+    if not stand.gatunek_panujacy:
+        return None, None, 0.0, "brak danych o drzewostanie"
+    dom = stand.gatunek_panujacy
+    st = strength.get(dom, 0.0)
+    if stand.udzial_panujacego is not None:
+        share, known = stand.udzial_panujacego, stand.udzial_panujacego
+    else:
+        share, known = cfg["udzial_nieznany_min"], 0.0
+    lo = min(1.0, share * st / sat)
+    hi = min(1.0, (share * st + (1 - share) * 1.0) / sat) if share < 1 else lo
+    if stand.udzial_panujacego is None:
+        hi = 1.0
+    sh = f"{round(stand.udzial_panujacego * 100)}%" if stand.udzial_panujacego is not None else "udział nieznany"
+    rest = "" if share >= 1 else f"; pozostałe {round((1 - share) * 100)}% składu nieznane"
+    role = "partner" if st > 0 else "nie jest partnerem mikoryzowym"
+    return lo, hi, max(known, 0.5 if stand.udzial_panujacego is None else known), \
+        f"gatunek panujący {names.get(dom, dom)} {sh} ({role}){rest}"
+
+
+def habitat(stand: Stand, sp: Species, cfg: dict | None = None) -> Component:
+    full = cfg or load_yaml("model.yaml")
+    cfg = full["siedlisko"]
+    w = cfg["wagi"]
+    cred = cfg["pewnosc_zrodla"]
     reasons: list[str] = []
     factors: list[Factor] = []
-    completeness_penalty = 1.0
+    conf: dict[str, float] = {}          # pewność wejść (0–1) dla liczenia pewności, nie warunków
 
-    # drzewa partnerskie
+    trees_lo = trees_hi = None
     if sp.typ_troficzny.wartosc == "mikoryzowy":
-        strength = {p.drzewo: cfg["sila_zwiazku"][p.sila] for p in sp.drzewa_partnerskie}
-        shares = stand.udzial_gatunkow
-        if not shares and stand.gatunek_panujacy:
-            shares = {stand.gatunek_panujacy: cfg["tylko_gatunek_panujacy_udzial"]}
-            completeness_penalty = 0.85
-            reasons.append("Znany tylko gatunek panujący — udział drzew partnerskich przyjęty orientacyjnie.")
-        if shares:
-            s = sum(share * strength.get(tree, 0.0) for tree, share in shares.items())
-            v = min(1.0, s / cfg["udzial_nasycenia"])
-            partners = [f"{names.get(t, t)} {round(share * 100)}%" for t, share in
-                        sorted(shares.items(), key=lambda x: -x[1]) if t in strength]
-            factors.append(Factor("drzewa", v, w["drzewa"],
-                                  "drzewa partnerskie: " + (", ".join(partners) if partners else "brak")))
-            reasons.append(f"Drzewa partnerskie: {', '.join(partners)}." if partners
-                           else "Brak drzew partnerskich gatunku w drzewostanie.")
-        else:
-            factors.append(Factor("drzewa", None, w["drzewa"], "brak danych o składzie drzewostanu"))
-            reasons.append("Brak danych o składzie drzewostanu.")
-    # (saprotrofy: składnik drzew pomijany — wagi pozostałych normalizują się same)
+        trees_lo, trees_hi, c, d = _trees_interval(stand, sp, cfg)
+        conf["drzewa"] = c
+        factors.append(Factor("drzewa", None if trees_lo is None else (trees_lo + trees_hi) / 2, w["drzewa"], d))
+        reasons.append(d[0].upper() + d[1:] + ".")
+        if trees_lo is not None and trees_hi - trees_lo > 0.01:
+            reasons.append("Nieznany pełny skład drzewostanu — warunki podane jako przedział, obniżona pewność.")
 
-    # typ siedliskowy
     tsl = stand.typ_siedliskowy
     if tsl:
         if tsl in sp.typy_siedliskowe.preferowane:
@@ -110,11 +144,12 @@ def habitat(stand: Stand, sp: Species, cfg: dict | None = None) -> Component:
         else:
             v, d = cfg["typ_siedliskowy"]["inny"], f"typ siedliskowy {tsl} — nietypowy dla gatunku"
         factors.append(Factor("typ_siedliskowy", v, w["typ_siedliskowy"], d))
+        conf["typ_siedliskowy"] = cred["zrodlowa"]
         reasons.append(d[0].upper() + d[1:] + ".")
     else:
         factors.append(Factor("typ_siedliskowy", None, w["typ_siedliskowy"], "brak typu siedliskowego"))
+        conf["typ_siedliskowy"] = 0.0
 
-    # wiek
     if stand.wiek is not None and sp.wiek_drzewostanu:
         wd = sp.wiek_drzewostanu
         if stand.wiek < wd.min_lat:
@@ -125,22 +160,45 @@ def habitat(stand: Stand, sp: Species, cfg: dict | None = None) -> Component:
             v = 1.0
         else:
             v = cfg["wiek_powyzej_optimum"]
-        factors.append(Factor("wiek", v, w["wiek"], f"wiek drzewostanu {stand.wiek} lat"))
+        factors.append(Factor("wiek", v, w["wiek"], f"wiek gatunku panującego {stand.wiek} lat"))
+        conf["wiek"] = cred["zrodlowa"]
     else:
         factors.append(Factor("wiek", None, w["wiek"], "brak wieku drzewostanu"))
+        conf["wiek"] = 0.0
 
-    # gleba
-    traits = _soil_traits(stand.gleba) if stand.gleba else None
-    if traits:
-        ok = traits["odczyn"] in sp.gleba.odczyn and traits["zyznosc"] in sp.gleba.zyznosc
+    # gleba: najpierw opis z BDL (źródło), potem SoilGrids (model); niepewny model → cecha pominięta
+    traits = soil_from_code(stand.gleba) if stand.gleba else None
+    if traits and (traits.get("odczyn") or traits.get("zyznosc")):
+        checks = []
+        if traits.get("odczyn"):
+            checks.append(traits["odczyn"] in sp.gleba.odczyn)
+        if traits.get("zyznosc"):
+            checks.append(traits["zyznosc"] in sp.gleba.zyznosc)
+        ok = all(checks)
         v = cfg["gleba_zgodna"] if ok else cfg["gleba_niezgodna"]
-        factors.append(Factor("gleba", v, w["gleba"], f"gleba: {stand.gleba} ({'zgodna' if ok else 'mniej typowa'})"))
+        factors.append(Factor("gleba", v, w["gleba"], f"gleba {traits['nazwa']} ({traits['kod']}, BDL) — "
+                                                     f"{'zgodna' if ok else 'mniej typowa'} z wymaganiami gatunku"))
+        conf["gleba"] = cred["zrodlowa"]
+    elif stand.ph_model is not None:
+        classes = {ph_class(x) for x in (stand.ph_model, stand.ph_q05, stand.ph_q95) if x is not None}
+        if len(classes) == 1:
+            cls = classes.pop()
+            ok = cls in sp.gleba.odczyn
+            v = cfg["gleba_zgodna"] if ok else cfg["gleba_niezgodna"]
+            factors.append(Factor("gleba", v, w["gleba"], f"pH {stand.ph_model:.1f} (SoilGrids, model 250 m; przedział "
+                                                         f"{stand.ph_q05}–{stand.ph_q95}) — odczyn {cls}"))
+            conf["gleba"] = cred["model"]
+            reasons.append(f"Gleba: brak opisu w BDL — użyto modelu SoilGrids (pH {stand.ph_model:.1f}, 250 m; to nie pomiar).")
+        else:
+            factors.append(Factor("gleba", None, w["gleba"], f"pH z modelu niepewne ({stand.ph_q05}–{stand.ph_q95}) — pominięte"))
+            conf["gleba"] = 0.0
+            reasons.append("Gleba: brak opisu w BDL, model SoilGrids zbyt niepewny — cecha pominięta (niższa pewność).")
     else:
-        desc = "brak danych glebowych" if not stand.gleba else f"gleba '{stand.gleba}' bez przełożenia w config/gleby.yaml"
+        desc = "brak danych glebowych" if not stand.gleba else f"gleba '{stand.gleba}' bez przełożenia na cechy"
         factors.append(Factor("gleba", None, w["gleba"], desc))
-        reasons.append("Brak danych glebowych — obniżona kompletność.")
+        conf["gleba"] = 0.0
+        reasons.append("Brak danych glebowych — obniżona pewność, nie gorsze warunki.")
 
-    # rzeźba terenu
     if stand.wys_sr is not None:
         inside = sp.wysokosc_npm.min_m <= stand.wys_sr <= sp.wysokosc_npm.max_m
         v = 1.0 if inside else cfg["teren_poza_zakresem_wysokosci"]
@@ -149,19 +207,25 @@ def habitat(stand: Stand, sp: Species, cfg: dict | None = None) -> Component:
             v *= cfg["teren_nachylenie_trudne_mnoznik"]
             d += f", strome zbocza {round(stand.nachylenie_sr)}°"
         factors.append(Factor("teren", v, w["teren"], d))
+        conf["teren"] = cfg["teren_pewnosc"]
     else:
         factors.append(Factor("teren", None, w["teren"], "brak danych o rzeźbie terenu"))
+        conf["teren"] = 0.0
 
-    # Drzewa partnerskie są czynnikiem ograniczającym (mnożnik): bez gospodarza mikoryzowego inne cechy
-    # siedliska nie mogą podnieść wyniku. Pozostałe czynniki — średnia ważona.
-    trees = next((f for f in factors if f.nazwa == "drzewa"), None)
+    # Warunki: średnia ważona dostępnych cech (brakujące nie obniżają) × drzewa (czynnik ograniczający).
     others = [f for f in factors if f.nazwa != "drzewa"]
-    score, _ = _weighted(others)
-    _, comp = _weighted(factors)
-    if score is not None and trees is not None and trees.wartosc is not None:
-        score *= trees.wartosc
-    return Component(None if score is None else round(score * 100, 1), round(comp * completeness_penalty, 3),
-                     factors, reasons)
+    base, _ = _weighted(others)
+    wsum = sum(f.waga for f in factors)
+    certainty = sum(f.waga * conf.get(f.nazwa, 0.0) for f in factors) / wsum if wsum else 0.0
+    if base is None:
+        return Component(None, round(certainty, 3), factors, reasons)
+    if trees_lo is None:
+        lo = hi = base
+    else:
+        lo, hi = base * trees_lo, base * trees_hi
+    comp = Component(round((lo + hi) / 2 * 100, 1), round(certainty, 3), factors, reasons)
+    comp.zakres = (round(lo * 100, 1), round(hi * 100, 1))
+    return comp
 
 
 # ---------------------------------------------------------------- B: pogoda i sezon

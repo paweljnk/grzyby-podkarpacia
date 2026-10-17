@@ -66,7 +66,7 @@ def test_snapshot_roundtrip(tmp_path):
         with connect() as conn, conn.cursor() as cur:
             cur.execute("SELECT gatunek_panujacy, ST_SRID(geom) FROM forest.wydzielenie WHERE source_id='test_snap'")
             assert cur.fetchone() == ("SO", 2180)
-        bad = tmp_path / "forest.wydzielenie.copy.gz"
+        bad = tmp_path / "forest.wydzielenie.part001.copy.gz"
         bad.write_bytes(bad.read_bytes() + b"x")
         with pytest.raises(ValueError):
             snapshot.load(str(tmp_path), force=True)                        # zła suma kontrolna
@@ -92,3 +92,36 @@ def test_verify_rejects_incomplete_weather():
     assert isinstance(problems, list)
     from datetime import date
     assert any("prognoza" in p for p in snapshot.verify(today=date(2030, 1, 1)))
+
+
+
+@pytest.mark.db
+def test_snapshot_splits_large_tables_into_parts(tmp_path, monkeypatch):
+    from grzyby import snapshot
+    monkeypatch.setattr(snapshot, "PART_BYTES", 200)          # wymuszenie wielu części
+    m = snapshot.export(tmp_path, "baza")
+    files = m["tabele"]["weather.komorka"]["pliki"] + m["tabele"]["forest.wydzielenie"]["pliki"]
+    assert all((tmp_path / f["plik"]).exists() for f in files)
+    import gzip
+    rows = sum(gzip.decompress((tmp_path / f["plik"]).read_bytes()).count(b"\n")
+               for f in m["tabele"]["forest.wydzielenie"]["pliki"])
+    assert rows == m["wiersze"]["forest.wydzielenie"]
+
+
+@pytest.mark.db
+def test_sql_cell_ids_match_python():
+    from grzyby.db import connect
+    from grzyby.weather.openmeteo import cell_center, cell_id, ensure_cells_for_forests
+    with connect() as conn, conn.cursor() as cur:
+        cur.execute("""INSERT INTO forest.wydzielenie (source_id, external_id, attrs, geom)
+                       VALUES ('test_cell','1','{}', ST_Multi(ST_Transform(ST_Buffer(ST_SetSRID(ST_MakePoint(22.2836, 49.3326),4326)::geography, 30)::geometry, 2180)))
+                       RETURNING id""")
+        wid = cur.fetchone()[0]
+        conn.commit()
+        try:
+            ensure_cells_for_forests(conn, 0.1)
+            cur.execute("SELECT komorka_id FROM forest.wydzielenie_komorka WHERE wydzielenie_id=%s", (wid,))
+            assert cur.fetchone()[0] == cell_id(*cell_center(49.3326, 22.2836, 0.1), 0.1)
+        finally:
+            cur.execute("DELETE FROM forest.wydzielenie WHERE source_id='test_cell'")
+            conn.commit()

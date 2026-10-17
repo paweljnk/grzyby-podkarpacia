@@ -48,13 +48,15 @@ def get_species(sid: str) -> Species:
 
 
 def _component_json(c) -> dict:
-    return {"wynik": c.wynik, "kompletnosc": c.kompletnosc,
+    return {"wynik": c.wynik, "kompletnosc": c.kompletnosc, "zakres": c.zakres,
             "czynniki": [asdict(f) for f in c.czynniki], "uzasadnienie": c.uzasadnienie}
 
 
 def score_json(s: Score) -> dict:
     return {
         "wynik": s.wynik, "podstawa": s.podstawa,
+        "warunki": s.wynik, "warunki_min": s.warunki_min, "warunki_max": s.warunki_max,
+        "pewnosc": s.kompletnosc, "pewnosc_opis": s.jakosc,
         "A": _component_json(s.A), "B": _component_json(s.B),
         "C": s.C, "D": s.D, "D_szczegoly": s.D_szczegoly,
         "bramki": [asdict(g) for g in s.bramki], "rekomendowane": s.rekomendowane,
@@ -84,7 +86,14 @@ def score_place(conn, ds: repo.Dataset, row: repo.StandRow, sp: Species, day: da
                 weather_cache[key] = (daily, wmeta)
     else:
         daily = []
-    B, ind, gates = weather(sp, daily, day, row.stand.wys_sr, cfg)
+    # Ocena pogody zależy od komórki, dnia i (przez sezon) wysokości — pamiętamy ją dla pasów co 50 m.
+    bkey = ("B", sp.id, row.komorka_id, day, None if row.stand.wys_sr is None else round(row.stand.wys_sr / 50))
+    if weather_cache is not None and bkey in weather_cache:
+        B, ind, gates = weather_cache[bkey]
+    else:
+        B, ind, gates = weather(sp, daily, day, row.stand.wys_sr, cfg)
+        if weather_cache is not None:
+            weather_cache[bkey] = (B, ind, gates)
     if prefetch is not None:
         from dataclasses import replace
         obs = [replace(o, odleglosc_km=_haversine_km(row.lat, row.lon, la, lo)) for lo, la, o in prefetch["obs"]]
@@ -101,6 +110,10 @@ def score_place(conn, ds: repo.Dataset, row: repo.StandRow, sp: Species, day: da
     else:
         prot = repo.protection_for(conn, ds, row.stand.id)
         bans = repo.bans_for(conn, ds, row.stand.id, day)
+    meta = row.meta or {}
+    if meta.get("wlasnosc") in load_yaml("zasieg.yaml").get("wlasnosc_zakaz_zbioru", []):
+        prot = prot + [{"rodzaj": "park_narodowy", "nazwa": f"Las {meta['wlasnosc']} (BDL, kategoria własności)",
+                        "source_id": "bdl_rest"}]
     s = combine(A, B, C, D, Dd, gates["susza"], prot, cfg)
     for b in bans:
         from .model.combine import Gate
@@ -139,6 +152,8 @@ def _place_header(row: repo.StandRow) -> dict:
         "powierzchnia_ha": round(row.powierzchnia_ha, 2),
         "gatunek_panujacy": row.stand.gatunek_panujacy, "typ_siedliskowy": row.stand.typ_siedliskowy,
         "wiek": row.stand.wiek,
+        "zarzad": (row.meta or {}).get("zarzad"), "wlasnosc": (row.meta or {}).get("wlasnosc"),
+        "klasa_danych": (row.meta or {}).get("klasa_danych"), "rok_danych": (row.meta or {}).get("rok_danych"),
     }
 
 
@@ -225,7 +240,42 @@ def place_card(conn, ds: repo.Dataset, sp: Species, sid: int, day: date, calenda
                            "Nie wjeżdżaj na drogi leśne bez potwierdzenia, że ruch jest dopuszczony.",
                    "nachylenie_sr_deg": row.stand.nachylenie_sr},
         "kalendarz": calendar_json(cal),
+        "atrybuty": attributes_table(row),
+        "zarzad": (row.meta or {}).get("zarzad"),
     }
+
+
+def attributes_table(row: repo.StandRow) -> list[dict]:
+    """Każdy atrybut z wartością, źródłem, datą i oznaczeniem: źródłowa | model | brak."""
+    m = row.meta or {}
+    st = row.stand
+    bdl = "BDL — Wydzielenia PGL LP" if m.get("zarzad") == "LP" else "BDL — Wydzielenia poza PGL LP wg PUL"
+    rok = m.get("rok_danych")
+    def a(name, value, src, date, kind):
+        return {"atrybut": name, "wartosc": value, "zrodlo": src if value is not None else None,
+                "data": date if value is not None else None, "oznaczenie": kind if value is not None else "brak"}
+    names = {k: v["nazwa"] for k, v in load_yaml("slowniki.yaml")["drzewa"].items()}
+    out = [
+        a("Zarząd / własność", (("Lasy Państwowe" if m.get("zarzad") == "LP" else "poza LP")
+                                 + (f" — {m['wlasnosc']}" if m.get("wlasnosc") else "")) if m.get("zarzad") else None,
+          "BDL", rok, "źródłowa"),
+        a("Gatunek panujący", names.get(st.gatunek_panujacy, st.gatunek_panujacy) if st.gatunek_panujacy else None, bdl, rok, "źródłowa"),
+        a("Udział gatunku panującego", f"{round(st.udzial_panujacego * 100)}%" if st.udzial_panujacego is not None else None,
+          bdl + " (part_cd)", rok, "źródłowa"),
+        a("Pełny skład gatunkowy z udziałami", None, None, None, "brak"),
+        a("Wiek gatunku panującego", st.wiek, bdl, rok, "źródłowa"),
+        a("Typ siedliskowy lasu", st.typ_siedliskowy, bdl, rok, "źródłowa"),
+        a("Podtyp gleby", st.gleba, f"BDL — Siedliska leśne ({m.get('siedlisko_zrodlo') or '—'})", m.get("siedlisko_rok"), "źródłowa"),
+        a("Gatunek gleby (utwór)", m.get("gleba_gatunek"), "BDL — Siedliska leśne", m.get("siedlisko_rok"), "źródłowa"),
+        a("Uwilgotnienie (kod BDL, słownik nieopublikowany)", m.get("uwilgotnienie_kod"), "BDL — Siedliska leśne",
+          m.get("siedlisko_rok"), "źródłowa"),
+        a("pH gleby 0–5 cm", (f"{st.ph_model:.1f} (przedział {st.ph_q05}–{st.ph_q95})" if st.ph_model is not None else None),
+          "SoilGrids 2.0, siatka 250 m — wynik modelu, nie pomiar", "2020", "model"),
+        a("Wysokość, nachylenie, ekspozycja", (f"{round(st.wys_sr)} m, {st.nachylenie_sr:.0f}°, {row.ekspozycja}"
+                                               if st.wys_sr is not None and st.nachylenie_sr is not None else None),
+          "Copernicus DEM GLO-30 (DSM, 25 m)", "2011–2015", "model"),
+    ]
+    return out
 
 
 def seven_days(conn, ds: repo.Dataset, sp: Species, sid: int, start: date, calendar_on: bool) -> dict | None:

@@ -115,28 +115,30 @@ def fetch_cell(client: HttpClient, kind: str, lat: float, lon: float, start: dat
 
 
 def ensure_cells_for_forests(conn, step: float) -> list[tuple[str, float, float]]:
-    """Tworzy komórki dla wydzieleń (wg centroidu) i przypisuje wydzielenia do komórek."""
+    """Komórki siatki dla wydzieleń (wg punktu wewnątrz poligonu) i przypisanie wydzieleń — w SQL (setki tysięcy rekordów).
+    Identyfikator komórki zgodny z cell_id(): 'g<krok>:<lat środka .2f>:<lon środka .2f>'."""
     with conn.cursor() as cur:
-        cur.execute("""SELECT id, ST_Y(c), ST_X(c) FROM (
-                         SELECT id, ST_Transform(ST_PointOnSurface(geom), 4326) c FROM forest.wydzielenie) s""")
-        rows = cur.fetchall()
-        cells: dict[str, tuple[float, float]] = {}
-        for wid, lat, lon in rows:
-            clat, clon = cell_center(lat, lon, step)
-            cid = cell_id(clat, clon, step)
-            cells[cid] = (clat, clon)
-        for cid, (clat, clon) in cells.items():
-            poly = box(clon - step / 2, clat - step / 2, clon + step / 2, clat + step / 2)
-            cur.execute("""INSERT INTO weather.komorka (id, lat, lon, krok_st, geom)
-                           VALUES (%s,%s,%s,%s, ST_GeomFromWKB(%s,2180)) ON CONFLICT (id) DO NOTHING""",
-                        (cid, clat, clon, step, wkb.dumps(shp_transform(_TO_2180, poly))))
-        for wid, lat, lon in rows:
-            clat, clon = cell_center(lat, lon, step)
-            cur.execute("""INSERT INTO forest.wydzielenie_komorka VALUES (%s,%s)
-                           ON CONFLICT (wydzielenie_id) DO UPDATE SET komorka_id=EXCLUDED.komorka_id""",
-                        (wid, cell_id(clat, clon, step)))
+        cur.execute("""
+            CREATE TEMP TABLE _wk ON COMMIT DROP AS
+            SELECT w.id, ((floor(ST_Y(p)::numeric / %(s)s) + 0.5) * %(s)s) AS clat,
+                         ((floor(ST_X(p)::numeric / %(s)s) + 0.5) * %(s)s) AS clon
+            FROM forest.wydzielenie w CROSS JOIN LATERAL (SELECT ST_Transform(ST_PointOnSurface(w.geom), 4326) p) q""",
+                    {"s": step})
+        cur.execute("""
+            INSERT INTO weather.komorka (id, lat, lon, krok_st, geom)
+            SELECT DISTINCT 'g' || %(st)s || ':' || to_char(clat, 'FM990.00') || ':' || to_char(clon, 'FM990.00'),
+                   clat, clon, %(s)s,
+                   ST_Transform(ST_MakeEnvelope(clon - %(s)s / 2, clat - %(s)s / 2, clon + %(s)s / 2, clat + %(s)s / 2, 4326), 2180)
+            FROM _wk ON CONFLICT (id) DO NOTHING""", {"s": step, "st": str(step)})
+        cur.execute("""
+            INSERT INTO forest.wydzielenie_komorka
+            SELECT id, 'g' || %(st)s || ':' || to_char(clat, 'FM990.00') || ':' || to_char(clon, 'FM990.00') FROM _wk
+            ON CONFLICT (wydzielenie_id) DO UPDATE SET komorka_id = EXCLUDED.komorka_id""", {"st": str(step)})
+        cur.execute("""SELECT DISTINCT k.id, k.lat, k.lon FROM weather.komorka k
+                       JOIN forest.wydzielenie_komorka wk ON wk.komorka_id = k.id""")
+        cells = [(r[0], float(r[1]), float(r[2])) for r in cur.fetchall()]
     conn.commit()
-    return [(cid, la, lo) for cid, (la, lo) in cells.items()]
+    return cells
 
 
 def store_days(cur, cid: str, days: list[DailyWeather], meta: dict) -> None:

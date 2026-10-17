@@ -46,6 +46,7 @@ class StandRow:
     pochodzenie: dict[str, str]
     attrs: dict
     imported_at: datetime | None
+    meta: dict | None = None      # zarząd, własność, rok danych, gleba/siedlisko, pH (model), klasa danych
 
 
 _STAND_SQL = """
@@ -54,7 +55,11 @@ SELECT w.id, w.gatunek_panujacy, w.udzial_gatunkow, w.wiek, w.typ_siedliskowy, w
        ST_Y(c.p), ST_X(c.p), {dist}, ST_Area(w.geom) / 10000.0, wk.komorka_id,
        t.nachylenie_max_deg, t.ekspozycja_klasa, t.wys_min, t.wys_max,
        w.gatunek_panujacy_pochodzenie, w.udzial_gatunkow_pochodzenie, w.wiek_pochodzenie,
-       w.typ_siedliskowy_pochodzenie, w.gleba_pochodzenie, t.pochodzenie, w.attrs, w.imported_at
+       w.typ_siedliskowy_pochodzenie, w.gleba_pochodzenie, t.pochodzenie, w.attrs, w.imported_at,
+       w.udzial_panujacego, w.ph_model, w.ph_q05, w.ph_q95,
+       w.zarzad, w.wlasnosc, w.rok_danych, w.w_wojewodztwie_frac, w.gleba_gatunek, w.uwilgotnienie_kod,
+       w.siedlisko_zrodlo, w.siedlisko_rok, w.siedlisko_pokrycie, w.klasa_danych, w.nadl_kod,
+       w.udzial_panujacego_pochodzenie, w.ph_pochodzenie
 FROM {wydz} w
 CROSS JOIN LATERAL (SELECT ST_Transform(ST_PointOnSurface(w.geom), 4326) p) c
 LEFT JOIN {teren} t ON t.wydzielenie_id = w.id
@@ -66,11 +71,18 @@ def _row(r) -> StandRow:
     shares = r[2] if isinstance(r[2], dict) or r[2] is None else json.loads(r[2])
     # Normalizacja kodów także przy odczycie — dane zaimportowane starszym słownikiem dają ten sam wynik.
     from .etl.bdl_codes import site_type, species
-    st = Stand(r[0], species(r[1]), shares, r[3], site_type(r[4]), r[5], r[6], r[7])
+    st = Stand(r[0], species(r[1]), shares, r[3], site_type(r[4]), r[5], r[6], r[7],
+               udzial_panujacego=r[27], ph_model=r[28], ph_q05=r[29], ph_q95=r[30])
     prov = dict(zip(["gatunek_panujacy", "udzial_gatunkow", "wiek", "typ_siedliskowy", "gleba", "teren"],
                     [str(x) if x else "brak" for x in r[19:25]]))
+    prov["udzial_panujacego"] = str(r[42] or "brak")
+    prov["ph"] = str(r[43] or "brak")
+    meta = dict(zip(["zarzad", "wlasnosc", "rok_danych", "w_wojewodztwie_frac", "gleba_gatunek", "uwilgotnienie_kod",
+                     "siedlisko_zrodlo", "siedlisko_rok", "siedlisko_pokrycie", "klasa_danych", "nadl_kod"], r[31:42]))
+    if isinstance(meta.get("wlasnosc"), str):
+        meta["wlasnosc"] = meta["wlasnosc"].strip()
     return StandRow(st, r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15], r[16], r[17], r[18], prov,
-                    r[25] or {}, r[26])
+                    r[25] or {}, r[26], meta)
 
 
 def stands_near(conn, ds: Dataset, lat: float, lon: float, radius_km: float, limit: int = 20000) -> list[StandRow]:

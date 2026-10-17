@@ -1,6 +1,5 @@
-# Codzienny import danych RZECZYWISTYCH dla obszarów pilotażowych i publikacja paczki na gałęzi `dane/pilot`.
-# Źródła: BDL (wydzielenia, granice nadleśnictw), PRG, Copernicus DEM, Open-Meteo (reanaliza, analiza, prognoza).
-# Aplikacja (API) sama pobiera najnowszą paczkę: GRZYBY_SNAPSHOT_URL (domyślnie raw.githubusercontent.com/.../dane/pilot/).
+# Codzienna paczka DZIENNA: pogoda (Open-Meteo) dla komórek z paczki bazowej + zakazy wstępu do lasu (BDL).
+# Wczytuje paczkę bazową z gałęzi `dane/baza`, publikuje na `dane/dzienne`. Aplikacja pobiera obie paczki sama.
 name: dane-pilot
 on:
   schedule:
@@ -48,22 +47,21 @@ jobs:
         run: pip install ./backend
       - name: Schemat bazy
         run: python -c "from grzyby.db import migrate; print(migrate())"
-      - name: Import (PRG, BDL, DEM + statystyki strefowe, GDOŚ)
-        run: python -m grzyby.cli import all 2>&1 | tee -a log.txt
+      - name: Wczytanie paczki bazowej (dane/baza)
+        run: python -m grzyby.cli snapshot load --pakiet baza --force 2>&1 | tee -a log.txt
       - name: Pogoda (Open-Meteo)
         run: python -m grzyby.cli import weather 2>&1 | tee -a log.txt
-      - name: Kontrola danych
-        run: python -m grzyby.cli check-data 2>&1 | tee raport.txt
+      - name: Zakazy wstępu (BDL)
+        run: python -m grzyby.cli import zakazy 2>&1 | tee -a log.txt || echo "zakazy niedostępne" | tee -a log.txt
       - name: Kontrola jakości (bez niej paczka nie jest publikowana — zostaje poprzednia)
         run: python -m grzyby.cli snapshot verify 2>&1 | tee -a log.txt
       - name: Eksport paczki
-        run: python -m grzyby.cli snapshot export out 2>&1 | tee -a log.txt
-      - name: Publikacja na gałęzi dane/pilot
+        run: python -m grzyby.cli snapshot export out --pakiet dzienne 2>&1 | tee -a log.txt
+      - name: Publikacja na gałęzi dane/dzienne
         run: |
-          cp raport.txt out/raport_check_data.txt
           grep -vE "HTTP Request|INFO httpx" log.txt > out/log_importu.txt || true
           cat > out/README.md <<'MD'
-          # Paczka danych — Grzyby Podkarpacia (obszary pilotażowe)
+          # Paczka dzienna — Grzyby Podkarpacia (pogoda, zakazy wstępu)
 
           Generowana automatycznie przez GitHub Actions (`.github/workflows/dane.yml`). Szczegóły: `manifest.json`,
           `raport_check_data.txt`, `log_importu.txt`.
@@ -75,12 +73,12 @@ jobs:
           - Państwowy Rejestr Granic — Główny Urząd Geodezji i Kartografii
           MD
           cd out
-          git init -q -b dane/pilot
+          git init -q -b dane/dzienne
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add -A
           git commit -qm "Paczka danych $(date -u +%Y-%m-%dT%H:%MZ)"
-          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dane/pilot
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dane/dzienne
       - name: Log błędu na gałęzi dane/log
         if: failure()
         run: |

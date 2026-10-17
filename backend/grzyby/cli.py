@@ -12,13 +12,17 @@ def main() -> int:
     pr = sub.add_parser("probe", help="pobierz próbki i zapisz schematy źródeł")
     pr.add_argument("sources", nargs="*")
     imp = sub.add_parser("import", help="import danych pilotażowych")
-    imp.add_argument("layer", choices=["prg", "bdl", "dem", "gdos", "weather", "all"])
+    imp.add_argument("layer", choices=["prg", "bdl", "dem", "gdos", "weather", "all", "wojewodztwo", "dem-woj",
+                                        "soilgrids", "worldcover", "pokrycie", "zakazy", "wojewodztwo-all"])
     sub.add_parser("demo", help="wygeneruj DANE DEMONSTRACYJNE w schemacie demo")
     sub.add_parser("check-data")
+    rp = sub.add_parser("raport", help="raport pokrycia danymi (json + md)")
+    rp.add_argument("katalog", nargs="?", default="out")
     sn = sub.add_parser("snapshot", help="paczka danych rzeczywistych: eksport / wczytanie")
     sn.add_argument("akcja", choices=["export", "load", "verify"])
     sn.add_argument("cel", nargs="?", help="katalog (export) albo URL/katalog (load)")
     sn.add_argument("--force", action="store_true")
+    sn.add_argument("--pakiet", choices=["baza", "dzienne", "wszystkie"], default="wszystkie")
     at = sub.add_parser("atlas", help="atlas: kandydaci zdjęć, zatwierdzanie, kontrola treści")
     asub = at.add_subparsers(dest="acmd", required=True)
     k = asub.add_parser("kandydaci", help="pobierz kandydatów z Wikimedia Commons (status do_weryfikacji)")
@@ -48,13 +52,47 @@ def main() -> int:
         steps = {"prg": vector.import_prg, "bdl": vector.import_bdl, "gdos": vector.import_gdos, "dem": dem.import_dem,
                  "weather": import_weather}
         # Kolejność: granice → wydzielenia → teren (statystyki strefowe wymagają wydzieleń) → ochrona.
-        order = ["prg", "bdl", "dem", "gdos"] if args.layer == "all" else [args.layer]
+        from .etl import bdl_province, soilgrids, worldcover
+        import json as _json
+
+        def _woj():
+            rep = bdl_province.import_province()
+            print(_json.dumps(rep, ensure_ascii=False, indent=1, default=str))
+
+        def _zakazy():
+            from .db import connect as _c
+            from .config import load_yaml as _ly
+            conn = _c()
+            with HttpClient_() as client:
+                print(bdl_province.import_bans(conn, client, _ly("zasieg.yaml"), bdl_province.province(conn)))
+            conn.close()
+
+        def _pokrycie():
+            print(_json.dumps(worldcover.compute_coverage(), ensure_ascii=False))
+
+        from .etl.http import HttpClient as HttpClient_
+        steps.update({"wojewodztwo": _woj, "dem-woj": dem.import_dem_province, "soilgrids": soilgrids.import_soilgrids,
+                      "worldcover": worldcover.import_reference, "pokrycie": _pokrycie, "zakazy": _zakazy})
+        if args.layer == "all":
+            order = ["prg", "bdl", "dem", "gdos"]
+        elif args.layer == "wojewodztwo-all":
+            order = ["prg", "wojewodztwo", "dem-woj", "soilgrids", "worldcover", "pokrycie"]
+        else:
+            order = [args.layer]
         for name in order:
-            steps[name]()
+            r = steps[name]()
+            if r is not None and not isinstance(r, dict):
+                print(name, r)
         return 0
     if args.cmd == "demo":
         from .demo import generate
         print(generate())
+        return 0
+    if args.cmd == "raport":
+        from pathlib import Path
+        from .report import write
+        r = write(Path(args.katalog))
+        print({"procent_pokrycia": r["pokrycie"]["procent_pokrycia"], "nadlesnictw": len(r["nadlesnictwa"])})
         return 0
     if args.cmd == "snapshot":
         from pathlib import Path
@@ -64,10 +102,13 @@ def main() -> int:
             print("\n".join(problems) or "OK — paczka kompletna")
             return 1 if problems else 0
         if args.akcja == "export":
-            m = snapshot.export(Path(args.cel) if args.cel else snapshot.default_export_dir())
-            print({"wygenerowano": m["wygenerowano_utc"], "wiersze": m["wiersze"]})
+            m = snapshot.export(Path(args.cel) if args.cel else snapshot.default_export_dir(),
+                                "baza" if args.pakiet == "wszystkie" else args.pakiet)
+            print({"pakiet": m["pakiet"], "wygenerowano": m["wygenerowano_utc"], "wiersze": m["wiersze"]})
+        elif args.pakiet == "wszystkie" and not args.cel:
+            print(snapshot.load_all(args.force))
         else:
-            print(snapshot.load(args.cel, args.force))
+            print(snapshot.load(args.cel, args.force, "baza" if args.pakiet == "wszystkie" else args.pakiet))
         return 0
     if args.cmd == "atlas":
         import json

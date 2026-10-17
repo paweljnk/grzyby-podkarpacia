@@ -1,0 +1,19 @@
+# Zasięg analizy: całe województwo podkarpackie (granica z PRG). Nadleśnictwa i wydzielenia wybierane są przez
+# PRZECIĘCIE GEOMETRII z granicą województwa — granice nadleśnictw nie pokrywają się z administracyjnymi.
+obszar_id: podkarpackie
+odswiezanie_dni: 30                 # plik etapowy młodszy niż tyle dni nie jest pobierany ponownie (wznawianie)
+bdl_rest:
+  usluga_drzewostanow: WMS_BDL_mapa_drzewostanow
+  warstwa_nadlesnictw: 1
+  warstwa_wydzielen_lp: 5            # „Wydzielenia PGL LP”
+  warstwa_wydzielen_poza_lp: 6       # „Wydzielenia poza PGL LP wg PUL” (plany urządzenia lasu)
+  usluga_siedlisk: WMS_BDL_mapa_siedlisk
+  warstwa_siedlisk: 7                # „Siedliska leśne” (podtyp gleby, uwilgotnienie)
+  usluga_zakazow: WMS_zakazy_wstepu_do_lasu
+  warstwa_zakazow: 0
+  # tylko drzewostany; inne rodzaje powierzchni leśnej (zręby, uprawy bez drzewostanu, drogi) pomijamy
+  filtr_drzewostanow: "area_type_cd LIKE 'D-STAN%'"
+  kafel_stopnie: 0.25
+  min_ha_w_wojewodztwie: 1.0         # nadleśnictwo bierzemy, gdy ma w województwie co najmniej tyle ha
+# kategorie własności lasów poza LP, w których zbiór grzybów jest co do zasady zakazany
+wlasnosc_zakaz_zbioru: ["SP w zarządzie Parków Narodowych"]
