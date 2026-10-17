@@ -55,13 +55,16 @@ def test_snapshot_roundtrip(tmp_path):
                          gatunek_panujacy_pochodzenie, attrs, geom)
                        VALUES ('test_snap','1','99-99-test','SO','opis_taksacyjny','{}',
                                ST_Multi(ST_Buffer(ST_SetSRID(ST_MakePoint(700000,250000),2180),50)))""")
+    daily = tmp_path / "dzienne"
     try:
         m = snapshot.export(tmp_path)
+        snapshot.export(daily, "dzienne")      # baza czyści komórki pogody (CASCADE) — przywracamy pogodę po teście
         assert m["wiersze"]["forest.wydzielenie"] >= 1 and (tmp_path / "manifest.json").exists()
         with connect() as conn, conn.cursor() as cur:
             cur.execute("DELETE FROM forest.wydzielenie WHERE source_id='test_snap'")
         r = snapshot.load(str(tmp_path), force=True)
         assert r["wczytano"]
+        snapshot.load(str(daily), force=True, pakiet="dzienne")
         assert snapshot.load(str(tmp_path))["wczytano"] is False           # ta sama paczka drugi raz — bez zmian
         with connect() as conn, conn.cursor() as cur:
             cur.execute("SELECT gatunek_panujacy, ST_SRID(geom) FROM forest.wydzielenie WHERE source_id='test_snap'")
@@ -73,13 +76,14 @@ def test_snapshot_roundtrip(tmp_path):
     finally:
         with connect() as conn, conn.cursor() as cur:
             cur.execute("DELETE FROM forest.wydzielenie WHERE source_id='test_snap'")
-            cur.execute("DELETE FROM meta.snapshot")
+            cur.execute("DELETE FROM meta.snapshot WHERE zrodlo_url LIKE %s", (str(tmp_path) + "%",))
 
 
 def test_display_name_from_forest_address():
     from grzyby.service import display_name
     assert display_name("04-08-2-09-163   -k   -00", 1) == "oddz. 163k, leśn. 09"
     assert display_name("04-01-2-09-127A  -b   -00", 4) == "oddz. 127Ab, leśn. 09"
+    assert display_name("R050720009-1001  -cx  -00", 5) == "las poza LP 1001cx"
     assert display_name("DEMO BAL-001", 2) == "DEMO BAL-001" and display_name(None, 3) == "Wydzielenie 3"
 
 

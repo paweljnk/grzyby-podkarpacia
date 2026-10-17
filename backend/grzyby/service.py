@@ -141,6 +141,9 @@ def display_name(adres: str | None, sid: int) -> str:
     import re
     if len(parts) >= 6 and re.fullmatch(r"\d+[A-Za-z]*", parts[4]):
         return f"oddz. {parts[4]}{parts[5]}, leśn. {parts[3]}"
+    # lasy poza LP (adres z PUL, znaczenie członów nieopisane w BDL), np. 'R050720009-1001  -cx  -00'
+    if len(parts) >= 3 and re.fullmatch(r"R\d+", parts[0]) and re.fullmatch(r"\d+[A-Za-z]*", parts[1]):
+        return f"las poza LP {parts[1]}{parts[2]}"
     return adres
 
 
