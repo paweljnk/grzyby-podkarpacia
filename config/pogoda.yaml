@@ -25,8 +25,11 @@ open_meteo:
   archive:
     url: https://archive-api.open-meteo.com/v1/archive
     typ: reanaliza
-    model: era5_land
-    rozdzielczosc_km: 9
+    # Bez parametru models = domyślne łączenie ERA5 (0.25°) z ERA5-Land (0.1°). Sam model era5_land NIE podaje
+    # opadu ani ET₀ (sprawdzone na danych 2026-10-17: 0/1265 dób z opadem) — dlatego nie wymuszamy go.
+    model: null
+    model_opis: Open-Meteo best_match (ERA5 + ERA5-Land)
+    rozdzielczosc_km: 25            # opad pochodzi z ERA5 (~25 km) — podajemy grubszą rozdzielczość
     zmienne:
       opad_mm: precipitation
       temp_c: temperature_2m

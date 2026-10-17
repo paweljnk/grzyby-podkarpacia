@@ -72,7 +72,7 @@ def test_zonal_stats_on_real_dem_inside_rolled_back_transaction(conn):
     with conn.cursor() as cur:
         cur.execute("SELECT warstwa, sciezka FROM terrain.raster WHERE obszar_id='baligrod'")
         paths = {w: __import__("pathlib").Path(p) for w, p in cur.fetchall()}
-        if len(paths) < 3:
+        if len(paths) < 3 or not all(p.exists() for p in paths.values()):
             pytest.skip("brak rastrów Baligrodu — uruchom make import-pilot")
         # 500 x 500 m wokół szczytu Łopiennika (stok górski → wyraźne nachylenie)
         cur.execute("""INSERT INTO forest.wydzielenie (source_id, external_id, obszar_id, attrs, geom)
@@ -87,3 +87,21 @@ def test_zonal_stats_on_real_dem_inside_rolled_back_transaction(conn):
     conn.rollback()
     assert n == 1 and npx > 250          # koło r=250 m ≈ 314 pikseli 25 m
     assert 1000 < wmax < 1120 and slope > 5 and prov == "model"
+
+
+
+def test_weather_series_prefers_complete_precipitation(conn):
+    """Doba z reanalizą bez opadu i analizą z opadem → wybór analizy (błąd znaleziony na danych z 2026-10-17)."""
+    from datetime import date
+    from grzyby.repo import weather_series
+    with conn.cursor() as cur:
+        cur.execute("""INSERT INTO weather.komorka VALUES ('test_c', 50, 22, 0.1,
+                         ST_Transform(ST_MakeEnvelope(21.95,49.95,22.05,50.05,4326),2180))""")
+        cur.execute("""INSERT INTO weather.dzien (komorka_id, data_lokalna, typ, godzin, opad_mm, temp_sr_c, pochodzenie)
+                       VALUES ('test_c','2026-10-10','reanaliza',24,NULL,8,'model'),
+                              ('test_c','2026-10-10','analiza',24,3.2,8.5,'model'),
+                              ('test_c','2026-10-09','reanaliza',24,1.0,9,'model'),
+                              ('test_c','2026-10-09','analiza',24,2.0,9,'model')""")
+    days, _ = weather_series(conn, "real", "test_c", date(2026, 10, 9), date(2026, 10, 10))
+    conn.rollback()
+    assert [(d.data.day, d.typ, d.opad_mm) for d in days] == [(9, "reanaliza", 1.0), (10, "analiza", 3.2)]

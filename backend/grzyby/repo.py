@@ -102,13 +102,14 @@ def stand_geojson(conn, ds: Dataset, ids: list[int]) -> dict[int, dict]:
 
 
 def weather_series(conn, ds: Dataset, komorka_id: str, start: date, end: date) -> tuple[list[DailyWeather], dict]:
-    """Ciąg dobowy; dla tej samej doby reanaliza/stacja ma pierwszeństwo przed prognozą."""
+    """Ciąg dobowy. Dla tej samej doby: najpierw wiersze z kompletnym opadem, potem kolejność stacja >
+    reanaliza > analiza > prognoza (reanaliza z końca okresu bywa niepełna — wtedy wygrywa analiza)."""
     with conn.cursor() as cur:
         cur.execute(f"""
             SELECT DISTINCT ON (data_lokalna) data_lokalna, typ, godzin, opad_mm, temp_min_c, temp_sr_c, temp_max_c,
                    wilg_powietrza_pct, wilg_gleby_m3m3, temp_gleby_c, et0_mm, pobrano_utc, model, rozdzielczosc_km
             FROM {T(ds)['dzien']} WHERE komorka_id=%s AND data_lokalna BETWEEN %s AND %s
-            ORDER BY data_lokalna, CASE typ WHEN 'stacja' THEN 0 WHEN 'reanaliza' THEN 1 WHEN 'analiza' THEN 2 ELSE 3 END""",
+            ORDER BY data_lokalna, (opad_mm IS NULL), CASE typ WHEN 'stacja' THEN 0 WHEN 'reanaliza' THEN 1 WHEN 'analiza' THEN 2 ELSE 3 END""",
                     (komorka_id, start, end))
         rows = cur.fetchall()
     days = [DailyWeather(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10]) for r in rows]

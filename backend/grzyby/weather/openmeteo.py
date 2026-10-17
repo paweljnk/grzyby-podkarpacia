@@ -109,7 +109,7 @@ def fetch_cell(client: HttpClient, kind: str, lat: float, lon: float, start: dat
         # zajmie 'analiza'); nie wstawiamy wartości zastępczych.
         days = [d for d in days if start <= d.data <= end and not (d.opad_mm is None and d.temp_sr_c is None)]
     meta = {"lat": payload.get("latitude"), "lon": payload.get("longitude"),
-            "model": api.get("model") or "open-meteo best_match", "rozdzielczosc_km": api.get("rozdzielczosc_km"),
+            "model": api.get("model") or api.get("model_opis") or "open-meteo best_match", "rozdzielczosc_km": api.get("rozdzielczosc_km"),
             "pominiete_zmienne": dropped}
     return days, meta
 
@@ -185,6 +185,11 @@ def import_weather(today: date | None = None) -> None:
                                 continue
                             store_days(cur, cid, days, meta)
                             run.records += len(days)
+                            # zmienna obowiązkowa pusta w całym okresie = problem ze źródłem, nie "brak deszczu"
+                            empty = [v for v in ("opad_mm", "temp_sr_c") if days and all(getattr(d, v) is None for d in days)]
+                            if empty:
+                                log.warning("%s %s: zmienne puste w całym okresie: %s", kind, cid, empty)
+                                run.set_status("partial", f"zmienne puste w całym okresie: {empty}")
                     conn.commit()
             except SourceUnavailable as e:
                 log.warning("%s pominięte: %s", source_id, e)
