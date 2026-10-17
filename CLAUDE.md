@@ -14,6 +14,10 @@ Zasady obowiązujące w każdym etapie:
 - Nie używaj tile.openstreetmap.org.
 - Aplikacja nie ocenia jadalności okazów.
 
-Polecenia: `make up | probe | import-pilot | check-data | test | test-db`.
+- Zbiór danych jest jawnym parametrem (`real` / `demo`) w repo, serwisie i API — nigdy nie łącz zapytań między nimi.
+- Wynik nazywaj „wskaźnikiem rekomendacji 0–100” (nie „szansa”, nie „%”). Kalendarz zawsze oznaczaj jako eksperymentalny.
+- Odległość pokazujemy w linii prostej, dopóki nie ma danych drogowych; nie proponuj dróg leśnych.
+
+Polecenia: `make up | migrate | probe | import-pilot | import-weather | demo-data | web | check-data | test | test-db | e2e`.
 Na końcu etapu raportuj: co pobrano (źródło, liczba rekordów, obszar), testy (komendy i wyniki),
 co uruchomiono, co nie zadziałało i czego brakuje.

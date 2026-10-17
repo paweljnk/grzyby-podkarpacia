@@ -2,7 +2,7 @@
 COMPOSE ?= docker compose
 RUN := $(COMPOSE) run --rm etl
 
-.PHONY: up down build migrate probe import-pilot import-weather demo-data api check-data test test-db e2e reset-db
+.PHONY: web up down build migrate probe import-pilot import-weather demo-data api check-data test test-db e2e reset-db
 
 up:            ## baza + kontener ETL
 	$(COMPOSE) up -d --build --wait db
@@ -31,6 +31,12 @@ demo-data:     ## DANE DEMONSTRACYJNE w schemacie demo (fikcyjne drzewostany i p
 
 check-data:    ## liczba rekordów i braków w każdej warstwie
 	$(RUN) python -m grzyby.cli check-data
+
+web:           ## zbudowanie PWA (frontend/dist, serwowane przez API pod /)
+	cd frontend && npm ci --no-audit --no-fund && npm run build
+
+e2e:           ## Playwright, ekran 390x844 (wymaga działającego API z danymi demo)
+	cd frontend && PW_CHROMIUM=$${PW_CHROMIUM:-$$(ls -d /opt/pw-browsers/chromium-*/chrome-linux/chrome 2>/dev/null | head -1)} npx playwright test
 
 test:          ## testy jednostkowe (bez sieci)
 	$(RUN) pytest -q -m "not db" backend/tests

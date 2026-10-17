@@ -4,7 +4,9 @@ Aplikacja ocenia **potencjał siedliska i sprzyjające warunki** dla wybranych g
 w województwie podkarpackim. Nie twierdzi, że grzyby gdzieś teraz rosną, i nie ocenia jadalności
 żadnego okazu. Oznaczenie gatunku zawsze potwierdza grzyboznawca (punkty PSSE).
 
-Stan: **Etap 1 — rozpoznanie źródeł i pilotaż danych.**
+Stan: Etap 1 (pilotaż danych), Etap 2 (baza wiedzy o gatunkach MVP), Etap 3 (pogoda, Księżyc i biodynamika,
+model rekomendacji, API) i Etap 4 (PWA) — zbudowane. Źródła BDL, GDOŚ, PRG i Open-Meteo są w tym środowisku
+niedostępne (polityka sieci), dlatego aplikację można oglądać na **jawnie oznaczonych danych demonstracyjnych**.
 
 ## Szybki start
 
@@ -15,7 +17,14 @@ make import-pilot  # PRG, BDL, DEM + statystyki strefowe, GDOŚ dla obszarów pi
 make check-data    # liczba rekordów i braków w każdej warstwie
 make test          # testy jednostkowe (bez sieci)
 make test-db       # testy integracyjne na bazie
+make demo-data     # DANE DEMONSTRACYJNE (schemat demo): fikcyjne drzewostany i pogoda, prawdziwy DEM
+make web           # zbudowanie PWA → frontend/dist (serwowane przez API)
+make e2e           # Playwright, ekran 390×844
 ```
+
+Aplikacja: http://localhost:8000 (API: `/api/ranking?species=&lat=&lon=&radius_km=&date=&calendar=on|off&dataset=real|demo`,
+`/api/miejsce/{id}`, `/api/miejsce/{id}/7dni`, `/api/kalendarz`, `/api/porownanie`, `/api/mapa`, `/api/warstwy/ochrona`,
+`/api/gatunki`, `/api/zrodla`; dokumentacja OpenAPI: `/docs`).
 
 Za proxy HTTPS (kontener chmurowy): plik `.env` z
 `COMPOSE_FILE=docker-compose.yml:docker-compose.proxy.yml` i certyfikat CA proxy w `backend/certs/*.crt`.
@@ -31,7 +40,13 @@ Za proxy HTTPS (kontener chmurowy): plik `.env` z
 | `backend/grzyby/etl/` | klient HTTP (cache, limity, backoff), próbkowanie, importery |
 | `docs/schemas/` | rzeczywiste schematy próbek albo zapis o niedostępności |
 | `docs/pokrycie_danych.md` | raport pokrycia danych i licencji |
-| `docs/zalozenia.md` | założenia projektowe i metody |
+| `docs/zalozenia.md` | założenia projektowe i metody (także model A/B/C/D) |
+| `docs/weryfikacja_zrodel.md` | weryfikacja dokumentacji, licencji i bibliografii (2026-10-17) |
+| `species/` | baza wiedzy o gatunkach (YAML + bibliografia `_zrodla.yaml`) |
+| `config/model.yaml`, `config/kalendarz.yaml`, `config/pogoda.yaml` | wagi, progi i reguły (założenia projektowe) |
+| `backend/grzyby/{weather,model,api}` | agregacja pogody, model rekomendacji, API |
+| `frontend/` | PWA: React + TypeScript + Vite + MapLibre; testy e2e w `frontend/e2e` |
+| `docs/zrzuty/` | zrzuty ekranów 390×844 (dane demo) |
 | `data/` | surowe pliki, cache, rastry pochodne (poza repozytorium) |
 
 ## Zasady danych (skrót)
