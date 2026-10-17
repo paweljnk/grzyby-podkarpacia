@@ -1,0 +1,234 @@
+2026-10-17 20:23:50,568 INFO grzyby.etl.bdl_province: LP 05-02 Biłgoraj: 8553 obiektów
+2026-10-17 20:23:53,986 INFO grzyby.etl.bdl_province: LP 04-07 Dynów: 1607 obiektów
+{
+ "nadlesnictwa": [
+  {
+   "kod": "05-02",
+   "nazwa": "Biłgoraj",
+   "ha_w_wojewodztwie": 16817
+  },
+  {
+   "kod": "04-07",
+   "nazwa": "Dynów",
+   "ha_w_wojewodztwie": 26804
+  },
+  {
+   "kod": "04-23",
+   "nazwa": "Stuposiany",
+   "ha_w_wojewodztwie": 38842
+  },
+  {
+   "kod": "04-01",
+   "nazwa": "Baligród",
+   "ha_w_wojewodztwie": 30579
+  },
+  {
+   "kod": "03-03",
+   "nazwa": "Dąbrowa Tarnowska",
+   "ha_w_wojewodztwie": 22667
+  },
+  {
+   "kod": "04-06",
+   "nazwa": "Dukla",
+   "ha_w_wojewodztwie": 78752
+  },
+  {
+   "kod": "04-19",
+   "nazwa": "Oleszyce",
+   "ha_w_wojewodztwie": 34437
+  },
+  {
+   "kod": "05-28",
+   "nazwa": "Tomaszów",
+   "ha_w_wojewodztwie": 604
+  },
+  {
+   "kod": "04-27",
+   "nazwa": "Lubaczów",
+   "ha_w_wojewodztwie": 54011
+  },
+  {
+   "kod": "05-21",
+   "nazwa": "Rudnik",
+   "ha_w_wojewodztwie": 48717
+  },
+  {
+   "kod": "05-31",
+   "nazwa": "Janów Lubelski",
+   "ha_w_wojewodztwie": 15819
+  },
+  {
+   "kod": "04-02",
+   "nazwa": "Bircza",
+   "ha_w_wojewodztwie": 50349
+  },
+  {
+   "kod": "04-08",
+   "nazwa": "Głogów",
+   "ha_w_wojewodztwie": 75273
+  },
+  {
+   "kod": "04-09",
+   "nazwa": "Kańczuga",
+   "ha_w_wojewodztwie": 104340
+  },
+  {
+   "kod": "04-21",
+   "nazwa": "Sieniawa",
+   "ha_w_wojewodztwie": 44727
+  },
+  {
+   "kod": "04-16",
+   "nazwa": "Lutowiska",
+   "ha_w_wojewodztwie": 27445
+  },
+  {
+   "kod": "03-04",
+   "nazwa": "Dębica",
+   "ha_w_wojewodztwie": 74588
+  },
+  {
+   "kod": "03-05",
+   "nazwa": "Gorlice",
+   "ha_w_wojewodztwie": 2266
+  },
+  {
+   "kod": "04-28",
+   "nazwa": "Jarosław",
+   "ha_w_wojewodztwie": 78213
+  },
+  {
+   "kod": "04-11",
+   "nazwa": "Kołaczyce",
+   "ha_w_wojewodztwie": 83559
+  },
+  {
+   "kod": "05-03",
+   "nazwa": "Nowa Dęba",
+   "ha_w_wojewodztwie": 77915
+  },
+  {
+   "kod": "04-15",
+   "nazwa": "Leżajsk",
+   "ha_w_wojewodztwie": 89812
+  },
+  {
+   "kod": "04-17",
+   "nazwa": "Mielec",
+   "ha_w_wojewodztwie": 28385
+  },
+  {
+   "kod": "05-20",
+   "nazwa": "Rozwadów",
+   "ha_w_wojewodztwie": 59912
+  },
+  {
+   "kod": "04-13",
+   "nazwa": "Krasiczyn",
+   "ha_w_wojewodztwie": 60586
+  },
+  {
+   "kod": "04-14",
+   "nazwa": "Lesko",
+   "ha_w_wojewodztwie": 53517
+  },
+  {
+   "kod": "03-06",
+   "nazwa": "Gromnik",
+   "ha_w_wojewodztwie": 145
+  },
+  {
+   "kod": "04-04",
+   "nazwa": "Brzozów",
+   "ha_w_wojewodztwie": 72642
+  },
+  {
+   "kod": "05-07",
+   "nazwa": "Józefów",
+   "ha_w_wojewodztwie": 1
+  },
+  {
+   "kod": "04-03",
+   "nazwa": "Ustrzyki Dolne",
+   "ha_w_wojewodztwie": 46962
+  },
+  {
+   "kod": "04-12",
+   "nazwa": "Komańcza",
+   "ha_w_wojewodztwie": 28559
+  },
+  {
+   "kod": "04-10",
+   "nazwa": "Kolbuszowa",
+   "ha_w_wojewodztwie": 42298
+  },
+  {
+   "kod": "05-05",
+   "nazwa": "Gościeradów",
+   "ha_w_wojewodztwie": 25176
+  },
+  {
+   "kod": "04-20",
+   "nazwa": "Rymanów",
+   "ha_w_wojewodztwie": 46687
+  },
+  {
+   "kod": "04-18",
+   "nazwa": "Narol",
+   "ha_w_wojewodztwie": 35623
+  },
+  {
+   "kod": "04-05",
+   "nazwa": "Cisna",
+   "ha_w_wojewodztwie": 22219
+  },
+  {
+   "kod": "04-24",
+   "nazwa": "Tuszyma",
+   "ha_w_wojewodztwie": 52872
+  },
+  {
+   "kod": "04-22",
+   "nazwa": "Strzyżów",
+   "ha_w_wojewodztwie": 132163
+  }
+ ],
+ "lp": {
+  "pobrane": 10160,
+  "z_cache": 0,
+  "zapisane": 4073,
+  "duplikaty": 0,
+  "naprawione_geometrie": 6,
+  "poza_wojewodztwem": 6087,
+  "bez_geometrii": 0
+ },
+ "poza_lp": {
+  "pobrane": 25330,
+  "z_cache": 0,
+  "zapisane": 13872,
+  "duplikaty": 669,
+  "naprawione_geometrie": 22,
+  "poza_wojewodztwem": 10789,
+  "bez_geometrii": 0
+ },
+ "siedliska": {
+  "pobrane": 9979,
+  "z_cache": 0,
+  "zapisane": 5382,
+  "duplikaty": 280,
+  "naprawione_geometrie": 5,
+  "poza_wojewodztwem": 4317,
+  "bez_geometrii": 0
+ },
+ "zakazy": {
+  "w_kraju": 789,
+  "w_wojewodztwie": 0
+ }
+}
+dem-woj 17945
+soilgrids 17840
+worldcover 17907
+{"komorek": 17907, "las_ref_ha": 963379, "pokryte_ha_szac": 29608, "bdl_ha_w_komorkach": 30030, "pokrycie_proc": 3.1, "komorki_pelniejsze": 16, "komorki_czesciowe": 680, "komorki_brak_oceny": 17211}
+40 komórek
+{'procent_pokrycia': 3.1, 'nadlesnictw': 38}
+{'pakiet': 'baza', 'wygenerowano': '2026-10-17T18:26:36+00:00', 'wiersze': {'ref.obszar_pilotazowy': 1, 'ref.wojewodztwo': 1, 'ref.nadlesnictwo': 38, 'forest.wydzielenie': 17945, 'terrain.wydzielenie_teren': 17945, 'terrain.raster': 3, 'weather.komorka': 40, 'forest.wydzielenie_komorka': 17945, 'protection.forma_ochrony': 0, 'coverage.siatka': 17907}}

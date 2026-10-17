@@ -1,0 +1,401 @@
+{
+ "wygenerowano_utc": "2026-10-17T18:26:33+00:00",
+ "wojewodztwo_ha": 1784371.0,
+ "nadlesnictwa": [
+  {
+   "kod": "03-03",
+   "nazwa": "Dąbrowa Tarnowska",
+   "ha_nadlesnictwa_w_wojewodztwie": 22667.0,
+   "ha_nadlesnictwa": 149275.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "03-04",
+   "nazwa": "Dębica",
+   "ha_nadlesnictwa_w_wojewodztwie": 74588.0,
+   "ha_nadlesnictwa": 74898.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "03-05",
+   "nazwa": "Gorlice",
+   "ha_nadlesnictwa_w_wojewodztwie": 2266.0,
+   "ha_nadlesnictwa": 51696.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "03-06",
+   "nazwa": "Gromnik",
+   "ha_nadlesnictwa_w_wojewodztwie": 145.0,
+   "ha_nadlesnictwa": 97688.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-01",
+   "nazwa": "Baligród",
+   "ha_nadlesnictwa_w_wojewodztwie": 30579.0,
+   "ha_nadlesnictwa": 30579.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-02",
+   "nazwa": "Bircza",
+   "ha_nadlesnictwa_w_wojewodztwie": 50349.0,
+   "ha_nadlesnictwa": 50350.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-03",
+   "nazwa": "Ustrzyki Dolne",
+   "ha_nadlesnictwa_w_wojewodztwie": 46962.0,
+   "ha_nadlesnictwa": 46962.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-04",
+   "nazwa": "Brzozów",
+   "ha_nadlesnictwa_w_wojewodztwie": 72642.0,
+   "ha_nadlesnictwa": 72642.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-05",
+   "nazwa": "Cisna",
+   "ha_nadlesnictwa_w_wojewodztwie": 22219.0,
+   "ha_nadlesnictwa": 22219.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-06",
+   "nazwa": "Dukla",
+   "ha_nadlesnictwa_w_wojewodztwie": 78752.0,
+   "ha_nadlesnictwa": 80648.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-07",
+   "nazwa": "Dynów",
+   "ha_nadlesnictwa_w_wojewodztwie": 26804.0,
+   "ha_nadlesnictwa": 26804.0,
+   "wydzielen_LP": 1607,
+   "ha_drzewostanow_LP_w_wojewodztwie": 10461.0
+  },
+  {
+   "kod": "04-08",
+   "nazwa": "Głogów",
+   "ha_nadlesnictwa_w_wojewodztwie": 75273.0,
+   "ha_nadlesnictwa": 75273.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-09",
+   "nazwa": "Kańczuga",
+   "ha_nadlesnictwa_w_wojewodztwie": 104340.0,
+   "ha_nadlesnictwa": 104340.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-10",
+   "nazwa": "Kolbuszowa",
+   "ha_nadlesnictwa_w_wojewodztwie": 42298.0,
+   "ha_nadlesnictwa": 42298.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-11",
+   "nazwa": "Kołaczyce",
+   "ha_nadlesnictwa_w_wojewodztwie": 83559.0,
+   "ha_nadlesnictwa": 99023.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-12",
+   "nazwa": "Komańcza",
+   "ha_nadlesnictwa_w_wojewodztwie": 28559.0,
+   "ha_nadlesnictwa": 28560.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-13",
+   "nazwa": "Krasiczyn",
+   "ha_nadlesnictwa_w_wojewodztwie": 60586.0,
+   "ha_nadlesnictwa": 60587.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-14",
+   "nazwa": "Lesko",
+   "ha_nadlesnictwa_w_wojewodztwie": 53517.0,
+   "ha_nadlesnictwa": 53517.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-15",
+   "nazwa": "Leżajsk",
+   "ha_nadlesnictwa_w_wojewodztwie": 89812.0,
+   "ha_nadlesnictwa": 89813.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-16",
+   "nazwa": "Lutowiska",
+   "ha_nadlesnictwa_w_wojewodztwie": 27445.0,
+   "ha_nadlesnictwa": 27446.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-17",
+   "nazwa": "Mielec",
+   "ha_nadlesnictwa_w_wojewodztwie": 28385.0,
+   "ha_nadlesnictwa": 28385.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-18",
+   "nazwa": "Narol",
+   "ha_nadlesnictwa_w_wojewodztwie": 35623.0,
+   "ha_nadlesnictwa": 35623.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-19",
+   "nazwa": "Oleszyce",
+   "ha_nadlesnictwa_w_wojewodztwie": 34437.0,
+   "ha_nadlesnictwa": 34437.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-20",
+   "nazwa": "Rymanów",
+   "ha_nadlesnictwa_w_wojewodztwie": 46687.0,
+   "ha_nadlesnictwa": 46687.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-21",
+   "nazwa": "Sieniawa",
+   "ha_nadlesnictwa_w_wojewodztwie": 44727.0,
+   "ha_nadlesnictwa": 44727.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-22",
+   "nazwa": "Strzyżów",
+   "ha_nadlesnictwa_w_wojewodztwie": 132163.0,
+   "ha_nadlesnictwa": 132163.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-23",
+   "nazwa": "Stuposiany",
+   "ha_nadlesnictwa_w_wojewodztwie": 38842.0,
+   "ha_nadlesnictwa": 38851.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-24",
+   "nazwa": "Tuszyma",
+   "ha_nadlesnictwa_w_wojewodztwie": 52872.0,
+   "ha_nadlesnictwa": 52872.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-27",
+   "nazwa": "Lubaczów",
+   "ha_nadlesnictwa_w_wojewodztwie": 54011.0,
+   "ha_nadlesnictwa": 54011.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "04-28",
+   "nazwa": "Jarosław",
+   "ha_nadlesnictwa_w_wojewodztwie": 78213.0,
+   "ha_nadlesnictwa": 78215.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "05-02",
+   "nazwa": "Biłgoraj",
+   "ha_nadlesnictwa_w_wojewodztwie": 16817.0,
+   "ha_nadlesnictwa": 106090.0,
+   "wydzielen_LP": 2466,
+   "ha_drzewostanow_LP_w_wojewodztwie": 4506.0
+  },
+  {
+   "kod": "05-03",
+   "nazwa": "Nowa Dęba",
+   "ha_nadlesnictwa_w_wojewodztwie": 77915.0,
+   "ha_nadlesnictwa": 77915.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "05-05",
+   "nazwa": "Gościeradów",
+   "ha_nadlesnictwa_w_wojewodztwie": 25176.0,
+   "ha_nadlesnictwa": 65782.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "05-07",
+   "nazwa": "Józefów",
+   "ha_nadlesnictwa_w_wojewodztwie": 1.0,
+   "ha_nadlesnictwa": 68220.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "05-20",
+   "nazwa": "Rozwadów",
+   "ha_nadlesnictwa_w_wojewodztwie": 59912.0,
+   "ha_nadlesnictwa": 61065.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "05-21",
+   "nazwa": "Rudnik",
+   "ha_nadlesnictwa_w_wojewodztwie": 48717.0,
+   "ha_nadlesnictwa": 48717.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "05-28",
+   "nazwa": "Tomaszów",
+   "ha_nadlesnictwa_w_wojewodztwie": 604.0,
+   "ha_nadlesnictwa": 125432.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  },
+  {
+   "kod": "05-31",
+   "nazwa": "Janów Lubelski",
+   "ha_nadlesnictwa_w_wojewodztwie": 15819.0,
+   "ha_nadlesnictwa": 94996.0,
+   "wydzielen_LP": 0,
+   "ha_drzewostanow_LP_w_wojewodztwie": 0.0
+  }
+ ],
+ "poza_LP_wg_wlasnosci": [
+  {
+   "wlasnosc": "prywatne",
+   "wydzielen": 12490,
+   "ha": 11282.0,
+   "rok_od": 1996,
+   "rok_do": 2023
+  },
+  {
+   "wlasnosc": "gminne",
+   "wydzielen": 1247,
+   "ha": 2985.0,
+   "rok_od": 1996,
+   "rok_do": 2018
+  },
+  {
+   "wlasnosc": "współwłasności",
+   "wydzielen": 96,
+   "ha": 62.0,
+   "rok_od": 2017,
+   "rok_do": 2023
+  },
+  {
+   "wlasnosc": "inne Skarbu Państwa",
+   "wydzielen": 38,
+   "ha": 20.0,
+   "rok_od": 2001,
+   "rok_do": 2005
+  },
+  {
+   "wlasnosc": "SP w zarządzie Lasów Państwowych",
+   "wydzielen": 1,
+   "ha": 0.0,
+   "rok_od": 2005,
+   "rok_do": 2005
+  }
+ ],
+ "pokrycie": {
+  "warstwa_referencyjna": "ESA WorldCover 2021 v200, klasa 10 'Tree cover' (10 m), w granicach województwa (PRG)",
+  "komorek_1km_z_lasem": 17907,
+  "las_referencyjny_ha": 963379.0,
+  "pokryty_danymi_BDL_ha_szac": 29608.0,
+  "procent_pokrycia": 3.1,
+  "komorki_pelniejsze": 16,
+  "komorki_czesciowe": 680,
+  "komorki_brak_oceny": 17211,
+  "las_ref_w_komorkach_brak_oceny_ha": 922466.0,
+  "metoda": "dla każdej komórki 1 km: min(powierzchnia drzewostanów BDL, las wg WorldCover); suma / suma lasu referencyjnego. 'Tree cover' ≠ las w rozumieniu ustawy — wartość przybliżona."
+ },
+ "drzewostany_BDL_w_wojewodztwie_ha": 29318.0,
+ "zakazy_wstepu": {
+  "w_wojewodztwie": 0,
+  "aktualne_dzis": 0
+ },
+ "jakosc": {
+  "LP": {
+   "wydzielen": 4073,
+   "ha_w_wojewodztwie": 14968.0,
+   "niepoprawne_geometrie": 0,
+   "brak_gatunku": 0,
+   "brak_udzialu": 0,
+   "brak_tsl": 0,
+   "brak_wieku": 0,
+   "brak_gleby": 3158,
+   "brak_uwilgotnienia": 3158,
+   "brak_ph_model": 2,
+   "klasa_pelniejsze": 915
+  },
+  "poza_LP": {
+   "wydzielen": 13872,
+   "ha_w_wojewodztwie": 14350.0,
+   "niepoprawne_geometrie": 0,
+   "brak_gatunku": 0,
+   "brak_udzialu": 0,
+   "brak_tsl": 0,
+   "brak_wieku": 0,
+   "brak_gleby": 13868,
+   "brak_uwilgotnienia": 13868,
+   "brak_ph_model": 103,
+   "klasa_pelniejsze": 4
+  },
+  "duplikaty_adresu_LP": 0,
+  "duplikaty_geometrii": 0
+ },
+ "braki_danych": [
+  "Pełny skład gatunkowy z udziałami — niedostępny w usługach BDL (OGC API, WFS, WMS, REST); tylko w paczce z formularza bdl.lasy.gov.pl/portal/wniosek (wymaga adresu e-mail i akceptacji warunków).",
+  "pH gleby — brak w BDL; zastępczo SoilGrids (model 250 m, z przedziałem Q0.05–Q0.95).",
+  "Słownik kodów uwilgotnienia (moisture_cd) — nieopublikowany; kod pokazywany bez interpretacji.",
+  "Formy ochrony przyrody GDOŚ — usługa zwraca HTTP 403 z serwerów GitHub Actions; parki narodowe rozpoznawane z kategorii własności BDL ('SP w zarządzie Parków Narodowych').",
+  "Lasy bez planu urządzenia lasu (poza LP i poza PUL, np. małe lasy prywatne z uproszczonym planem lub bez) — brak opisu w BDL; widoczne jako 'brak możliwości oceny' w siatce pokrycia."
+ ]
+}
