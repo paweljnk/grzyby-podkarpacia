@@ -1,0 +1,97 @@
+id: imleria_badia
+nazwa_polska: podgrzybek brunatny
+nazwy_zwyczajowe: [podgrzybek, czarny łebek]
+nazwa_naukowa:
+  aktualna: Imleria badia (Fr.) Vizzini
+  synonimy: [Xerocomus badius (Fr.) E.-J. Gilbert, Boletus badius (Fr.) Fr.]
+  uwagi: Przeniesiony do monotypowego rodzaju Imleria w 2014 r.; starsze przewodniki podają Xerocomus badius.
+  zrodla: [vizzini_2014, index_fungorum]
+typ_troficzny:
+  wartosc: mikoryzowy
+  zrodla: [funga_nordica_2012]
+  wiarygodnosc: B
+drzewa_partnerskie:
+  - {drzewo: SO, sila: silny, zrodla: [funga_nordica_2012, gruminska_wojewoda_1985], wiarygodnosc: B}
+  - {drzewo: SW, sila: silny, zrodla: [funga_nordica_2012], wiarygodnosc: B}
+  - {drzewo: BK, sila: umiarkowany, zrodla: [gruminska_wojewoda_1985], wiarygodnosc: B}
+  - {drzewo: DB, sila: umiarkowany, zrodla: [gruminska_wojewoda_1985], wiarygodnosc: B}
+  - {drzewo: JD, sila: umiarkowany, zrodla: [praktyka_grzybiarska], wiarygodnosc: C}
+  - {drzewo: MD, sila: slaby, zrodla: [praktyka_grzybiarska], wiarygodnosc: C}
+  - {drzewo: BRZ, sila: slaby, zrodla: [praktyka_grzybiarska], wiarygodnosc: C}
+wiek_drzewostanu:
+  min_lat: 20
+  optimum_lat: [35, 120]
+  zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+  wiarygodnosc: C
+gleba:
+  odczyn: [kwasny]
+  zyznosc: [uboga, srednia]
+  uwilgotnienie: [swieza, wilgotna]
+  zrodla: [gruminska_wojewoda_1985]
+  wiarygodnosc: B
+typy_siedliskowe:
+  preferowane: [Bśw, BMśw, Bw, BMw]
+  dopuszczalne: [LMśw, LMw, BMG, LMG, BMwyż, LMwyż]
+  zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+  wiarygodnosc: C
+wysokosc_npm:
+  min_m: 0
+  max_m: 1200
+  zrodla: [zalozenie_projektowe]
+  wiarygodnosc: C
+sezon:
+  wysokosc_odniesienia_m: 200
+  start: "07-15"
+  szczyt: ["09-01", "10-25"]
+  koniec: "11-20"
+  poprawka_wysokosci_dni_na_100m: 3
+  zrodla: [gruminska_wojewoda_1985, zalozenie_projektowe]
+  wiarygodnosc: C
+  uwagi: Gatunek późniejszy niż borowik szlachetny; owocnikuje do pierwszych silniejszych przymrozków.
+pogoda:
+  opady:
+    okno_dni: 14
+    min_mm: 15
+    optimum_mm: [35, 90]
+    zrodla: [boddy_2014, praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+  opoznienie_po_opadzie:
+    progi:
+      - {t_sr_od: 3,  t_sr_do: 10, dni: [12, 20]}
+      - {t_sr_od: 10, t_sr_do: 16, dni: [8, 14]}
+      - {t_sr_od: 16, t_sr_do: 30, dni: [6, 11]}
+    opad_istotny_mm: 12
+    zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+  temperatura:
+    t_sr_min: 5
+    t_sr_optimum: [9, 17]
+    t_sr_max: 24
+    zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+  susza:
+    dni_bez_opadu_kara_od: 10
+    bilans_14d_mm_kara_ponizej: -25
+    bilans_14d_mm_bramka_ponizej: -45
+    zrodla: [boddy_2014, zalozenie_projektowe]
+    wiarygodnosc: C
+  przymrozek:
+    tmin_prog_c: -1
+    kara_pkt_za_dzien_7d: 10
+    zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+status:
+  wartosc: jadalny
+  uwagi:
+    - Najczęstsza pomyłka to goryczak żółciowy (gorzki, niejadalny).
+  zrodla: [gruminska_wojewoda_1985]
+  wiarygodnosc: B
+sobowtory: [tylopilus_felleus]
+sprzecznosci:
+  - temat: nazwa naukowa
+    opis: Część przewodników i baz krajowych nadal używa Xerocomus badius; w danych GBIF wyszukujemy po wszystkich synonimach.
+    zrodla: [vizzini_2014, wojewoda_2003]
+weryfikacja:
+  status: wersja_robocza
+  zatwierdzil: null
+  data: null

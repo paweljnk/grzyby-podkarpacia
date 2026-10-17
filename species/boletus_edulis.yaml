@@ -1,0 +1,103 @@
+id: boletus_edulis
+nazwa_polska: borowik szlachetny
+nazwy_zwyczajowe: [prawdziwek, borowik]
+nazwa_naukowa:
+  aktualna: Boletus edulis Bull.
+  synonimy: [Boletus edulis f. edulis]
+  uwagi: >-
+    Dawniej w szerokim ujęciu obejmował też borowiki ceglastopore/ciemnobrązowe; w ujęciu filogenetycznym
+    B. pinophilus, B. reticulatus (= B. aestivalis) i B. aereus są odrębnymi gatunkami — nie łączymy ich wymagań.
+  zrodla: [index_fungorum, dentinger_2010]
+typ_troficzny:
+  wartosc: mikoryzowy
+  zrodla: [funga_nordica_2012, gruminska_wojewoda_1985]
+  wiarygodnosc: B
+drzewa_partnerskie:
+  - {drzewo: SW, sila: silny, zrodla: [funga_nordica_2012, gruminska_wojewoda_1985], wiarygodnosc: B}
+  - {drzewo: SO, sila: silny, zrodla: [funga_nordica_2012], wiarygodnosc: B}
+  - {drzewo: BK, sila: silny, zrodla: [gruminska_wojewoda_1985], wiarygodnosc: B}
+  - {drzewo: DB, sila: umiarkowany, zrodla: [gruminska_wojewoda_1985], wiarygodnosc: B}
+  - {drzewo: BRZ, sila: umiarkowany, zrodla: [funga_nordica_2012], wiarygodnosc: B}
+  - {drzewo: JD, sila: umiarkowany, zrodla: [praktyka_grzybiarska], wiarygodnosc: C}
+  - {drzewo: GB, sila: slaby, zrodla: [praktyka_grzybiarska], wiarygodnosc: C}
+wiek_drzewostanu:
+  min_lat: 25
+  optimum_lat: [40, 140]
+  zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+  wiarygodnosc: C
+gleba:
+  odczyn: [kwasny, lekko_kwasny]
+  zyznosc: [uboga, srednia]
+  uwilgotnienie: [swieza]
+  zrodla: [gruminska_wojewoda_1985]
+  wiarygodnosc: B
+typy_siedliskowe:
+  preferowane: [BMśw, LMśw, BMG, LMG]
+  dopuszczalne: [Bśw, Lśw, BMw, LMw, LG, BMwyż, LMwyż, Lwyż]
+  zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+  wiarygodnosc: C
+wysokosc_npm:
+  min_m: 0
+  max_m: 1300
+  zrodla: [zalozenie_projektowe]
+  wiarygodnosc: C
+sezon:
+  wysokosc_odniesienia_m: 200
+  start: "06-10"
+  szczyt: ["08-01", "09-30"]
+  koniec: "10-31"
+  poprawka_wysokosci_dni_na_100m: 3      # start później, koniec wcześniej o tyle dni na każde 100 m powyżej odniesienia
+  zrodla: [gruminska_wojewoda_1985, kauserud_2008, zalozenie_projektowe]
+  wiarygodnosc: C
+  uwagi: Zakres miesięcy (VI–X, szczyt VIII–IX) wg przewodników; daty dzienne i poprawka wysokościowa to założenie.
+pogoda:
+  opady:
+    okno_dni: 14
+    min_mm: 20
+    optimum_mm: [40, 90]
+    zrodla: [boddy_2014, praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+  opoznienie_po_opadzie:
+    # opóźnienie pojawu owocników po istotnym opadzie, zależne od średniej temperatury dobowej
+    progi:
+      - {t_sr_od: 5,  t_sr_do: 12, dni: [12, 20]}
+      - {t_sr_od: 12, t_sr_do: 18, dni: [8, 14]}
+      - {t_sr_od: 18, t_sr_do: 30, dni: [5, 10]}
+    opad_istotny_mm: 15
+    zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+  temperatura:
+    t_sr_min: 8
+    t_sr_optimum: [13, 21]
+    t_sr_max: 27
+    zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+  susza:
+    dni_bez_opadu_kara_od: 10
+    bilans_14d_mm_kara_ponizej: -25
+    bilans_14d_mm_bramka_ponizej: -45
+    zrodla: [boddy_2014, zalozenie_projektowe]
+    wiarygodnosc: C
+  przymrozek:
+    tmin_prog_c: 0
+    kara_pkt_za_dzien_7d: 15
+    zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+status:
+  wartosc: jadalny
+  uwagi:
+    - Spożywać wyłącznie okazy oznaczone z pewnością; najczęstsza pomyłka to goryczak żółciowy (gorzki).
+    - Nie zbierać okazów starych, rozmiękłych i robaczywych.
+  zrodla: [gruminska_wojewoda_1985]
+  wiarygodnosc: B
+sobowtory: [tylopilus_felleus, rubroboletus_satanas]
+sprzecznosci:
+  - temat: drzewa partnerskie
+    opis: >-
+      Przewodniki różnią się co do roli jodły i grabu (część podaje tylko świerk, sosnę, buk, dąb, brzozę).
+      Jodłę i grab przyjęto z siłą 'umiarkowany'/'slaby' i wiarygodnością C.
+    zrodla: [funga_nordica_2012, gruminska_wojewoda_1985, praktyka_grzybiarska]
+weryfikacja:
+  status: wersja_robocza
+  zatwierdzil: null
+  data: null

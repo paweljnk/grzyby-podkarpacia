@@ -1,0 +1,53 @@
+# Bibliografia bazy wiedzy o gatunkach.
+# klasa: A — publikacja naukowa; B — monografia / przewodnik / baza nomenklatoryczna; C — wiedza praktyczna / założenie.
+# zweryfikowano: false = opis bibliograficzny podany z pamięci autora pliku; przed publikacją sprawdzić
+# w bibliotece/katalogu (tytuł, rok, strony) i potwierdzić, że treść reguły rzeczywiście z niego wynika.
+zrodla:
+  index_fungorum:
+    opis: Index Fungorum. www.indexfungorum.org — aktualne nazwy i synonimy
+    klasa: B
+    zweryfikowano: false
+  mycobank:
+    opis: MycoBank Database. www.mycobank.org — nazwy i synonimy
+    klasa: B
+    zweryfikowano: false
+  wojewoda_2003:
+    opis: "Wojewoda W. 2003. Checklist of Polish larger Basidiomycetes. W. Szafer Institute of Botany, PAS, Kraków"
+    klasa: B
+    zweryfikowano: false
+  gruminska_wojewoda_1985:
+    opis: "Gumińska B., Wojewoda W. 1985. Grzyby i ich oznaczanie. PWRiL, Warszawa"
+    klasa: B
+    zweryfikowano: false
+  funga_nordica_2012:
+    opis: "Knudsen H., Vesterholt J. (red.) 2012. Funga Nordica. Agaricoid, boletoid, clavarioid, cyphelloid and gastroid genera. Wyd. 2. Nordsvamp, Kopenhaga"
+    klasa: B
+    zweryfikowano: false
+  dentinger_2010:
+    opis: "Dentinger B.T.M. i in. 2010. Molecular phylogenetics of porcini mushrooms (Boletus section Boletus). Molecular Phylogenetics and Evolution 57: 1276–1292"
+    klasa: A
+    zweryfikowano: false
+  vizzini_2014:
+    opis: "Vizzini A. 2014. Nomenclatural novelties. Index Fungorum 147 (Imleria badia comb. nov.)"
+    klasa: A
+    zweryfikowano: false
+  olariaga_2017:
+    opis: "Olariaga I. i in. 2017. Cantharellus (Cantharellales, Basidiomycota) revisited in Europe through a multigene phylogeny. Fungal Diversity 83: 263–292"
+    klasa: A
+    zweryfikowano: false
+  boddy_2014:
+    opis: "Boddy L. i in. 2014. Climate variation effects on fungal fruiting. Fungal Ecology 10: 20–33 (przegląd: wpływ opadów i temperatury na owocnikowanie; bez progów dla gatunków)"
+    klasa: A
+    zweryfikowano: false
+  kauserud_2008:
+    opis: "Kauserud H. i in. 2008. Mushroom fruiting and climate change. PNAS 105: 3811–3814 (przesunięcia sezonu owocnikowania)"
+    klasa: A
+    zweryfikowano: false
+  zalozenie_projektowe:
+    opis: Założenie projektowe zespołu — wartość startowa do kalibracji na obserwacjach (Etap 6); nie jest ustaloną zależnością biologiczną
+    klasa: C
+    zweryfikowano: true
+  praktyka_grzybiarska:
+    opis: Wiedza praktyczna grzybiarzy (powszechne obserwacje, nieopublikowane systematycznie)
+    klasa: C
+    zweryfikowano: true

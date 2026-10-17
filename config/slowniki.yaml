@@ -1,0 +1,55 @@
+# Słowniki kontrolowane używane przez species/*.yaml i model.
+# Skróty gatunków drzew: zwyczajowe skróty leśne w Polsce. Mapowanie na kody pól BDL
+# zostanie dodane po odczytaniu rzeczywistego schematu (config/bdl_mapping.yaml).
+drzewa:
+  SO:  {nazwa: sosna zwyczajna, lacina: Pinus sylvestris}
+  SW:  {nazwa: świerk pospolity, lacina: Picea abies}
+  JD:  {nazwa: jodła pospolita, lacina: Abies alba}
+  MD:  {nazwa: modrzew europejski, lacina: Larix decidua}
+  BK:  {nazwa: buk zwyczajny, lacina: Fagus sylvatica}
+  DB:  {nazwa: dąb (szypułkowy i bezszypułkowy), lacina: Quercus robur / Q. petraea}
+  GB:  {nazwa: grab pospolity, lacina: Carpinus betulus}
+  BRZ: {nazwa: brzoza (brodawkowata i omszona), lacina: Betula pendula / B. pubescens}
+  OS:  {nazwa: osika, lacina: Populus tremula}
+  TP:  {nazwa: topola, lacina: Populus spp.}
+  OL:  {nazwa: olsza czarna, lacina: Alnus glutinosa}
+  OLS: {nazwa: olsza szara, lacina: Alnus incana}
+  JW:  {nazwa: jawor, lacina: Acer pseudoplatanus}
+  LP:  {nazwa: lipa, lacina: Tilia spp.}
+  KL:  {nazwa: klon, lacina: Acer platanoides}
+  JS:  {nazwa: jesion wyniosły, lacina: Fraxinus excelsior}
+
+# Typy siedliskowe lasu (TSL) — klasyfikacja stosowana w urządzaniu lasu w Polsce.
+typy_siedliskowe:
+  # niżowe
+  Bs:     {nazwa: bór suchy, zyznosc: 1, wilgotnosc: sucha, kraina: nizinna}
+  Bśw:    {nazwa: bór świeży, zyznosc: 2, wilgotnosc: swieza, kraina: nizinna}
+  Bw:     {nazwa: bór wilgotny, zyznosc: 2, wilgotnosc: wilgotna, kraina: nizinna}
+  Bb:     {nazwa: bór bagienny, zyznosc: 1, wilgotnosc: bagienna, kraina: nizinna}
+  BMśw:   {nazwa: bór mieszany świeży, zyznosc: 3, wilgotnosc: swieza, kraina: nizinna}
+  BMw:    {nazwa: bór mieszany wilgotny, zyznosc: 3, wilgotnosc: wilgotna, kraina: nizinna}
+  BMb:    {nazwa: bór mieszany bagienny, zyznosc: 3, wilgotnosc: bagienna, kraina: nizinna}
+  LMśw:   {nazwa: las mieszany świeży, zyznosc: 4, wilgotnosc: swieza, kraina: nizinna}
+  LMw:    {nazwa: las mieszany wilgotny, zyznosc: 4, wilgotnosc: wilgotna, kraina: nizinna}
+  LMb:    {nazwa: las mieszany bagienny, zyznosc: 4, wilgotnosc: bagienna, kraina: nizinna}
+  Lśw:    {nazwa: las świeży, zyznosc: 5, wilgotnosc: swieza, kraina: nizinna}
+  Lw:     {nazwa: las wilgotny, zyznosc: 5, wilgotnosc: wilgotna, kraina: nizinna}
+  Ol:     {nazwa: ols, zyznosc: 5, wilgotnosc: bagienna, kraina: nizinna}
+  OlJ:    {nazwa: ols jesionowy, zyznosc: 5, wilgotnosc: bagienna, kraina: nizinna}
+  Lł:     {nazwa: las łęgowy, zyznosc: 6, wilgotnosc: zalewowa, kraina: nizinna}
+  # wyżynne
+  BMwyż:  {nazwa: bór mieszany wyżynny, zyznosc: 3, wilgotnosc: swieza, kraina: wyzynna}
+  LMwyż:  {nazwa: las mieszany wyżynny, zyznosc: 4, wilgotnosc: swieza, kraina: wyzynna}
+  Lwyż:   {nazwa: las wyżynny, zyznosc: 5, wilgotnosc: swieza, kraina: wyzynna}
+  # górskie
+  BMG:    {nazwa: bór mieszany górski, zyznosc: 3, wilgotnosc: swieza, kraina: gorska}
+  BWG:    {nazwa: bór wysokogórski, zyznosc: 2, wilgotnosc: swieza, kraina: gorska}
+  LMG:    {nazwa: las mieszany górski, zyznosc: 4, wilgotnosc: swieza, kraina: gorska}
+  LG:     {nazwa: las górski, zyznosc: 5, wilgotnosc: swieza, kraina: gorska}
+  LłG:    {nazwa: las łęgowy górski, zyznosc: 6, wilgotnosc: zalewowa, kraina: gorska}
+  OlJG:   {nazwa: ols jesionowy górski, zyznosc: 5, wilgotnosc: bagienna, kraina: gorska}
+
+troficzne: [mikoryzowy, saprotroficzny]
+status_jadalnosci: [jadalny, niejadalny, trujacy, smiertelnie_trujacy, niepewny]
+wiarygodnosc: [A, B, C]   # A publikacja naukowa, B monografia/przewodnik, C wiedza praktyczna/założenie
+sila_zwiazku: [silny, umiarkowany, slaby]

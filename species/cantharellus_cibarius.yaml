@@ -1,0 +1,101 @@
+id: cantharellus_cibarius
+nazwa_polska: pieprznik jadalny
+nazwy_zwyczajowe: [kurka]
+nazwa_naukowa:
+  aktualna: Cantharellus cibarius Fr.
+  synonimy: [Cantharellus vulgaris Gray]
+  uwagi: >-
+    Taksonomia europejskich pieprzników była rewidowana filogenetycznie; gatunki bliskie (np. C. amethysteus,
+    C. ferruginascens) bywają w przewodnikach łączone z kurką — nie przypisujemy im wspólnych wymagań.
+  zrodla: [olariaga_2017, index_fungorum]
+typ_troficzny:
+  wartosc: mikoryzowy
+  zrodla: [olariaga_2017, funga_nordica_2012]
+  wiarygodnosc: B
+drzewa_partnerskie:
+  - {drzewo: SO, sila: silny, zrodla: [funga_nordica_2012], wiarygodnosc: B}
+  - {drzewo: SW, sila: silny, zrodla: [funga_nordica_2012], wiarygodnosc: B}
+  - {drzewo: BK, sila: silny, zrodla: [gruminska_wojewoda_1985], wiarygodnosc: B}
+  - {drzewo: DB, sila: silny, zrodla: [gruminska_wojewoda_1985], wiarygodnosc: B}
+  - {drzewo: BRZ, sila: umiarkowany, zrodla: [funga_nordica_2012], wiarygodnosc: B}
+  - {drzewo: GB, sila: umiarkowany, zrodla: [praktyka_grzybiarska], wiarygodnosc: C}
+  - {drzewo: JD, sila: umiarkowany, zrodla: [praktyka_grzybiarska], wiarygodnosc: C}
+wiek_drzewostanu:
+  min_lat: 20
+  optimum_lat: [30, 120]
+  zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+  wiarygodnosc: C
+gleba:
+  odczyn: [kwasny, lekko_kwasny]
+  zyznosc: [uboga, srednia]
+  uwilgotnienie: [swieza, wilgotna]
+  zrodla: [gruminska_wojewoda_1985]
+  wiarygodnosc: B
+typy_siedliskowe:
+  preferowane: [Bśw, BMśw, LMśw, LMG]
+  dopuszczalne: [Bw, BMw, Lśw, LG, BMG, BMwyż, LMwyż, Lwyż]
+  zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+  wiarygodnosc: C
+wysokosc_npm:
+  min_m: 0
+  max_m: 1200
+  zrodla: [zalozenie_projektowe]
+  wiarygodnosc: C
+sezon:
+  wysokosc_odniesienia_m: 200
+  start: "06-15"
+  szczyt: ["07-10", "09-15"]
+  koniec: "10-20"
+  poprawka_wysokosci_dni_na_100m: 3
+  zrodla: [gruminska_wojewoda_1985, zalozenie_projektowe]
+  wiarygodnosc: C
+pogoda:
+  opady:
+    okno_dni: 14
+    min_mm: 15
+    optimum_mm: [30, 80]
+    zrodla: [boddy_2014, praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+  opoznienie_po_opadzie:
+    progi:
+      - {t_sr_od: 8,  t_sr_do: 14, dni: [8, 14]}
+      - {t_sr_od: 14, t_sr_do: 20, dni: [5, 10]}
+      - {t_sr_od: 20, t_sr_do: 30, dni: [4, 8]}
+    opad_istotny_mm: 12
+    zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+  temperatura:
+    t_sr_min: 10
+    t_sr_optimum: [15, 22]
+    t_sr_max: 28
+    zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+  susza:
+    dni_bez_opadu_kara_od: 12
+    bilans_14d_mm_kara_ponizej: -30
+    bilans_14d_mm_bramka_ponizej: -50
+    zrodla: [boddy_2014, zalozenie_projektowe]
+    wiarygodnosc: C
+    uwagi: Owocniki kurki długo utrzymują się w okresach umiarkowanie suchych — łagodniejsza kara niż dla borowika (założenie).
+  przymrozek:
+    tmin_prog_c: 0
+    kara_pkt_za_dzien_7d: 15
+    zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
+    wiarygodnosc: C
+status:
+  wartosc: jadalny
+  uwagi:
+    - Najczęstsza pomyłka to lisówka pomarańczowa (prawdziwe, cienkie i gęste blaszki).
+  zrodla: [gruminska_wojewoda_1985]
+  wiarygodnosc: B
+sobowtory: [hygrophoropsis_aurantiaca]
+sprzecznosci:
+  - temat: siedlisko
+    opis: >-
+      Część źródeł opisuje kurkę głównie z ubogich borów sosnowych, inne podkreślają buczyny i dąbrowy na
+      żyźniejszych glebach. Przyjęto szeroki zakres TSL; rozstrzygnąć na obserwacjach regionalnych (Etap 6).
+    zrodla: [funga_nordica_2012, gruminska_wojewoda_1985, praktyka_grzybiarska]
+weryfikacja:
+  status: wersja_robocza
+  zatwierdzil: null
+  data: null
