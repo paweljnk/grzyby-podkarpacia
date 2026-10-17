@@ -11,6 +11,7 @@ from typing import Literal
 from zoneinfo import ZoneInfo
 
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -67,6 +68,8 @@ async def _snapshot_loop():
 app = FastAPI(title="Grzyby Podkarpacia API", version="0.4.0", lifespan=lifespan)
 
 from .atlas_routes import router as atlas_router  # noqa: E402
+
+app.add_middleware(GZipMiddleware, minimum_size=2000)   # mapa GeoJSON przez sieć komórkową
 
 app.include_router(atlas_router)
 Dataset = Literal["real", "demo"]
@@ -214,8 +217,8 @@ def map_layer(species: str, lat: float, lon: float, radius_km: float = Query(25,
     sp = _sp(species)
     day = date_ or today_local()
     with connect() as conn:
-        r = service.ranking(conn, dataset, sp, lat, lon, radius_km, day, calendar == "on", 5000, True)
-        geoms = repo.stand_geojson(conn, dataset, [m["id"] for m in r["miejsca"]])
+        r = service.ranking(conn, dataset, sp, lat, lon, radius_km, day, calendar == "on", 20000, True)
+        geoms = repo.stand_geojson(conn, dataset, [m["id"] for m in r["miejsca"]], simplify_m=5)
         feats = [{"type": "Feature", "id": m["id"], "geometry": geoms.get(m["id"]),
                   "properties": {"id": m["id"], "nazwa": m["nazwa"], "wynik": m["wynik"],
                                  "rekomendowane": m["rekomendowane"], "jakosc": m["jakosc"],

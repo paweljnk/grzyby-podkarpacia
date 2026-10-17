@@ -73,7 +73,7 @@ def _row(r) -> StandRow:
                     r[25] or {}, r[26])
 
 
-def stands_near(conn, ds: Dataset, lat: float, lon: float, radius_km: float, limit: int = 2000) -> list[StandRow]:
+def stands_near(conn, ds: Dataset, lat: float, lon: float, radius_km: float, limit: int = 20000) -> list[StandRow]:
     t = T(ds)
     pt = "ST_Transform(ST_SetSRID(ST_MakePoint(%(lon)s, %(lat)s), 4326), 2180)"
     sql = _STAND_SQL.format(dist=f"ST_Distance(w.geom, {pt}) / 1000.0", **t) + \
@@ -95,12 +95,52 @@ def stand_by_id(conn, ds: Dataset, sid: int, lat: float | None = None, lon: floa
     return _row(r) if r else None
 
 
-def stand_geojson(conn, ds: Dataset, ids: list[int]) -> dict[int, dict]:
+def stand_geojson(conn, ds: Dataset, ids: list[int], simplify_m: float = 0) -> dict[int, dict]:
+    """Geometrie w EPSG:4326. simplify_m > 0 upraszcza do mapy (poniżej dokładności źródła)."""
     if not ids:
         return {}
+    g = f"ST_SimplifyPreserveTopology(geom, {float(simplify_m)})" if simplify_m else "geom"
     with conn.cursor() as cur:
-        cur.execute(f"SELECT id, ST_AsGeoJSON(ST_Transform(geom, 4326), 6) FROM {T(ds)['wydz']} WHERE id = ANY(%s)", (ids,))
-        return {i: json.loads(g) for i, g in cur.fetchall()}
+        cur.execute(f"SELECT id, ST_AsGeoJSON(ST_Transform({g}, 4326), 5) FROM {T(ds)['wydz']} WHERE id = ANY(%s)", (ids,))
+        return {i: json.loads(x) for i, x in cur.fetchall()}
+
+
+def protection_bulk(conn, ds: Dataset, ids: list[int]) -> dict[int, list[dict]]:
+    t = T(ds)
+    out: dict[int, list[dict]] = {i: [] for i in ids}
+    with conn.cursor() as cur:
+        cur.execute(f"""SELECT w.id, o.rodzaj, o.nazwa, o.kod, o.source_id, o.warstwa FROM {t['ochrona']} o
+                        JOIN {t['wydz']} w ON ST_Intersects(o.geom, w.geom) WHERE w.id = ANY(%s)""", (ids,))
+        for r in cur.fetchall():
+            out[r[0]].append(dict(zip(["rodzaj", "nazwa", "kod", "source_id", "warstwa"], r[1:])))
+    return out
+
+
+def bans_bulk(conn, ds: Dataset, ids: list[int], day: date) -> dict[int, list[dict]]:
+    t = T(ds)
+    out: dict[int, list[dict]] = {i: [] for i in ids}
+    with conn.cursor() as cur:
+        cur.execute(f"""SELECT w.id, z.rodzaj, z.opis, z.od, z.do_dnia, z.source_id FROM {t['zakaz']} z
+                        JOIN {t['wydz']} w ON ST_Intersects(z.geom, w.geom)
+                        WHERE w.id = ANY(%s) AND (z.od IS NULL OR z.od <= %s) AND (z.do_dnia IS NULL OR z.do_dnia >= %s)""",
+                    (ids, day, day))
+        for r in cur.fetchall():
+            out[r[0]].append(dict(zip(["rodzaj", "opis", "od", "do", "source_id"], r[1:])))
+    return out
+
+
+def observations_region(conn, ds: Dataset, species: str, lat: float, lon: float, day: date, radius_km: float,
+                        lookback_days: int = 60) -> list[tuple[float, float, Observation]]:
+    """Obserwacje w regionie zapytania (promień + zasięg wpływu) — odległość do miejsca liczona potem w Pythonie."""
+    t = T(ds)
+    end = datetime(day.year, day.month, day.day, tzinfo=timezone.utc) + timedelta(days=1)
+    with conn.cursor() as cur:
+        cur.execute(f"""
+            SELECT ST_X(ST_Transform(geom,4326)), ST_Y(ST_Transform(geom,4326)), czas_utc, znaleziono, jakosc, czas_szukania_min
+            FROM {t['obs']} WHERE species_id=%s AND czas_utc < %s AND czas_utc >= %s
+              AND ST_DWithin(geom, ST_Transform(ST_SetSRID(ST_MakePoint(%s,%s),4326),2180), %s)""",
+                    (species, end, end - timedelta(days=lookback_days), lon, lat, radius_km * 1000))
+        return [(r[0], r[1], Observation(max(0, (end - r[2]).days), 0.0, r[3], r[4], r[5])) for r in cur.fetchall()]
 
 
 def weather_series(conn, ds: Dataset, komorka_id: str, start: date, end: date) -> tuple[list[DailyWeather], dict]:

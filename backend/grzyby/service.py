@@ -62,8 +62,15 @@ def score_json(s: Score) -> dict:
     }
 
 
+def _haversine_km(lat1, lon1, lat2, lon2) -> float:
+    import math
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    a = math.sin((p2 - p1) / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(math.radians(lon2 - lon1) / 2) ** 2
+    return 6371.0 * 2 * math.asin(math.sqrt(a))
+
+
 def score_place(conn, ds: repo.Dataset, row: repo.StandRow, sp: Species, day: date, calendar_on: bool,
-                cal: CalendarDay | None, weather_cache: dict | None = None) -> tuple[Score, dict]:
+                cal: CalendarDay | None, weather_cache: dict | None = None, prefetch: dict | None = None) -> tuple[Score, dict]:
     cfg = load_yaml("model.yaml")
     A = habitat(row.stand, sp, cfg)
     wmeta: dict = {}
@@ -78,14 +85,22 @@ def score_place(conn, ds: repo.Dataset, row: repo.StandRow, sp: Species, day: da
     else:
         daily = []
     B, ind, gates = weather(sp, daily, day, row.stand.wys_sr, cfg)
-    obs = repo.observations_near(conn, ds, sp.id, row.lat, row.lon, day, cfg["obserwacje"]["promien_km"])
+    if prefetch is not None:
+        from dataclasses import replace
+        obs = [replace(o, odleglosc_km=_haversine_km(row.lat, row.lon, la, lo)) for lo, la, o in prefetch["obs"]]
+        obs = [o for o in obs if o.odleglosc_km <= cfg["obserwacje"]["promien_km"]]
+    else:
+        obs = repo.observations_near(conn, ds, sp.id, row.lat, row.lon, day, cfg["obserwacje"]["promien_km"])
     C, c_reasons = observations(obs, cfg)
     if calendar_on and cal is not None:
         D, Dd = calendar_modifier(cal)
     else:
         D, Dd = 0.0, None
-    prot = repo.protection_for(conn, ds, row.stand.id)
-    bans = repo.bans_for(conn, ds, row.stand.id, day)
+    if prefetch is not None:
+        prot, bans = prefetch["prot"].get(row.stand.id, []), prefetch["bans"].get(row.stand.id, [])
+    else:
+        prot = repo.protection_for(conn, ds, row.stand.id)
+        bans = repo.bans_for(conn, ds, row.stand.id, day)
     s = combine(A, B, C, D, Dd, gates["susza"], prot, cfg)
     for b in bans:
         from .model.combine import Gate
@@ -160,9 +175,13 @@ def ranking(conn, ds: repo.Dataset, sp: Species, lat: float, lon: float, radius_
     rows = repo.stands_near(conn, ds, lat, lon, radius_km)
     cal = cal_day(day, lat, lon)
     wc: dict = {}
+    ids = [r.stand.id for r in rows]
+    cfg = load_yaml("model.yaml")
+    prefetch = {"prot": repo.protection_bulk(conn, ds, ids), "bans": repo.bans_bulk(conn, ds, ids, day),
+                "obs": repo.observations_region(conn, ds, sp.id, lat, lon, day, radius_km + cfg["obserwacje"]["promien_km"])}
     items, excluded = [], 0
     for row in rows:
-        s, extra = score_place(conn, ds, row, sp, day, calendar_on, cal, wc)
+        s, extra = score_place(conn, ds, row, sp, day, calendar_on, cal, wc, prefetch)
         if not s.rekomendowane:
             excluded += 1
             if not include_excluded:
@@ -198,7 +217,7 @@ def place_card(conn, ds: repo.Dataset, sp: Species, sid: int, day: date, calenda
         "teren": terr,
         "pogoda": {**extra["wskazniki_pogody"], **{k: (v.isoformat() if isinstance(v, datetime) else v)
                                                   for k, v in extra["pogoda_meta"].items()},
-                   "uwaga": "Wartości dla komórki siatki pogodowej (ok. 9–11 km), nie pomiar w tym lesie."},
+                   "uwaga": "Wartości dla komórki siatki pogodowej (temperatura i gleba ok. 9 km, opad ok. 25 km z ERA5; prognoza wg modelu Open-Meteo), nie pomiar w tym lesie."},
         "dostep": access_status(conn, ds, extra["ochrona"], extra["zakazy"]),
         "dojazd": {"odleglosc_km": round(row.odleglosc_km, 1) if row.odleglosc_km is not None else None,
                    "opis": "Odległość w linii prostej. Brak danych o drogach publicznych i parkingach "
