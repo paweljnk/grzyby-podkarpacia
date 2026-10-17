@@ -19,6 +19,7 @@ dependencies = [
   "numpy>=1.26",
   "rasterstats>=0.20",
   "skyfield>=1.49",
+  "skyfield-data>=7.0",
   "tzdata>=2024.1",
 ]
 

@@ -1,0 +1,47 @@
+# Modyfikator kalendarzowy D — EKSPERYMENTALNY.
+# Brak naukowego potwierdzenia wpływu fazy Księżyca i typów dni biodynamicznych na owocnikowanie grzybów.
+# Źródła biodynamiczne (M. Thun) nie podają zasad dla grzybów. Poniższe przełożenie na punkty to
+# założenie projektowe (klasa C) do weryfikacji w Etapie 6 (porównanie trafności z kalendarzem i bez).
+# Faza i biodynamika tworzą JEDEN modyfikator (biodynamika opiera się na ruchu Księżyca — nie liczymy podwójnie).
+eksperymentalny: true
+amplituda_pkt: 3          # domyślnie ±3
+amplituda_max_pkt: 5      # twardy limit; dozwolone 0 (wyłączenie)
+skladowe:                 # wartości w [-1, 1], łączone średnią ważoną, potem × amplituda
+  faza:
+    waga: 0.5
+    wartosci:             # wierzenie ludowe: "grzyby rosną na przybywającym Księżycu" — klasa C
+      now: -0.5
+      sierp_przybywajacy: 0.25
+      pierwsza_kwadra: 0.5
+      garb_przybywajacy: 0.75
+      pelnia: 0.5
+      garb_ubywajacy: 0.0
+      ostatnia_kwadra: -0.25
+      sierp_ubywajacy: -0.5
+  biodynamika:
+    waga: 0.5
+    wartosci:             # przełożenie wyłącznie umowne; źródła biodynamiczne nie opisują grzybów
+      owoc: 0.5
+      lisc: 0.0
+      korzen: 0.0
+      kwiat: 0.0
+      nieprzypisany: 0.0
+
+# Metoda biodynamiczna: położenie Księżyca w gwiazdozbiorach astronomicznych (granice IAU, Delporte 1930,
+# w postaci tabeli Roman 1987, CDS VI/42 — dołączonej do biblioteki skyfield). Przypisanie elementów wg M. Thun.
+# Gwiazdozbiory poza dwunastoma (np. Wężownik, Wieloryb, Orion) → 'nieprzypisany' (metoda Thun używa
+# własnych, nierównych granic dwunastu gwiazdozbiorów; nasze granice IAU są jawne i sprawdzalne,
+# więc wyniki mogą różnić się od publikowanych kalendarzy).
+gwiazdozbiory:
+  Ari: owoc
+  Tau: korzen
+  Gem: kwiat
+  Cnc: lisc
+  Leo: owoc
+  Vir: korzen
+  Lib: kwiat
+  Sco: lisc
+  Sgr: owoc
+  Cap: korzen
+  Aqr: kwiat
+  Psc: lisc

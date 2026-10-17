@@ -1,0 +1,34 @@
+# Pobieranie i agregacja pogody (Etap 3a). Wartości = założenia projektowe.
+siatka:
+  krok_stopnie: 0.1          # komórka ok. 11 km (N-S) x 7 km (E-W); wynik dotyczy komórki, nie lasu
+historia_dni: 60             # zapas, aby okna 30-dniowe były pełne także dla dni prognozy
+prognoza_dni: 7
+prog_dnia_z_opadem_mm: 1.0
+min_godzin_w_dobie: 22       # doba z mniejszą liczbą godzin = niekompletna (NULL), nie szacujemy
+okna_opadow_dni: [3, 7, 14, 30]
+
+# Nazwy zmiennych godzinowych wg dokumentacji Open-Meteo. DO WERYFIKACJI próbką (`make probe`):
+# parser odrzuca odpowiedź, w której brakuje którejkolwiek zmiennej — nie podstawiamy wartości.
+open_meteo:
+  forecast:
+    url: https://api.open-meteo.com/v1/forecast
+    typ: prognoza
+    zmienne:
+      opad_mm: precipitation
+      temp_c: temperature_2m
+      wilg_powietrza_pct: relative_humidity_2m
+      wilg_gleby_m3m3: soil_moisture_3_to_9cm
+      temp_gleby_c: soil_temperature_6cm
+      et0_mm: et0_fao_evapotranspiration
+  archive:
+    url: https://archive-api.open-meteo.com/v1/archive
+    typ: reanaliza
+    model: era5_land
+    rozdzielczosc_km: 9
+    zmienne:
+      opad_mm: precipitation
+      temp_c: temperature_2m
+      wilg_powietrza_pct: relative_humidity_2m
+      wilg_gleby_m3m3: soil_moisture_0_to_7cm
+      temp_gleby_c: soil_temperature_0_to_7cm
+      et0_mm: et0_fao_evapotranspiration
