@@ -91,3 +91,19 @@ def test_ranking_exposes_conditions_and_certainty_separately(client):
     kinds = {a["atrybut"]: a["oznaczenie"] for a in card["atrybuty"]}
     assert kinds["Pełny skład gatunkowy z udziałami"] == "brak"
     assert set(kinds.values()) <= {"źródłowa", "model", "brak"}
+
+
+def test_truncated_ranking_warns_instead_of_silently_cutting(client, monkeypatch):
+    from grzyby import service
+    real = service.load_yaml
+
+    def small(name):
+        c = real(name)
+        if name == "model.yaml":
+            c = {**c, "zapytania": {"limit_wydzielen_ranking": 3, "limit_wydzielen_mapa": 3}}
+        return c
+    monkeypatch.setattr(service, "load_yaml", small)
+    d = client.get(f"/api/ranking?{Q}&pokaz_wykluczone=true").json()
+    assert d["liczba_ocenionych"] == 3
+    assert any("najbliższych wydzieleń" in w for w in d["ostrzezenia"])
+    assert "_ostrzezenia" not in d

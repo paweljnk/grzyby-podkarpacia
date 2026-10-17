@@ -51,3 +51,7 @@ kompletnosc:
   # pewność obniża też szerokość przedziału warunków (nieznany skład drzewostanu)
   kara_za_szerokosc_przedzialu: 0.5
   prognoza_mnoznik_dnia: 0.97     # każdy dzień prognozy w oknie lekko obniża jakość
+
+zapytania:                        # ograniczenia wydajnościowe API (po przekroczeniu — ostrzeżenie, nie ciche obcięcie)
+  limit_wydzielen_ranking: 40000  # najbliższe wydzielenia w promieniu
+  limit_wydzielen_mapa: 20000     # wydzielenia w widocznym obszarze mapy

@@ -187,11 +187,17 @@ def access_status(conn, ds: repo.Dataset, prot: list[dict], bans: list[dict]) ->
 
 def ranking(conn, ds: repo.Dataset, sp: Species, lat: float, lon: float, radius_km: float, day: date,
             calendar_on: bool, limit: int = 50, include_excluded: bool = False) -> dict:
-    rows = repo.stands_near(conn, ds, lat, lon, radius_km)
+    cfg = load_yaml("model.yaml")
+    lim = cfg["zapytania"]["limit_wydzielen_ranking"]
+    rows = repo.stands_near(conn, ds, lat, lon, radius_km, limit=lim + 1)
+    warn = []
+    if len(rows) > lim:
+        rows = rows[:lim]
+        warn.append(f"Ocenianych jest {lim} najbliższych wydzieleń (do {rows[-1].odleglosc_km:.1f} km w linii prostej) — "
+                    f"zmniejsz promień, aby objąć cały obszar.")
     cal = cal_day(day, lat, lon)
     wc: dict = {}
     ids = [r.stand.id for r in rows]
-    cfg = load_yaml("model.yaml")
     prefetch = {"prot": repo.protection_bulk(conn, ds, ids), "bans": repo.bans_bulk(conn, ds, ids, day),
                 "obs": repo.observations_region(conn, ds, sp.id, lat, lon, day, radius_km + cfg["obserwacje"]["promien_km"])}
     items, excluded = [], 0
@@ -207,7 +213,7 @@ def ranking(conn, ds: repo.Dataset, sp: Species, lat: float, lon: float, radius_
                                  "sklad_typow": extra["wskazniki_pogody"]["sklad_typow"]}})
     items.sort(key=lambda x: (x["wynik"] is None, -(x["wynik"] or 0)))
     return {"miejsca": items[:limit], "liczba_ocenionych": len(rows), "wykluczone": excluded,
-            "kalendarz": calendar_json(cal) if calendar_on else None}
+            "kalendarz": calendar_json(cal) if calendar_on else None, "_ostrzezenia": warn}
 
 
 MAP_MAX_KM2 = 900          # powyżej: mapa pokazuje tylko pokrycie danymi (przybliż, aby zobaczyć wskaźnik)
@@ -219,11 +225,16 @@ def map_bbox(conn, ds: repo.Dataset, sp: Species, bbox: tuple[float, float, floa
     km2 = (bbox[2] - bbox[0]) * 111.32 * math.cos(math.radians((bbox[1] + bbox[3]) / 2)) * (bbox[3] - bbox[1]) * 110.57
     if km2 > MAP_MAX_KM2:
         return {"tryb": "przybliz", "km2": round(km2), "geojson": {"type": "FeatureCollection", "features": []}}
-    rows = repo.stands_in_bbox(conn, ds, bbox)
+    cfg = load_yaml("model.yaml")
+    lim = cfg["zapytania"]["limit_wydzielen_mapa"]
+    rows = repo.stands_in_bbox(conn, ds, bbox, limit=lim + 1)
+    warn = []
+    if len(rows) > lim:
+        rows = rows[:lim]
+        warn.append(f"Pokazano {lim} wydzieleń z widocznego obszaru — przybliż mapę, aby zobaczyć wszystkie.")
     lat, lon = (bbox[1] + bbox[3]) / 2, (bbox[0] + bbox[2]) / 2
     cal = cal_day(day, lat, lon)
     ids = [r.stand.id for r in rows]
-    cfg = load_yaml("model.yaml")
     prefetch = {"prot": repo.protection_bulk(conn, ds, ids), "bans": repo.bans_bulk(conn, ds, ids, day),
                 "obs": repo.observations_region(conn, ds, sp.id, lat, lon, day, 60 + cfg["obserwacje"]["promien_km"])}
     wc: dict = {}
@@ -238,7 +249,8 @@ def map_bbox(conn, ds: repo.Dataset, sp: Species, bbox: tuple[float, float, floa
                                "opad_7d_mm": extra["wskazniki_pogody"]["opad_mm"].get("7")}
     geoms = repo.stand_geojson(conn, ds, ids, simplify_m=3)
     feats = [{"type": "Feature", "id": i, "geometry": geoms.get(i), "properties": p} for i, p in props.items()]
-    return {"tryb": "wydzielenia", "km2": round(km2), "geojson": {"type": "FeatureCollection", "features": feats}}
+    return {"tryb": "wydzielenia", "km2": round(km2), "geojson": {"type": "FeatureCollection", "features": feats},
+            "_ostrzezenia": warn}
 
 
 def place_card(conn, ds: repo.Dataset, sp: Species, sid: int, day: date, calendar_on: bool,

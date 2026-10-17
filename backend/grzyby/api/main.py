@@ -105,12 +105,13 @@ def _sources_footer(conn, keys: list[str]) -> list[dict]:
     return out
 
 
-FOOTER_REAL = ["bdl_ogcapi", "copernicus_dem_glo30", "open_meteo_archive", "open_meteo_forecast", "gdos_crfop"]
+FOOTER_REAL = ["bdl_ogcapi", "bdl_rest", "soilgrids", "esa_worldcover_2021", "copernicus_dem_glo30", "open_meteo_archive", "open_meteo_forecast", "gdos_crfop"]
 
 
 def _envelope(conn, ds: Dataset, params: dict, body: dict, day: date | None = None) -> dict:
     info = repo.dataset_info(conn, ds)
     warnings = []
+    extra_warnings = body.pop("_ostrzezenia", [])
     if ds == "demo":
         warnings.append("DANE DEMONSTRACYJNE: fikcyjne drzewostany, pogoda i obserwacje. Nie używaj do planowania wypraw.")
     elif info["wydzielen"] == 0:
@@ -122,6 +123,7 @@ def _envelope(conn, ds: Dataset, params: dict, body: dict, day: date | None = No
         warnings.append("Dane pogodowe są nieaktualne — ograniczona wiarygodność wyniku.")
     if day and info["pogoda_do"] and day > info["pogoda_do"]:
         warnings.append(f"Wybrany dzień jest poza zakresem danych pogodowych (do {info['pogoda_do']}).")
+    warnings += extra_warnings
     return {"zbior_danych": ds, "parametry": params, "ostrzezenia": warnings, "zastrzezenie": DISCLAIMER,
             "dane": {k: (v.isoformat() if hasattr(v, "isoformat") else v) for k, v in info.items()},
             "zrodla": _sources_footer(conn, FOOTER_REAL) + ([{"id": "demo", "nazwa": "Dane demonstracyjne (fikcyjne)",
