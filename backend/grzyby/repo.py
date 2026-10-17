@@ -55,7 +55,7 @@ SELECT w.id, w.gatunek_panujacy, w.udzial_gatunkow, w.wiek, w.typ_siedliskowy, w
        ST_Y(c.p), ST_X(c.p), {dist}, ST_Area(w.geom) / 10000.0, wk.komorka_id,
        t.nachylenie_max_deg, t.ekspozycja_klasa, t.wys_min, t.wys_max,
        w.gatunek_panujacy_pochodzenie, w.udzial_gatunkow_pochodzenie, w.wiek_pochodzenie,
-       w.typ_siedliskowy_pochodzenie, w.gleba_pochodzenie, t.pochodzenie, w.attrs, w.imported_at,
+       w.typ_siedliskowy_pochodzenie, w.gleba_pochodzenie, t.pochodzenie, NULL::jsonb, w.imported_at,  -- attrs (surowe pola BDL) nie są potrzebne do oceny
        w.udzial_panujacego, w.ph_model, w.ph_q05, w.ph_q95,
        w.zarzad, w.wlasnosc, w.rok_danych, w.w_wojewodztwie_frac, w.gleba_gatunek, w.uwilgotnienie_kod,
        w.siedlisko_zrodlo, w.siedlisko_rok, w.siedlisko_pokrycie, w.klasa_danych, w.nadl_kod,

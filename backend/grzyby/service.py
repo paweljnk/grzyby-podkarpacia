@@ -89,11 +89,12 @@ def score_place(conn, ds: repo.Dataset, row: repo.StandRow, sp: Species, day: da
     # Ocena pogody zależy od komórki, dnia i (przez sezon) wysokości — pamiętamy ją dla pasów co 50 m.
     bkey = ("B", sp.id, row.komorka_id, day, None if row.stand.wys_sr is None else round(row.stand.wys_sr / 50))
     if weather_cache is not None and bkey in weather_cache:
-        B, ind, gates = weather_cache[bkey]
+        B, ind_json, gates = weather_cache[bkey]
     else:
         B, ind, gates = weather(sp, daily, day, row.stand.wys_sr, cfg)
+        ind_json = _ind_json(ind)
         if weather_cache is not None:
-            weather_cache[bkey] = (B, ind, gates)
+            weather_cache[bkey] = (B, ind_json, gates)
     if prefetch is not None:
         from dataclasses import replace
         obs = [replace(o, odleglosc_km=_haversine_km(row.lat, row.lon, la, lo)) for lo, la, o in prefetch["obs"]]
@@ -120,7 +121,7 @@ def score_place(conn, ds: repo.Dataset, row: repo.StandRow, sp: Species, day: da
         s.bramki.append(Gate("zakaz_wstepu", f"Zakaz wstępu: {b['rodzaj']} {b.get('opis') or ''}".strip()))
         s.rekomendowane = False
     s.uzasadnienie += c_reasons
-    extra = {"wskazniki_pogody": _ind_json(ind), "pogoda_meta": wmeta, "ochrona": prot, "zakazy": bans,
+    extra = {"wskazniki_pogody": ind_json, "pogoda_meta": wmeta, "ochrona": prot, "zakazy": bans,
              "liczba_obserwacji": len(obs)}
     return s, extra
 
@@ -200,19 +201,22 @@ def ranking(conn, ds: repo.Dataset, sp: Species, lat: float, lon: float, radius_
     ids = [r.stand.id for r in rows]
     prefetch = {"prot": repo.protection_bulk(conn, ds, ids), "bans": repo.bans_bulk(conn, ds, ids, day),
                 "obs": repo.observations_region(conn, ds, sp.id, lat, lon, day, radius_km + cfg["obserwacje"]["promien_km"])}
-    items, excluded = [], 0
+    scored, excluded = [], 0
     for row in rows:
         s, extra = score_place(conn, ds, row, sp, day, calendar_on, cal, wc, prefetch)
         if not s.rekomendowane:
             excluded += 1
             if not include_excluded:
                 continue
-        items.append({**_place_header(row), **score_json(s),
-                      "pogoda": {"komorka_id": extra["pogoda_meta"].get("komorka_id"),
-                                 "opad_7d_mm": extra["wskazniki_pogody"]["opad_mm"].get("7"),
-                                 "sklad_typow": extra["wskazniki_pogody"]["sklad_typow"]}})
-    items.sort(key=lambda x: (x["wynik"] is None, -(x["wynik"] or 0)))
-    return {"miejsca": items[:limit], "liczba_ocenionych": len(rows), "wykluczone": excluded,
+        scored.append((s, extra, row))
+    # stabilne sortowanie jak wcześniej; JSON budujemy tylko dla zwracanych miejsc
+    scored.sort(key=lambda x: (x[0].wynik is None, -(x[0].wynik or 0)))
+    items = [{**_place_header(row), **score_json(s),
+              "pogoda": {"komorka_id": extra["pogoda_meta"].get("komorka_id"),
+                         "opad_7d_mm": extra["wskazniki_pogody"]["opad_mm"].get("7"),
+                         "sklad_typow": extra["wskazniki_pogody"]["sklad_typow"]}}
+             for s, extra, row in scored[:limit]]
+    return {"miejsca": items, "liczba_ocenionych": len(rows), "wykluczone": excluded,
             "kalendarz": calendar_json(cal) if calendar_on else None, "_ostrzezenia": warn}
 
 
