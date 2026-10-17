@@ -14,12 +14,12 @@ REAL = {"adr_for": "04-08-2-09-163   -k   -00", "site_type": "OLJ", "forest_fun"
 
 
 @pytest.mark.parametrize("raw,norm", [("OLJ", "OlJ"), ("BMW", "BMw"), ("BSW", "Bśw"), ("LMSW", "LMśw"),
-                                       ("LL", "Lł"), ("LMG", "LMG"), ("BMWYZ", "BMwyż"), ("XYZ", "XYZ"), (" ", None)])
+                                       ("LL", "Lł"), ("LGŚW", "LGśw"), ("LŁG", "LłG"), ("BMGB", "BMGb"), ("OLJG", "OlJG"), ("BMWYZ", "BMwyż"), ("XYZ", "XYZ"), (" ", None)])
 def test_site_type_normalization(raw, norm):
     assert site_type(raw) == norm
 
 
-@pytest.mark.parametrize("raw,norm", [("SO", "SO"), ("ŚW", "SW"), ("SW", "SW"), ("DB.S", "DB"), ("BRZ", "BRZ"),
+@pytest.mark.parametrize("raw,norm", [("SO", "SO"), ("ŚW", "SW"), ("SW", "SW"), ("DB.S", "DB"), ("DB.C", "DBC"), ("OL.S", "OLS"), ("BRZ", "BRZ"),
                                        ("JD", "JD"), ("AK", "AK"), (None, None)])
 def test_species_normalization(raw, norm):
     assert species(raw) == norm
@@ -79,4 +79,5 @@ def test_snapshot_roundtrip(tmp_path):
 def test_display_name_from_forest_address():
     from grzyby.service import display_name
     assert display_name("04-08-2-09-163   -k   -00", 1) == "oddz. 163k, leśn. 09"
+    assert display_name("04-01-2-09-127A  -b   -00", 4) == "oddz. 127Ab, leśn. 09"
     assert display_name("DEMO BAL-001", 2) == "DEMO BAL-001" and display_name(None, 3) == "Wydzielenie 3"

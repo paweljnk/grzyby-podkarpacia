@@ -12,7 +12,7 @@ from grzyby.weather.aggregate import DailyWeather
 SP = all_species()["boletus_edulis"]
 DAY = date(2026, 9, 1)
 
-GOOD_STAND = Stand(1, "SW", {"SW": 0.6, "BK": 0.3, "JD": 0.1}, 80, "LMG", "brunatna kwaśna", 650.0, 12.0)
+GOOD_STAND = Stand(1, "SW", {"SW": 0.6, "BK": 0.3, "JD": 0.1}, 80, "LMGśw", "brunatna kwaśna", 650.0, 12.0)
 NO_HABITAT = Stand(2, "OL", {"OL": 1.0}, 15, "Ol", "torfowa", 650.0, 2.0)
 
 

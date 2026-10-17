@@ -38,9 +38,9 @@ PROFILES = {
         ({"OL": 0.9, "JS": 0.1}, ["Ol"], ["torfowa"], 1),
     ],
     "gorski": [
-        ({"BK": 0.7, "JD": 0.2, "JW": 0.1}, ["LG"], ["brunatna kwaśna", "brunatna właściwa"], 4),
-        ({"JD": 0.5, "BK": 0.4, "SW": 0.1}, ["LMG"], ["brunatna kwaśna"], 3),
-        ({"SW": 0.7, "JD": 0.2, "BK": 0.1}, ["BMG"], ["brunatna kwaśna", "bielicowa"], 2),
+        ({"BK": 0.7, "JD": 0.2, "JW": 0.1}, ["LGśw"], ["brunatna kwaśna", "brunatna właściwa"], 4),
+        ({"JD": 0.5, "BK": 0.4, "SW": 0.1}, ["LMGśw"], ["brunatna kwaśna"], 3),
+        ({"SW": 0.7, "JD": 0.2, "BK": 0.1}, ["BMGśw"], ["brunatna kwaśna", "bielicowa"], 2),
         ({"OLS": 0.9, "JS": 0.1}, ["LłG"], ["mada"], 1),
     ],
 }

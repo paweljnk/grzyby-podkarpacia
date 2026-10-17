@@ -70,6 +70,9 @@ def combine(A: Component, B: Component, C: float, D: float, D_details: dict | No
         base = round(weighted_geometric(A.wynik, B.wynik, w["A"], w["B"]), 1)
         total = round(max(0.0, min(100.0, base + C + D)), 1)
 
+    if total is not None and total < cfg["bramki"].get("wynik_min", 0) and not gates:
+        gates.append(Gate("wynik_niski", f"Wskaźnik {total:.0f} poniżej progu rekomendacji ({cfg['bramki']['wynik_min']}) — "
+                                         "np. poza sezonem albo przy niekorzystnej pogodzie."))
     # Kompletność: średnia kompletności A i B (C i D to modyfikatory — ich brak nie obniża kompletności).
     completeness = round((A.kompletnosc + B.kompletnosc) / 2, 3)
     reasons += A.uzasadnienie + B.uzasadnienie

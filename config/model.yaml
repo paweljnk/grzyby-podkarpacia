@@ -7,6 +7,7 @@ podstawa:
 
 bramki:
   A_min: 30                       # poniżej: miejsce nie trafia do rekomendacji wypraw
+  wynik_min: 15                   # wskaźnik poniżej progu (np. poza sezonem) — nie rekomendujemy wyprawy
   susza_najdluzszy_okres_bez_opadu_dni: 21
   # bramka bilansu wodnego jest per gatunek: species/*.yaml pogoda.susza.bilans_14d_mm_bramka_ponizej
   zakaz_rodzaje: [park_narodowy]  # formy ochrony z zakazem zbioru co do zasady (poza miejscami wyznaczonymi)

@@ -64,7 +64,9 @@ LEFT JOIN {wk} wk ON wk.wydzielenie_id = w.id
 
 def _row(r) -> StandRow:
     shares = r[2] if isinstance(r[2], dict) or r[2] is None else json.loads(r[2])
-    st = Stand(r[0], r[1], shares, r[3], r[4], r[5], r[6], r[7])
+    # Normalizacja kodów także przy odczycie — dane zaimportowane starszym słownikiem dają ten sam wynik.
+    from .etl.bdl_codes import site_type, species
+    st = Stand(r[0], species(r[1]), shares, r[3], site_type(r[4]), r[5], r[6], r[7])
     prov = dict(zip(["gatunek_panujacy", "udzial_gatunkow", "wiek", "typ_siedliskowy", "gleba", "teren"],
                     [str(x) if x else "brak" for x in r[19:25]]))
     return StandRow(st, r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15], r[16], r[17], r[18], prov,

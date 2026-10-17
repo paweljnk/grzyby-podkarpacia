@@ -8,6 +8,7 @@ drzewa:
   MD:  {nazwa: modrzew europejski, lacina: Larix decidua}
   BK:  {nazwa: buk zwyczajny, lacina: Fagus sylvatica}
   DB:  {nazwa: dąb (szypułkowy i bezszypułkowy), lacina: Quercus robur / Q. petraea}
+  DBC: {nazwa: dąb czerwony (gatunek obcy), lacina: Quercus rubra}
   GB:  {nazwa: grab pospolity, lacina: Carpinus betulus}
   BRZ: {nazwa: brzoza (brodawkowata i omszona), lacina: Betula pendula / B. pubescens}
   OS:  {nazwa: osika, lacina: Populus tremula}
@@ -41,11 +42,15 @@ typy_siedliskowe:
   BMwyż:  {nazwa: bór mieszany wyżynny, zyznosc: 3, wilgotnosc: swieza, kraina: wyzynna}
   LMwyż:  {nazwa: las mieszany wyżynny, zyznosc: 4, wilgotnosc: swieza, kraina: wyzynna}
   Lwyż:   {nazwa: las wyżynny, zyznosc: 5, wilgotnosc: swieza, kraina: wyzynna}
-  # górskie
-  BMG:    {nazwa: bór mieszany górski, zyznosc: 3, wilgotnosc: swieza, kraina: gorska}
+  # górskie — kody zgodne z BDL (odczytane z danych 2026-10-17: LGŚW, LGW, LŁG, LMGŚW, BMGŚW, OLJG, BMGB)
+  BMGśw:  {nazwa: bór mieszany górski świeży, zyznosc: 3, wilgotnosc: swieza, kraina: gorska}
+  BMGw:   {nazwa: bór mieszany górski wilgotny, zyznosc: 3, wilgotnosc: wilgotna, kraina: gorska}
+  BMGb:   {nazwa: bór mieszany górski bagienny, zyznosc: 3, wilgotnosc: bagienna, kraina: gorska}
   BWG:    {nazwa: bór wysokogórski, zyznosc: 2, wilgotnosc: swieza, kraina: gorska}
-  LMG:    {nazwa: las mieszany górski, zyznosc: 4, wilgotnosc: swieza, kraina: gorska}
-  LG:     {nazwa: las górski, zyznosc: 5, wilgotnosc: swieza, kraina: gorska}
+  LMGśw:  {nazwa: las mieszany górski świeży, zyznosc: 4, wilgotnosc: swieza, kraina: gorska}
+  LMGw:   {nazwa: las mieszany górski wilgotny, zyznosc: 4, wilgotnosc: wilgotna, kraina: gorska}
+  LGśw:   {nazwa: las górski świeży, zyznosc: 5, wilgotnosc: swieza, kraina: gorska}
+  LGw:    {nazwa: las górski wilgotny, zyznosc: 5, wilgotnosc: wilgotna, kraina: gorska}
   LłG:    {nazwa: las łęgowy górski, zyznosc: 6, wilgotnosc: zalewowa, kraina: gorska}
   OlJG:   {nazwa: ols jesionowy górski, zyznosc: 5, wilgotnosc: bagienna, kraina: gorska}
 

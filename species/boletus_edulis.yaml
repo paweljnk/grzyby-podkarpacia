@@ -32,8 +32,8 @@ gleba:
   zrodla: [gruminska_wojewoda_1985]
   wiarygodnosc: B
 typy_siedliskowe:
-  preferowane: [BMśw, LMśw, BMG, LMG]
-  dopuszczalne: [Bśw, Lśw, BMw, LMw, LG, BMwyż, LMwyż, Lwyż]
+  preferowane: [BMśw, LMśw, BMGśw, LMGśw]
+  dopuszczalne: [Bśw, Lśw, BMw, LMw, LGśw, BMwyż, LMwyż, Lwyż]
   zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
   wiarygodnosc: C
 wysokosc_npm:

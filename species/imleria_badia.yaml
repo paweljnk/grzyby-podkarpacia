@@ -31,7 +31,7 @@ gleba:
   wiarygodnosc: B
 typy_siedliskowe:
   preferowane: [Bśw, BMśw, Bw, BMw]
-  dopuszczalne: [LMśw, LMw, BMG, LMG, BMwyż, LMwyż]
+  dopuszczalne: [LMśw, LMw, BMGśw, LMGśw, BMwyż, LMwyż]
   zrodla: [praktyka_grzybiarska, zalozenie_projektowe]
   wiarygodnosc: C
 wysokosc_npm:

@@ -1,4 +1,26 @@
-# Pokrycie danych — pilotaż (Etap 1)
+# Pokrycie danych — pilotaż
+
+## Stan danych rzeczywistych (2026-10-17, import z GitHub Actions)
+
+Dane pobiera codziennie `.github/workflows/dane.yml` (serwery GitHuba mają dostęp do źródeł, którego nie ma
+środowisko deweloperskie). Paczka: gałąź `dane/pilot` (manifest, raport `check-data`, log). Aplikacja wczytuje ją sama.
+
+| Warstwa | Źródło | Rekordy | Braki |
+|---|---|---|---|
+| Granice nadleśnictw (obszary pilotażowe) | BDL, kolekcja `nadlesnictwa` | 2 (Głogów Małopolski 04-08, Baligród 04-01) | — |
+| Wydzielenia (tylko drzewostany, `area_type=D-STAN`) | BDL OGC API, RDLP Krosno | 6256 (Głogów 3487, Baligród 2769) | gatunek panujący, wiek, TSL: 0%; **udziały gatunków i gleba: 100%** (usługa ich nie udostępnia) |
+| Rzeźba terenu dla wydzieleń | Copernicus DEM GLO-30 (DSM) | 6256 | 0% |
+| Pogoda | Open-Meteo: reanaliza (ERA5+ERA5-Land), analiza (ostatnie 10 dni), prognoza (7 dni) | 23 komórki, ok. 1770 dób | opad i ET₀ 100% |
+| Granica województwa | PRG (WFS, warstwa `ms:A01_Granice_wojewodztw`) | 1 | pola TERYT nie zmapowane (wybór geometryczny) |
+| Formy ochrony przyrody | GDOŚ | 0 | **HTTP 403 także z GitHub Actions** — do wyjaśnienia |
+| Zakazy wstępu | — | 0 | brak źródła — aplikacja pokazuje „nie da się sprawdzić” |
+
+Wnioski z prawdziwych danych (poprawione w kodzie):
+- Model `era5_land` w Open-Meteo nie podaje opadu ani ET₀ — archiwum korzysta z domyślnego połączenia ERA5 + ERA5-Land.
+- BDL używa dokładniejszych kodów siedlisk górskich (LGŚW, LMGŚW, BMGŚW, LŁG, OLJG…) — słownik ujednolicony.
+- Kod `DB.C` (dąb czerwony, gatunek obcy) jest rozdzielony od dębów rodzimych.
+
+# Pilotaż — Etap 1 (stan pierwotny)
 
 Stan na: 2026-10-17. Obszary pilotażowe: **Nadleśnictwo Głogów Małopolski** (nizinne, bory sosnowe)
 i **Nadleśnictwo Baligród** (górskie, buczyny i jodła). Do czasu pobrania granic nadleśnictw z BDL

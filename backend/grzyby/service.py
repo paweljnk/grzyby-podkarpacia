@@ -109,7 +109,8 @@ def display_name(adres: str | None, sid: int) -> str:
     if not adres:
         return f"Wydzielenie {sid}"
     parts = [x.strip() for x in adres.split("-")]
-    if len(parts) >= 6 and parts[4].isdigit():
+    import re
+    if len(parts) >= 6 and re.fullmatch(r"\d+[A-Za-z]*", parts[4]):
         return f"oddz. {parts[4]}{parts[5]}, leśn. {parts[3]}"
     return adres
 
