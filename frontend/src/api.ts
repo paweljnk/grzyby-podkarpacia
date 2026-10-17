@@ -19,7 +19,9 @@ const base = (q: Query) => ({ species: q.species, date: q.date, calendar: q.cale
 export const api = {
   species: () => get<SpeciesItem[]>("gatunki"),
   ranking: (q: Query) => get<RankingResp>("ranking", { ...base(q), lat: q.lat, lon: q.lon, radius_km: q.radius_km }),
-  map: (q: Query) => get<Envelope & { geojson: GeoJSON.FeatureCollection }>("mapa", { ...base(q), lat: q.lat, lon: q.lon, radius_km: q.radius_km }),
+  map: (q: Query) => get<Envelope & { geojson: GeoJSON.FeatureCollection }>("mapa", { ...base(q), lat: q.lat, lon: q.lon, radius_km: Math.min(q.radius_km, 30) }),
+  mapBbox: (q: Query, bbox: string) => get<Envelope & { tryb: string; geojson: GeoJSON.FeatureCollection }>("mapa", { ...base(q), bbox }),
+  coverage: (bbox: string) => get<GeoJSON.FeatureCollection>("pokrycie", { bbox }),
   protection: (ds: Dataset) => get<GeoJSON.FeatureCollection>("warstwy/ochrona", { dataset: ds }),
   place: (id: number, q: Query) => get<Envelope & { miejsce: PlaceCard }>(`miejsce/${id}`, { ...base(q), lat: q.lat, lon: q.lon }),
   week: (id: number, q: Query) => get<WeekResp>(`miejsce/${id}/7dni`, { species: q.species, calendar: q.calendar ? "on" : "off", dataset: q.dataset, start: q.date }),

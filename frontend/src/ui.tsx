@@ -95,3 +95,16 @@ export function Footer({ env }: { env: Envelope | null }) {
 
 export function Loading() { return <p className="muted pad">Ładowanie…</p>; }
 export function ErrorBox({ error }: { error: string }) { return <div className="banner banner-warn" role="alert">{error}</div>; }
+
+/** Warunki (z przedziałem, gdy część danych nieznana) i — osobno — pewność danych. */
+export function Conditions({ v, lo, hi, pewnosc, opis }: { v: number | null; lo: number | null; hi: number | null; pewnosc: number; opis: string }) {
+  const range = lo != null && hi != null && hi - lo >= 2 ? `${Math.round(lo)}–${Math.round(hi)}` : null;
+  return (
+    <span className="cond" data-testid="conditions">
+      <span>warunki {v == null ? "—" : Math.round(v)}{range && <span className="muted"> (przedział {range})</span>}</span>
+      <span className={`cert cert-${opis}`} title="Pewność danych: ile wejść pochodzi ze źródła, ile z modelu, ile brak">
+        pewność danych: {QUALITY[opis]} ({Math.round(pewnosc * 100)}%)
+      </span>
+    </span>
+  );
+}

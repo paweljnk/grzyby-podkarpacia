@@ -210,6 +210,37 @@ def ranking(conn, ds: repo.Dataset, sp: Species, lat: float, lon: float, radius_
             "kalendarz": calendar_json(cal) if calendar_on else None}
 
 
+MAP_MAX_KM2 = 900          # powyżej: mapa pokazuje tylko pokrycie danymi (przybliż, aby zobaczyć wskaźnik)
+
+
+def map_bbox(conn, ds: repo.Dataset, sp: Species, bbox: tuple[float, float, float, float], day: date,
+             calendar_on: bool) -> dict:
+    import math
+    km2 = (bbox[2] - bbox[0]) * 111.32 * math.cos(math.radians((bbox[1] + bbox[3]) / 2)) * (bbox[3] - bbox[1]) * 110.57
+    if km2 > MAP_MAX_KM2:
+        return {"tryb": "przybliz", "km2": round(km2), "geojson": {"type": "FeatureCollection", "features": []}}
+    rows = repo.stands_in_bbox(conn, ds, bbox)
+    lat, lon = (bbox[1] + bbox[3]) / 2, (bbox[0] + bbox[2]) / 2
+    cal = cal_day(day, lat, lon)
+    ids = [r.stand.id for r in rows]
+    cfg = load_yaml("model.yaml")
+    prefetch = {"prot": repo.protection_bulk(conn, ds, ids), "bans": repo.bans_bulk(conn, ds, ids, day),
+                "obs": repo.observations_region(conn, ds, sp.id, lat, lon, day, 60 + cfg["obserwacje"]["promien_km"])}
+    wc: dict = {}
+    props = {}
+    for row in rows:
+        s, extra = score_place(conn, ds, row, sp, day, calendar_on, cal, wc, prefetch)
+        props[row.stand.id] = {"id": row.stand.id, "nazwa": display_name(row.adres_lesny, row.stand.id),
+                               "wynik": s.wynik, "warunki_min": s.warunki_min, "warunki_max": s.warunki_max,
+                               "pewnosc": s.kompletnosc, "rekomendowane": s.rekomendowane, "jakosc": s.jakosc,
+                               "gatunek_panujacy": row.stand.gatunek_panujacy, "typ_siedliskowy": row.stand.typ_siedliskowy,
+                               "zarzad": (row.meta or {}).get("zarzad"), "klasa_danych": (row.meta or {}).get("klasa_danych"),
+                               "opad_7d_mm": extra["wskazniki_pogody"]["opad_mm"].get("7")}
+    geoms = repo.stand_geojson(conn, ds, ids, simplify_m=3)
+    feats = [{"type": "Feature", "id": i, "geometry": geoms.get(i), "properties": p} for i, p in props.items()]
+    return {"tryb": "wydzielenia", "km2": round(km2), "geojson": {"type": "FeatureCollection", "features": feats}}
+
+
 def place_card(conn, ds: repo.Dataset, sp: Species, sid: int, day: date, calendar_on: bool,
                lat: float | None = None, lon: float | None = None) -> dict | None:
     row = repo.stand_by_id(conn, ds, sid, lat, lon)

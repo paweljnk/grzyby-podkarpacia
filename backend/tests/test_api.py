@@ -68,3 +68,26 @@ def test_validation_errors(client):
     assert client.get("/api/ranking?species=nieznany&lat=49.3&lon=22.3").status_code == 404
     assert client.get("/api/ranking?species=boletus_edulis&lat=52.2&lon=21.0").status_code == 422
     assert client.get(f"/api/ranking?{Q}&calendar=maybe").status_code == 422
+
+
+def test_map_bbox_modes_and_coverage(client):
+    small = client.get("/api/mapa?species=boletus_edulis&bbox=22.20,49.28,22.32,49.36&dataset=demo").json()
+    assert small["tryb"] == "wydzielenia"
+    for f in small["geojson"]["features"]:
+        p = f["properties"]
+        assert "pewnosc" in p and "warunki_min" in p and "warunki_max" in p
+    big = client.get("/api/mapa?species=boletus_edulis&bbox=21.1,49.0,23.6,50.85&dataset=demo").json()
+    assert big["tryb"] == "przybliz" and big["geojson"]["features"] == []
+    assert client.get("/api/mapa?species=boletus_edulis&bbox=1,2,3&dataset=demo").status_code == 422
+    cov = client.get("/api/pokrycie?bbox=21.1,49.0,23.6,50.85")
+    assert cov.status_code == 200 and cov.json()["type"] == "FeatureCollection"
+
+
+def test_ranking_exposes_conditions_and_certainty_separately(client):
+    m = client.get(f"/api/ranking?{Q}&limit=3").json()["miejsca"][0]
+    assert m["warunki"] == m["wynik"] and 0 <= m["pewnosc"] <= 1 and m["pewnosc_opis"] in {"wysoka", "srednia", "niska"}
+    assert m["warunki_min"] <= m["warunki"] <= m["warunki_max"]
+    card = client.get(f"/api/miejsce/{m['id']}?species=boletus_edulis&dataset=demo").json()["miejsce"]
+    kinds = {a["atrybut"]: a["oznaczenie"] for a in card["atrybuty"]}
+    assert kinds["Pełny skład gatunkowy z udziałami"] == "brak"
+    assert set(kinds.values()) <= {"źródłowa", "model", "brak"}

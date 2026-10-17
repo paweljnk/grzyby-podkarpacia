@@ -95,6 +95,25 @@ def stands_near(conn, ds: Dataset, lat: float, lon: float, radius_km: float, lim
         return [_row(r) for r in cur.fetchall()]
 
 
+def stands_in_bbox(conn, ds: Dataset, bbox: tuple[float, float, float, float], limit: int = 20000) -> list[StandRow]:
+    t = T(ds)
+    env = "ST_Transform(ST_MakeEnvelope(%(x0)s, %(y0)s, %(x1)s, %(y1)s, 4326), 2180)"
+    sql = _STAND_SQL.format(dist="NULL::float", **t) + f" WHERE w.geom && {env} LIMIT %(limit)s"
+    with conn.cursor() as cur:
+        cur.execute(sql, {"x0": bbox[0], "y0": bbox[1], "x1": bbox[2], "y1": bbox[3], "limit": limit})
+        return [_row(r) for r in cur.fetchall()]
+
+
+def coverage_geojson(conn, bbox: tuple[float, float, float, float]) -> dict:
+    with conn.cursor() as cur:
+        cur.execute("""SELECT ix, iy, klasa, las_ref_ha, bdl_ha, ST_AsGeoJSON(ST_Transform(geom, 4326), 5) FROM coverage.siatka
+                       WHERE geom && ST_Transform(ST_MakeEnvelope(%s,%s,%s,%s,4326), 2180)""", bbox)
+        feats = [{"type": "Feature", "geometry": json.loads(g),
+                  "properties": {"klasa": k, "las_ref_ha": round(r or 0, 1), "bdl_ha": round(b or 0, 1)}}
+                 for _, _, k, r, b, g in cur.fetchall()]
+    return {"type": "FeatureCollection", "features": feats}
+
+
 def stand_by_id(conn, ds: Dataset, sid: int, lat: float | None = None, lon: float | None = None) -> StandRow | None:
     t = T(ds)
     if lat is not None and lon is not None:

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api, geocode, type Query } from "./api";
 import type { Envelope, MonthResp, PlaceCard, RankingResp, Scored, SpeciesItem, WeekResp } from "./types";
-import { BIO, Breakdown, ErrorBox, Footer, Gates, Loading, QUALITY, ScoreBadge, TREE_NAMES, Warnings, scoreColor } from "./ui";
+import { BIO, Breakdown, Conditions, ErrorBox, Footer, Gates, Loading, QUALITY, ScoreBadge, TREE_NAMES, Warnings, scoreColor } from "./ui";
 
 function useLoad<T>(fn: () => Promise<T>, deps: unknown[]) {
   const [data, setData] = useState<T | null>(null);
@@ -99,8 +99,9 @@ export function RankingView({ q, setQ, open, compareIds, toggleCompare }: {
                 <span className="muted small">
                   {m.odleglosc_km != null && <>{m.odleglosc_km} km (linia prosta) · </>}
                   {m.gatunek_panujacy ? TREE_NAMES[m.gatunek_panujacy] ?? m.gatunek_panujacy : "drzewostan: brak"}
-                  {m.typ_siedliskowy && <> · {m.typ_siedliskowy}</>} · jakość danych: {QUALITY[m.jakosc]}
+                  {m.typ_siedliskowy && <> · {m.typ_siedliskowy}</>}{m.zarzad === "poza_LP" && <> · las poza LP{m.wlasnosc ? ` (${m.wlasnosc})` : ""}</>}
                 </span>
+                <Conditions v={m.warunki} lo={m.warunki_min} hi={m.warunki_max} pewnosc={m.pewnosc} opis={m.pewnosc_opis} />
                 <Breakdown A={m.A} B={m.B} C={m.C} D={m.D} calendar={q.calendar} />
               </span>
             </button>
@@ -142,7 +143,8 @@ export function PlaceView({ id, q, setQ, go, compareIds, toggleCompare }: {
             <ScoreBadge value={m.wynik} excluded={!m.rekomendowane} size="lg" />
             <div>
               <h2>{m.nazwa}</h2>
-              <p className="muted small">wskaźnik rekomendacji 0–100 · jakość danych: <strong>{QUALITY[m.jakosc]}</strong> ({Math.round(m.kompletnosc * 100)}% wejść)</p>
+              <p className="muted small">wskaźnik warunków 0–100 (nie prawdopodobieństwo)</p>
+              <Conditions v={m.warunki} lo={m.warunki_min} hi={m.warunki_max} pewnosc={m.pewnosc} opis={m.pewnosc_opis} />
               {!m.rekomendowane && <p className="excluded-note">Miejsce nie trafia do rekomendacji wypraw.</p>}
             </div>
           </header>
@@ -165,6 +167,21 @@ export function PlaceView({ id, q, setQ, go, compareIds, toggleCompare }: {
           <h3>Dojazd</h3>
           <p>{m.dojazd.odleglosc_km != null ? `${m.dojazd.odleglosc_km} km. ` : ""}{m.dojazd.opis}</p>
           {m.dojazd.nachylenie_sr_deg != null && <p className="small">Średnie nachylenie terenu: {m.dojazd.nachylenie_sr_deg.toFixed(0)}°.</p>}
+
+          <h3>Dane o miejscu — źródła</h3>
+          <table className="attr-table" data-testid="attributes">
+            <thead><tr><th>Atrybut</th><th>Wartość</th><th>Źródło / data</th></tr></thead>
+            <tbody>
+              {m.atrybuty.map((a) => (
+                <tr key={a.atrybut} className={`attr-${a.oznaczenie === "źródłowa" ? "src" : a.oznaczenie === "model" ? "model" : "none"}`}>
+                  <td>{a.atrybut}</td>
+                  <td>{a.wartosc ?? "brak danych"}</td>
+                  <td><span className="tag-k">{a.oznaczenie === "źródłowa" ? "informacja źródłowa" : a.oznaczenie === "model" ? "wynik modelu" : "brak danych"}</span>
+                    {a.zrodlo && <><br /><span className="tiny muted">{a.zrodlo}{a.data ? `, ${a.data}` : ""}</span></>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
           <h3>Drzewostan i siedlisko</h3>
           <dl className="facts">

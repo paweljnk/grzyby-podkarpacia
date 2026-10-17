@@ -31,12 +31,20 @@ def build() -> dict:
                               round(sum(las_ref_ha) FILTER (WHERE klasa = 'brak_oceny'))
                        FROM coverage.siatka""")
         n, ref, cov, bdl, full, part, none, none_ha = cur.fetchone()
+        cur.execute("""SELECT count(*), round(sum(las_ref_ha)), round(sum(LEAST(bdl_ha, las_ref_ha)))
+                       FROM coverage.siatka WHERE las_ref_ha >= 50""")
+        n50, ref50, cov50 = cur.fetchone()
         r["pokrycie"] = {
             "warstwa_referencyjna": "ESA WorldCover 2021 v200, klasa 10 'Tree cover' (10 m), w granicach województwa (PRG)",
             "komorek_1km_z_lasem": n, "las_referencyjny_ha": ref, "pokryty_danymi_BDL_ha_szac": cov,
             "procent_pokrycia": round(100 * cov / ref, 1) if ref else None,
             "komorki_pelniejsze": full, "komorki_czesciowe": part, "komorki_brak_oceny": none,
             "las_ref_w_komorkach_brak_oceny_ha": none_ha,
+            "komorki_lesne_50ha": n50, "las_ref_w_komorkach_lesnych_ha": ref50, "pokryty_w_komorkach_lesnych_ha": cov50,
+            "procent_pokrycia_komorki_lesne": round(100 * cov50 / ref50, 1) if ref50 else None,
+            "uwaga": "WorldCover 'Tree cover' obejmuje też zadrzewienia, sady, parki i drzewa przy drogach (w województwie "
+                     "ok. połowa powierzchni wobec ~38% lesistości), więc pokrycie liczone do całej klasy jest zaniżone. "
+                     "Miara dla komórek zdominowanych przez las (≥50 ha drzew na 1 km²) lepiej odpowiada lasom.",
             "metoda": "dla każdej komórki 1 km: min(powierzchnia drzewostanów BDL, las wg WorldCover); suma / suma lasu "
                       "referencyjnego. 'Tree cover' ≠ las w rozumieniu ustawy — wartość przybliżona.",
         }
@@ -70,9 +78,12 @@ def to_markdown(r: dict) -> str:
              f"- **Pokrycie danymi BDL względem warstwy referencyjnej: {p['procent_pokrycia']}%** "
              f"(komórki 1 km: pełniejsze {p['komorki_pelniejsze']}, częściowe {p['komorki_czesciowe']}, "
              f"bez możliwości oceny {p['komorki_brak_oceny']})",
-             f"- Metoda: {p['metoda']}", "",
+             f"- **Pokrycie w komórkach zdominowanych przez las (≥50 ha drzew na 1 km²): {p['procent_pokrycia_komorki_lesne']}%** "
+             f"({p['komorki_lesne_50ha']} komórek, las referencyjny {p['las_ref_w_komorkach_lesnych_ha']:,.0f} ha)".replace(",", " "),
+             f"- Metoda: {p['metoda']}",
+             f"- Uwaga: {p['uwaga']}", "",
              "## Nadleśnictwa przecinające województwo", "",
-             "| Kod | Nadleśnictwo | ha nadleśnictwa w województwie | wydzieleń LP | ha drzewostanów LP w województwie |",
+             "| Kod | Nadleśnictwo | ha zasięgu terytorialnego nadleśnictwa w województwie | wydzieleń LP | ha drzewostanów LP w województwie |",
              "|---|---|---|---|---|"]
     for n in r["nadlesnictwa"]:
         lines.append(f"| {n['kod']} | {n['nazwa']} | {n['ha_nadlesnictwa_w_wojewodztwie']} | {n['wydzielen_LP']} | "

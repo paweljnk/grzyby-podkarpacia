@@ -119,3 +119,14 @@ button:disabled { opacity: .5; }
 .call { display: block; padding: 10px; margin: 6px 0; border-radius: 10px; background: var(--bg); color: var(--text); text-decoration: none; font-weight: 700; font-size: 18px; }
 .call-112 { background: var(--bad); color: #fff; }
 .myths li { margin: 8px 0; }
+
+.cond { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 13px; margin: 2px 0; }
+.cert { border-radius: 6px; padding: 0 6px; border: 1px solid var(--line); }
+.cert-wysoka { background: #dbeedd; color: #1d4a22; } .cert-srednia { background: var(--warn-bg); color: var(--warn); }
+.cert-niska { background: #f4dede; color: var(--bad); }
+.banner-info { background: #e3eef5; color: #1f4b66; }
+.attr-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+.attr-table th, .attr-table td { border: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.attr-none td:nth-child(2) { color: var(--muted); font-style: italic; }
+.tag-k { font-size: 11px; font-weight: 600; }
+.attr-model .tag-k { color: #7a5200; } .attr-src .tag-k { color: #1d4a22; } .attr-none .tag-k { color: var(--muted); }

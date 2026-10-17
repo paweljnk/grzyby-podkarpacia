@@ -1,7 +1,7 @@
 export type Dataset = "real" | "demo";
 
 export interface Factor { nazwa: string; wartosc: number | null; waga: number; opis: string }
-export interface Component { wynik: number | null; kompletnosc: number; czynniki: Factor[]; uzasadnienie: string[] }
+export interface Component { wynik: number | null; kompletnosc: number; zakres: [number, number] | null; czynniki: Factor[]; uzasadnienie: string[] }
 export interface Gate { kod: string; opis: string }
 export interface Source { id: string; nazwa: string; licencja: string | null; atrybucja: string | null; ostatni_import: string | null; status: string | null }
 
@@ -19,7 +19,11 @@ export interface Scored {
   powierzchnia_ha: number; gatunek_panujacy: string | null; typ_siedliskowy: string | null; wiek: number | null;
   wynik: number | null; podstawa: number | null; A: Component; B: Component; C: number; D: number;
   bramki: Gate[]; rekomendowane: boolean; kompletnosc: number; jakosc: "wysoka" | "srednia" | "niska"; uzasadnienie: string[];
+  warunki: number | null; warunki_min: number | null; warunki_max: number | null; pewnosc: number; pewnosc_opis: "wysoka" | "srednia" | "niska";
+  zarzad?: string | null; wlasnosc?: string | null; klasa_danych?: string | null; rok_danych?: number | null;
 }
+
+export interface Attribute { atrybut: string; wartosc: string | number | null; zrodlo: string | null; data: string | number | null; oznaczenie: "źródłowa" | "model" | "brak" }
 
 export interface RankingResp extends Envelope { miejsca: (Scored & { pogoda: { opad_7d_mm: number | null } })[]; liczba_ocenionych: number; wykluczone: number }
 
@@ -36,6 +40,7 @@ export interface PlaceCard extends Scored {
   dostep: { zakaz_zbioru: boolean; zakaz_wstepu: boolean; zakazy_wstepu_sprawdzalne: boolean; uwagi: string[]; las_prywatny_uwaga: string; formy_ochrony: { rodzaj: string; nazwa: string }[] };
   dojazd: { odleglosc_km: number | null; opis: string; nachylenie_sr_deg: number | null };
   kalendarz: CalendarInfo;
+  atrybuty: Attribute[];
 }
 
 export interface WeekDay { data: string; wynik: number | null; rekomendowane: boolean; jakosc: string; A: number | null; B: number | null; C: number; D: number; bramki: string[]; powody: string[]; typy_danych: Record<string, number>; faza: string; typ_biodynamiczny: string }

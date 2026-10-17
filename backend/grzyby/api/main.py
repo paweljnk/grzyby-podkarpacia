@@ -210,22 +210,39 @@ def compare(ids: str, species: str, date_: date | None = Query(None, alias="date
 
 
 @app.get("/api/mapa")
-def map_layer(species: str, lat: float, lon: float, radius_km: float = Query(25, le=100),
-              date_: date | None = Query(None, alias="date"), calendar: Literal["on", "off"] = "off",
-              dataset: Dataset = "real"):
-    """GeoJSON wydzieleń z wskaźnikiem (także wykluczonych — z bramkami), do kolorowania mapy."""
+def map_layer(species: str, bbox: str | None = None, lat: float | None = None, lon: float | None = None,
+              radius_km: float = Query(10, le=30), date_: date | None = Query(None, alias="date"),
+              calendar: Literal["on", "off"] = "off", dataset: Dataset = "real"):
+    """GeoJSON wydzieleń z warunkami i pewnością w widocznym obszarze (bbox = lon0,lat0,lon1,lat1).
+    Dla dużego obszaru: tryb 'przybliz' — wtedy mapa pokazuje tylko siatkę pokrycia danymi."""
     sp = _sp(species)
     day = date_ or today_local()
+    if bbox:
+        try:
+            b = tuple(float(x) for x in bbox.split(","))
+            assert len(b) == 4 and b[0] < b[2] and b[1] < b[3]
+        except (ValueError, AssertionError):
+            raise HTTPException(422, "bbox w formacie lon0,lat0,lon1,lat1")
+    elif lat is not None and lon is not None:
+        d = radius_km / 111.0
+        b = (lon - d / 0.65, lat - d, lon + d / 0.65, lat + d)
+    else:
+        raise HTTPException(422, "podaj bbox albo lat/lon")
     with connect() as conn:
-        r = service.ranking(conn, dataset, sp, lat, lon, radius_km, day, calendar == "on", 20000, True)
-        geoms = repo.stand_geojson(conn, dataset, [m["id"] for m in r["miejsca"]], simplify_m=5)
-        feats = [{"type": "Feature", "id": m["id"], "geometry": geoms.get(m["id"]),
-                  "properties": {"id": m["id"], "nazwa": m["nazwa"], "wynik": m["wynik"],
-                                 "rekomendowane": m["rekomendowane"], "jakosc": m["jakosc"],
-                                 "gatunek_panujacy": m["gatunek_panujacy"], "typ_siedliskowy": m["typ_siedliskowy"],
-                                 "opad_7d_mm": m["pogoda"]["opad_7d_mm"]}} for m in r["miejsca"]]
-        return _envelope(conn, dataset, {"species": species, "date": day.isoformat()},
-                         {"geojson": {"type": "FeatureCollection", "features": feats}}, day)
+        r = service.map_bbox(conn, dataset, sp, b, day, calendar == "on")
+        return _envelope(conn, dataset, {"species": species, "date": day.isoformat(), "bbox": b}, r, day)
+
+
+@app.get("/api/pokrycie")
+def coverage(bbox: str):
+    """Siatka 1 km: las referencyjny (WorldCover) vs dane BDL — klasy: pelniejsze | czesciowe | brak_oceny."""
+    try:
+        b = tuple(float(x) for x in bbox.split(","))
+        assert len(b) == 4
+    except (ValueError, AssertionError):
+        raise HTTPException(422, "bbox w formacie lon0,lat0,lon1,lat1")
+    with connect() as conn:
+        return repo.coverage_geojson(conn, b)
 
 
 @app.get("/api/warstwy/ochrona")
