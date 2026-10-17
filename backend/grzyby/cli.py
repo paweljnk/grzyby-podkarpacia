@@ -16,7 +16,7 @@ def main() -> int:
     sub.add_parser("demo", help="wygeneruj DANE DEMONSTRACYJNE w schemacie demo")
     sub.add_parser("check-data")
     sn = sub.add_parser("snapshot", help="paczka danych rzeczywistych: eksport / wczytanie")
-    sn.add_argument("akcja", choices=["export", "load"])
+    sn.add_argument("akcja", choices=["export", "load", "verify"])
     sn.add_argument("cel", nargs="?", help="katalog (export) albo URL/katalog (load)")
     sn.add_argument("--force", action="store_true")
     at = sub.add_parser("atlas", help="atlas: kandydaci zdjęć, zatwierdzanie, kontrola treści")
@@ -59,6 +59,10 @@ def main() -> int:
     if args.cmd == "snapshot":
         from pathlib import Path
         from . import snapshot
+        if args.akcja == "verify":
+            problems = snapshot.verify()
+            print("\n".join(problems) or "OK — paczka kompletna")
+            return 1 if problems else 0
         if args.akcja == "export":
             m = snapshot.export(Path(args.cel) if args.cel else snapshot.default_export_dir())
             print({"wygenerowano": m["wygenerowano_utc"], "wiersze": m["wiersze"]})

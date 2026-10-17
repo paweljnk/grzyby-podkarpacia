@@ -81,3 +81,14 @@ def test_display_name_from_forest_address():
     assert display_name("04-08-2-09-163   -k   -00", 1) == "oddz. 163k, leśn. 09"
     assert display_name("04-01-2-09-127A  -b   -00", 4) == "oddz. 127Ab, leśn. 09"
     assert display_name("DEMO BAL-001", 2) == "DEMO BAL-001" and display_name(None, 3) == "Wydzielenie 3"
+
+
+
+@pytest.mark.db
+def test_verify_rejects_incomplete_weather():
+    from grzyby import snapshot
+    problems = snapshot.verify()
+    # baza deweloperska może mieć albo nie mieć pogody na dziś — ważne, że kontrola zwraca listę i nie rzuca wyjątkiem
+    assert isinstance(problems, list)
+    from datetime import date
+    assert any("prognoza" in p for p in snapshot.verify(today=date(2030, 1, 1)))

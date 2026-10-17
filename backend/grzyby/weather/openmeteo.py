@@ -175,13 +175,16 @@ def import_weather(today: date | None = None) -> None:
             try:
                 with import_run(conn, source_id, "weather.dzien", f"{len(cells)} komórek",
                                 {"start": start.isoformat(), "end": end.isoformat()}) as run:
+                    failed = 0
                     with conn.cursor() as cur:
                         for cid, lat, lon in cells:
                             try:
                                 days, meta = fetch_cell(client, kind, lat, lon, start, end, today)
-                            except BadResponse as e:
+                            except (BadResponse, SourceUnavailable) as e:
+                                # jedna komórka nie zatrzymuje importu pozostałych
                                 log.warning("%s %s: %s", kind, cid, e)
-                                run.set_status("partial", str(e)[:300])
+                                failed += 1
+                                run.set_status("partial", f"nieudane komórki: {failed}; ostatni błąd: {str(e)[:200]}")
                                 continue
                             store_days(cur, cid, days, meta)
                             run.records += len(days)

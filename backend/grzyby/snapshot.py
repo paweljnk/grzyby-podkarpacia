@@ -133,3 +133,29 @@ def load(base: str | None = None, force: bool = False) -> dict:
 
 def default_export_dir() -> Path:
     return DATA_DIR / "snapshot"
+
+
+def verify(today=None, min_cell_share: float = 0.8) -> list[str]:
+    """Kontrola jakości przed publikacją. Pusta lista = paczka nadaje się do publikacji."""
+    from datetime import timedelta
+    from zoneinfo import ZoneInfo
+    today = today or datetime.now(ZoneInfo("Europe/Warsaw")).date()
+    problems = []
+    conn = connect()
+    with conn.cursor() as cur:
+        cur.execute("SELECT count(*) FROM forest.wydzielenie")
+        if cur.fetchone()[0] == 0:
+            problems.append("brak wydzieleń")
+        cur.execute("SELECT count(*) FROM weather.komorka")
+        cells = cur.fetchone()[0]
+        for label, d0, d1 in (("ostatnie 14 dni", today - timedelta(days=14), today - timedelta(days=1)),
+                              ("dziś i prognoza", today, today + timedelta(days=4))):
+            cur.execute("""SELECT count(*) FROM (SELECT komorka_id FROM weather.dzien
+                             WHERE data_lokalna BETWEEN %s AND %s AND opad_mm IS NOT NULL
+                             GROUP BY komorka_id HAVING count(DISTINCT data_lokalna) = %s) s""",
+                        (d0, d1, (d1 - d0).days + 1))
+            ok = cur.fetchone()[0]
+            if cells == 0 or ok < min_cell_share * cells:
+                problems.append(f"pogoda ({label}): kompletne komórki {ok}/{cells}")
+    conn.close()
+    return problems
