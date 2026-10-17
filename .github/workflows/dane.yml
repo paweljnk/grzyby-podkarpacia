@@ -1,0 +1,81 @@
+# Codzienny import danych RZECZYWISTYCH dla obszarów pilotażowych i publikacja paczki na gałęzi `dane/pilot`.
+# Źródła: BDL (wydzielenia, granice nadleśnictw), PRG, Copernicus DEM, Open-Meteo (reanaliza, analiza, prognoza).
+# Aplikacja (API) sama pobiera najnowszą paczkę: GRZYBY_SNAPSHOT_URL (domyślnie raw.githubusercontent.com/.../dane/pilot/).
+name: dane-pilot
+on:
+  schedule:
+    - cron: "17 3 * * *"          # codziennie ok. 5:17 czasu polskiego (lato)
+  push:
+    branches: ["zadanie/dane"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: dane-pilot
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    services:
+      db:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_DB: grzyby
+          POSTGRES_USER: grzyby
+          POSTGRES_PASSWORD: grzyby
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U grzyby -d grzyby" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgresql://grzyby:grzyby@localhost:5432/grzyby
+      GRZYBY_ROOT: ${{ github.workspace }}
+      TZ: Europe/Warsaw
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/pyproject.toml
+      - uses: actions/cache@v4
+        with:
+          path: data/raw/copernicus_dem
+          key: copernicus-dem-v1
+      - name: Instalacja
+        run: pip install ./backend
+      - name: Schemat bazy
+        run: python -c "from grzyby.db import migrate; print(migrate())"
+      - name: Import (PRG, BDL, DEM + statystyki strefowe, GDOŚ)
+        run: python -m grzyby.cli import all 2>&1 | tee -a log.txt
+      - name: Pogoda (Open-Meteo)
+        run: python -m grzyby.cli import weather 2>&1 | tee -a log.txt
+      - name: Kontrola danych
+        run: python -m grzyby.cli check-data 2>&1 | tee raport.txt
+      - name: Eksport paczki
+        run: python -m grzyby.cli snapshot export out 2>&1 | tee -a log.txt
+      - name: Publikacja na gałęzi dane/pilot
+        run: |
+          cp raport.txt out/raport_check_data.txt
+          grep -vE "HTTP Request|INFO httpx" log.txt > out/log_importu.txt || true
+          cat > out/README.md <<'MD'
+          # Paczka danych — Grzyby Podkarpacia (obszary pilotażowe)
+
+          Generowana automatycznie przez GitHub Actions (`.github/workflows/dane.yml`). Szczegóły: `manifest.json`,
+          `raport_check_data.txt`, `log_importu.txt`.
+
+          Oznaczenia autorstwa:
+          - Bank Danych o Lasach (BULiGL / Lasy Państwowe), licencja CC BY 4.0
+          - Weather data by Open-Meteo.com (CC BY 4.0); Copernicus Climate Change Service (ERA5-Land)
+          - © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved
+          - Państwowy Rejestr Granic — Główny Urząd Geodezji i Kartografii
+          MD
+          cd out
+          git init -q -b dane/pilot
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -qm "Paczka danych $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dane/pilot

@@ -1,6 +1,7 @@
 """API aplikacji Grzyby Podkarpacia (EPSG:4326 na wyjściu, daty lokalne Europe/Warsaw)."""
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
 from contextlib import asynccontextmanager
@@ -36,6 +37,9 @@ async def lifespan(app: FastAPI):
             log.info("Migracje: %s", migrate())
         except Exception as e:
             log.warning("Migracja nieudana: %s", e)
+    task = None
+    if os.environ.get("GRZYBY_SNAPSHOT_AUTO", "1") == "1":
+        task = asyncio.create_task(_snapshot_loop())
     if os.environ.get("GRZYBY_DEMO_AUTOREFRESH", "1") == "1":
         try:
             from ..demo import ensure_fresh
@@ -44,6 +48,20 @@ async def lifespan(app: FastAPI):
         except Exception as e:  # brak DEM / bazy nie może blokować startu API
             log.warning("Nie odświeżono danych demo: %s", e)
     yield
+    if task:
+        task.cancel()
+
+
+async def _snapshot_loop():
+    """Co 6 h: wczytaj nowszą paczkę danych rzeczywistych (publikowaną codziennie przez GitHub Actions)."""
+    from .. import snapshot
+    while True:
+        try:
+            res = await asyncio.to_thread(snapshot.load)
+            log.info("Paczka danych: %s", res)
+        except Exception as e:  # brak sieci / paczki nie może zatrzymać API
+            log.warning("Paczka danych niedostępna: %s", e)
+        await asyncio.sleep(6 * 3600)
 
 
 app = FastAPI(title="Grzyby Podkarpacia API", version="0.4.0", lifespan=lifespan)
@@ -65,14 +83,22 @@ def _sp(species: str):
         raise HTTPException(404, f"Nieznany gatunek: {species}")
 
 
-def _sources_footer(keys: list[str]) -> list[dict]:
+def _sources_footer(conn, keys: list[str]) -> list[dict]:
+    """Źródła z datą ostatniego udanego importu — z wczytanej paczki danych, a gdy jej brak: z sources.yaml."""
+    from ..snapshot import current
     src = load_sources()
+    snap = current(conn)
+    last: dict[str, str] = {}
+    for imp in (snap["manifest"].get("importy", []) if snap else []):
+        if imp.get("status") in ("ok", "partial") and imp.get("finished_at"):
+            last[imp["source_id"]] = max(last.get(imp["source_id"], ""), str(imp["finished_at"]))
     out = []
     for k in keys:
         s = src.get(k)
         if s:
             out.append({"id": k, "nazwa": s["nazwa"], "licencja": s.get("licencja"), "atrybucja": s.get("atrybucja"),
-                        "ostatni_import": s.get("ostatni_import"), "status": (s.get("weryfikacja") or {}).get("status")})
+                        "ostatni_import": last.get(k) or s.get("ostatni_import"),
+                        "status": (s.get("weryfikacja") or {}).get("status")})
     return out
 
 
@@ -85,7 +111,7 @@ def _envelope(conn, ds: Dataset, params: dict, body: dict, day: date | None = No
     if ds == "demo":
         warnings.append("DANE DEMONSTRACYJNE: fikcyjne drzewostany, pogoda i obserwacje. Nie używaj do planowania wypraw.")
     elif info["wydzielen"] == 0:
-        warnings.append("Brak rzeczywistych danych o drzewostanach (BDL niedostępny w tym wdrożeniu). Ranking jest pusty.")
+        warnings.append("Brak rzeczywistych danych o drzewostanach — paczka danych nie została jeszcze wczytana. Ranking jest pusty.")
     if info["pogoda_do"] is None:
         warnings.append("Brak danych pogodowych.")
     elif ds == "real" and info["pogoda_pobrano_utc"] and \
@@ -95,7 +121,7 @@ def _envelope(conn, ds: Dataset, params: dict, body: dict, day: date | None = No
         warnings.append(f"Wybrany dzień jest poza zakresem danych pogodowych (do {info['pogoda_do']}).")
     return {"zbior_danych": ds, "parametry": params, "ostrzezenia": warnings, "zastrzezenie": DISCLAIMER,
             "dane": {k: (v.isoformat() if hasattr(v, "isoformat") else v) for k, v in info.items()},
-            "zrodla": _sources_footer(FOOTER_REAL) + ([{"id": "demo", "nazwa": "Dane demonstracyjne (fikcyjne)",
+            "zrodla": _sources_footer(conn, FOOTER_REAL) + ([{"id": "demo", "nazwa": "Dane demonstracyjne (fikcyjne)",
                                                         "licencja": None, "atrybucja": None,
                                                         "ostatni_import": info["metadane"].get("wygenerowano_utc"),
                                                         "status": "demo"}] if ds == "demo" else []),
@@ -214,6 +240,18 @@ def protection_layer(dataset: Dataset = "real"):
 @app.get("/api/zrodla")
 def sources():
     return load_sources()
+
+
+@app.get("/api/dane")
+def data_status():
+    """Stan danych rzeczywistych: ostatnia wczytana paczka i liczby wierszy."""
+    from ..snapshot import current
+    with connect() as conn:
+        s = current(conn)
+        info = repo.dataset_info(conn, "real")
+    return {"paczka": None if not s else {"wygenerowano": s["wygenerowano"].isoformat(), "wczytano": s["wczytano"].isoformat(),
+                                          "zrodlo": s["zrodlo_url"], "wiersze": s["manifest"].get("wiersze")},
+            "dane": {k: (v.isoformat() if hasattr(v, "isoformat") else v) for k, v in info.items()}}
 
 
 # --- frontend (zbudowany PWA) ---

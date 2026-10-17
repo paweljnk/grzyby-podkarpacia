@@ -1,8 +1,13 @@
 {
   "source_id": "gugik_nmt",
-  "sprawdzono_utc": "2026-10-17T06:32:45+00:00",
+  "sprawdzono_utc": "2026-10-17T15:19:13+00:00",
   "url": "https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF",
   "typ": "wcs_capabilities",
-  "status": "niedostepne",
-  "powod": "https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF: odmowa połączenia przez proxy (403 Forbidden)"
+  "wynik": {
+    "wersja": "2.0.1",
+    "pokrycia": [
+      "DTM_PL-KRON86-NH_TIFF"
+    ]
+  },
+  "status": "ok"
 }

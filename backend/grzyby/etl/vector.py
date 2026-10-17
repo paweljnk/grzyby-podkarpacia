@@ -61,45 +61,115 @@ def _prop(props: dict, field: str | None):
     return props.get(field) if field else None
 
 
+def _nadlesnictwa(client: HttpClient, base: str, m: dict, bbox: list[float]) -> list[dict]:
+    return list(ogcapi_items(client, base, m["kolekcja_nadlesnictw"], bbox))
+
+
+def _match_inspectorate(feats: list[dict], m: dict, needle: str) -> dict | None:
+    from .bdl_codes import search_key
+    hits = [f for f in feats if needle in search_key(str((f.get("properties") or {}).get(m["pole_nazwy_nadlesnictwa"], "")))]
+    return hits[0] if len(hits) == 1 else None
+
+
+def map_bdl_feature(p: dict, m: dict) -> dict:
+    """Atrybuty znormalizowane z obiektu BDL wg config/bdl_mapping.yaml (czysta funkcja, testowana)."""
+    from .bdl_codes import site_type, species
+    f = m["pola"]
+    raw = lambda k: p.get(f[k]) if f.get(k) else None
+    vals = {
+        "external_id": str(raw("external_id")) if raw("external_id") is not None else None,
+        "adres_lesny": raw("adres_lesny"),
+        "gatunek_panujacy": species(raw("gatunek_panujacy")),
+        "udzial_gatunkow": raw("udzial_gatunkow"),
+        "wiek": raw("wiek"),
+        "typ_siedliskowy": site_type(raw("typ_siedliskowy")),
+        "gleba": raw("gleba"),
+    }
+    vals["pochodzenie"] = {k: ("opis_taksacyjny" if vals[k] is not None else "brak")
+                           for k in ("gatunek_panujacy", "udzial_gatunkow", "wiek", "typ_siedliskowy", "gleba")}
+    return vals
+
+
 def import_bdl() -> None:
+    from shapely.geometry import shape
+    from .bdl_codes import search_key
     m = bdl_mapping()["bdl_ogcapi"]
     base = load_sources()["bdl_ogcapi"]["url"]
     conn = connect()
-    with HttpClient() as client:
+    with HttpClient(min_interval_s=0.5, timeout_s=120) as client:
         for area in pilot_config()["obszary"]:
             try:
                 with import_run(conn, "bdl_ogcapi", "forest.wydzielenie", area["id"]) as run:
-                    if not m["kolekcja_wydzielen"] or not m["pola"]["external_id"]:
-                        raise MappingMissing("config/bdl_mapping.yaml: brak kolekcja_wydzielen / pola.external_id — "
-                                             "uruchom `make probe` i uzupełnij mapowanie na podstawie docs/schemas/bdl_ogcapi.json")
-                    feats = list(ogcapi_items(client, base, m["kolekcja_wydzielen"], area["bbox_roboczy_wgs84"]))
-                    gdf = _to_storage(gpd.GeoDataFrame.from_features(feats, crs="OGC:CRS84"))
-                    f = m["pola"]
-                    with conn.cursor() as cur:
-                        for (_, row), feat in zip(gdf.iterrows(), feats):
-                            p = feat.get("properties") or {}
-                            vals = {k: _prop(p, f[k]) for k in
-                                    ("adres_lesny", "gatunek_panujacy", "udzial_gatunkow", "wiek", "typ_siedliskowy", "gleba")}
-                            src = lambda k: "opis_taksacyjny" if vals[k] is not None else "brak"
+                    if not m.get("kolekcje_wydzielen") or not m["pola"].get("external_id"):
+                        raise MappingMissing("config/bdl_mapping.yaml: brak kolekcje_wydzielen / pola.external_id")
+                    bbox = area["bbox_roboczy_wgs84"]
+                    prefix = None
+                    insp = None
+                    if area.get("nadlesnictwo_szukaj") and m.get("kolekcja_nadlesnictw"):
+                        insp = _match_inspectorate(_nadlesnictwa(client, base, m, bbox), m,
+                                                   search_key(area["nadlesnictwo_szukaj"]))
+                    if insp:
+                        ip = insp["properties"]
+                        prefix = f"{ip[m['pole_kodu_rdlp']]}-{ip[m['pole_kodu_nadlesnictwa']]}-"
+                        g = shape(insp["geometry"])
+                        bbox = list(g.bounds)
+                        g2180 = _to_storage(gpd.GeoDataFrame(geometry=[g], crs="OGC:CRS84")).geometry.iloc[0]
+                        with conn.cursor() as cur:
                             cur.execute(
-                                """INSERT INTO forest.wydzielenie (source_id, external_id, obszar_id, adres_lesny,
-                                     gatunek_panujacy, gatunek_panujacy_pochodzenie, udzial_gatunkow, udzial_gatunkow_pochodzenie,
-                                     wiek, wiek_pochodzenie, typ_siedliskowy, typ_siedliskowy_pochodzenie,
-                                     gleba, gleba_pochodzenie, attrs, geom, import_id)
-                                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-                                           ST_Multi(ST_GeomFromWKB(%s,2180)),%s)
-                                   ON CONFLICT (source_id, external_id) DO UPDATE SET
-                                     attrs=EXCLUDED.attrs, geom=EXCLUDED.geom, import_id=EXCLUDED.import_id,
-                                     imported_at=now()""",
-                                ("bdl_ogcapi", str(p[f["external_id"]]), area["id"], vals["adres_lesny"],
-                                 vals["gatunek_panujacy"], src("gatunek_panujacy"),
-                                 json.dumps(vals["udzial_gatunkow"]) if vals["udzial_gatunkow"] is not None else None,
-                                 src("udzial_gatunkow"), vals["wiek"], src("wiek"), vals["typ_siedliskowy"],
-                                 src("typ_siedliskowy"), vals["gleba"], src("gleba"),
-                                 json.dumps(p, default=str), wkb.dumps(row.geometry), run.id),
-                            )
-                    run.records = len(gdf)
+                                """INSERT INTO ref.obszar_pilotazowy (id, nazwa, typ_terenu, geom_origin, geom, import_id)
+                                   VALUES (%s,%s,%s,'bdl', ST_Multi(ST_GeomFromWKB(%s,2180)), %s)
+                                   ON CONFLICT (id) DO UPDATE SET nazwa=EXCLUDED.nazwa, geom_origin='bdl',
+                                     geom=EXCLUDED.geom, import_id=EXCLUDED.import_id""",
+                                (area["id"], f"Nadleśnictwo {ip[m['pole_nazwy_nadlesnictwa']]}", area["typ_terenu"],
+                                 wkb.dumps(g2180), run.id))
+                    else:
+                        log.warning("%s: nie znaleziono jednoznacznie nadleśnictwa w BDL — użyty prostokąt roboczy", area["id"])
+                    n = 0
+                    for coll in m["kolekcje_wydzielen"]:
+                        url = f"{base.rstrip('/')}/collections/{coll}/items"
+                        params = {"f": "json", "limit": PAGE_LIMIT, "bbox": ",".join(map(str, bbox)), **m.get("filtr", {})}
+                        with conn.cursor() as cur:
+                            while url:
+                                page = client.get(url, params=params).json()
+                                for feat in page.get("features", []):
+                                    p = feat.get("properties") or {}
+                                    v = map_bdl_feature(p, m)
+                                    if prefix and not str(v["adres_lesny"] or "").startswith(prefix):
+                                        continue
+                                    if not v["external_id"] or not feat.get("geometry"):
+                                        continue
+                                    geom = _to_storage(gpd.GeoDataFrame(geometry=[shape(feat["geometry"])],
+                                                                        crs="OGC:CRS84")).geometry.iloc[0]
+                                    pr = v["pochodzenie"]
+                                    cur.execute(
+                                        """INSERT INTO forest.wydzielenie (source_id, external_id, obszar_id, adres_lesny,
+                                             gatunek_panujacy, gatunek_panujacy_pochodzenie, udzial_gatunkow, udzial_gatunkow_pochodzenie,
+                                             wiek, wiek_pochodzenie, typ_siedliskowy, typ_siedliskowy_pochodzenie,
+                                             gleba, gleba_pochodzenie, attrs, geom, import_id)
+                                           VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, ST_Multi(ST_GeomFromWKB(%s,2180)),%s)
+                                           ON CONFLICT (source_id, external_id) DO UPDATE SET obszar_id=EXCLUDED.obszar_id,
+                                             adres_lesny=EXCLUDED.adres_lesny, gatunek_panujacy=EXCLUDED.gatunek_panujacy,
+                                             gatunek_panujacy_pochodzenie=EXCLUDED.gatunek_panujacy_pochodzenie,
+                                             wiek=EXCLUDED.wiek, wiek_pochodzenie=EXCLUDED.wiek_pochodzenie,
+                                             typ_siedliskowy=EXCLUDED.typ_siedliskowy,
+                                             typ_siedliskowy_pochodzenie=EXCLUDED.typ_siedliskowy_pochodzenie,
+                                             attrs=EXCLUDED.attrs, geom=EXCLUDED.geom, import_id=EXCLUDED.import_id,
+                                             imported_at=now()""",
+                                        ("bdl_ogcapi", v["external_id"], area["id"], v["adres_lesny"],
+                                         v["gatunek_panujacy"], pr["gatunek_panujacy"],
+                                         json.dumps(v["udzial_gatunkow"]) if v["udzial_gatunkow"] is not None else None,
+                                         pr["udzial_gatunkow"], v["wiek"], pr["wiek"], v["typ_siedliskowy"],
+                                         pr["typ_siedliskowy"], v["gleba"], pr["gleba"],
+                                         json.dumps({**p, "_kolekcja": coll}, default=str), wkb.dumps(geom), run.id))
+                                    n += 1
+                                nxt = [l["href"] for l in page.get("links", []) if l.get("rel") == "next"]
+                                url, params = (nxt[0], None) if nxt else (None, None)
+                        conn.commit()
+                    run.records = n
+                    if not insp:
+                        run.set_status("partial", "nadleśnictwo nieodnalezione — zakres z prostokąta roboczego")
                     conn.commit()
+                    log.info("BDL %s: %d wydzieleń (prefiks %s)", area["id"], n, prefix)
             except SourceUnavailable as e:
                 log.warning("BDL %s pominięte: %s", area["id"], e)
     conn.close()
@@ -136,16 +206,19 @@ def import_gdos() -> None:
 
 
 def import_prg() -> None:
+    from shapely.geometry import Point
     m = bdl_mapping()["prg"]
     url = load_sources()["prg_wojewodztwa"]["url"]
     conn = connect()
-    with HttpClient() as client:
+    with HttpClient(timeout_s=180) as client:
         try:
             with import_run(conn, "prg_wojewodztwa", "ref.wojewodztwo", "podkarpackie") as run:
-                if not (m["warstwa_wojewodztw"] and m["pole_teryt"]):
-                    raise MappingMissing("config/bdl_mapping.yaml: prg.warstwa_wojewodztw/pole_teryt puste — uzupełnij po `make probe`")
-                gdf = wfs_features(client, url, m["warstwa_wojewodztw"], [21.0, 49.0, 23.6, 50.9])
-                gdf = _to_storage(gdf[gdf[m["pole_teryt"]].astype(str) == m["teryt_podkarpackie"]])
+                if not m["warstwa_wojewodztw"]:
+                    raise MappingMissing("config/bdl_mapping.yaml: prg.warstwa_wojewodztw puste")
+                lon, lat = m["punkt_wewnatrz_wgs84"]
+                gdf = _to_storage(wfs_features(client, url, m["warstwa_wojewodztw"], [lon - 0.01, lat - 0.01, lon + 0.01, lat + 0.01]))
+                pt = _to_storage(gpd.GeoDataFrame(geometry=[Point(lon, lat)], crs="EPSG:4326")).geometry.iloc[0]
+                gdf = gdf[gdf.geometry.contains(pt)]
                 with conn.cursor() as cur:
                     cur.execute("DELETE FROM ref.wojewodztwo WHERE source_id='prg_wojewodztwa'")
                     for _, row in gdf.iterrows():
@@ -153,9 +226,8 @@ def import_prg() -> None:
                         cur.execute(
                             """INSERT INTO ref.wojewodztwo (source_id, teryt, nazwa, attrs, geom, import_id)
                                VALUES ('prg_wojewodztwa',%s,%s,%s, ST_Multi(ST_GeomFromWKB(%s,2180)), %s)""",
-                            (str(props[m["pole_teryt"]]), _prop(props, m["pole_nazwy"]),
-                             json.dumps(props, default=str), wkb.dumps(row.geometry), run.id),
-                        )
+                            (_prop(props, m["pole_teryt"]), _prop(props, m["pole_nazwy"]),
+                             json.dumps(props, default=str), wkb.dumps(row.geometry), run.id))
                 run.records = len(gdf)
                 conn.commit()
         except SourceUnavailable as e:

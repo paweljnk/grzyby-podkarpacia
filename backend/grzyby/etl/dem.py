@@ -52,8 +52,21 @@ def aligned_grid(bounds_2180: tuple[float, float, float, float], res: float):
     return rasterio.transform.from_origin(x0, y1, res, res), width, height
 
 
-def build_area_rasters(area: dict, tile_paths: list[Path], res: float, out_dir: Path) -> dict[str, Path]:
-    bbox = area["bbox_roboczy_wgs84"]
+def area_bbox(conn, area: dict, margin_deg: float = 0.01) -> list[float]:
+    """Zasięg rastra: prostokąt roboczy ∪ granica nadleśnictwa z BDL (jeśli zaimportowana), z marginesem."""
+    b = list(area["bbox_roboczy_wgs84"])
+    with conn.cursor() as cur:
+        cur.execute("""SELECT ST_XMin(e), ST_YMin(e), ST_XMax(e), ST_YMax(e)
+                       FROM (SELECT ST_Extent(ST_Transform(geom, 4326)) e FROM ref.obszar_pilotazowy
+                             WHERE id=%s AND geom_origin='bdl') s""", (area["id"],))
+        r = cur.fetchone()
+    if r and r[0] is not None:
+        b = [min(b[0], r[0] - margin_deg), min(b[1], r[1] - margin_deg), max(b[2], r[2] + margin_deg), max(b[3], r[3] + margin_deg)]
+    return b
+
+
+def build_area_rasters(area: dict, tile_paths: list[Path], res: float, out_dir: Path, bbox: list[float] | None = None) -> dict[str, Path]:
+    bbox = bbox or area["bbox_roboczy_wgs84"]
     srcs = [rasterio.open(p) for p in tile_paths]
     try:
         mosaic, mos_tr = merge(srcs, bounds=tuple(bbox), nodata=np.nan, dtype="float32")
@@ -157,11 +170,12 @@ def import_dem() -> None:
     with HttpClient(min_interval_s=0.5) as client:
         for area in cfg["obszary"]:
             with import_run(conn, SOURCE_ID, "terrain.raster", area["id"], {"rozdzielczosc_m": res}) as run:
+                bbox = area_bbox(conn, area)
                 tiles = []
-                for t in tiles_for_bbox(area["bbox_roboczy_wgs84"]):
+                for t in tiles_for_bbox(bbox):
                     log.info("Kafel %s", t)
                     tiles.append(client.download(f"{BASE_URL}/{t}/{t}.tif", raw_dir / f"{t}.tif"))
-                paths = build_area_rasters(area, tiles, res, DERIVED_DIR / "teren")
+                paths = build_area_rasters(area, tiles, res, DERIVED_DIR / "teren", bbox)
                 with conn.cursor() as cur:
                     _register_area(cur, area, run.id)
                     _register_rasters(cur, area, paths, res, run.id)

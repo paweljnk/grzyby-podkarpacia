@@ -9,6 +9,8 @@ pytestmark = pytest.mark.db
 def client():
     import os
     os.environ["GRZYBY_DEMO_AUTOREFRESH"] = "1"
+    import os
+    os.environ["GRZYBY_SNAPSHOT_AUTO"] = "0"
     from grzyby.api.main import app
     with TestClient(app) as c:
         yield c

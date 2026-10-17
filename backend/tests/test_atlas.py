@@ -75,6 +75,8 @@ def test_candidates_filtered_by_license_author_and_format():
 @pytest.fixture(scope="module")
 def client():
     from fastapi.testclient import TestClient
+    import os
+    os.environ["GRZYBY_SNAPSHOT_AUTO"] = "0"
     from grzyby.api.main import app
     with TestClient(app) as c:
         yield c

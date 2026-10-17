@@ -1,8 +1,326 @@
 {
   "source_id": "prg_wojewodztwa",
-  "sprawdzono_utc": "2026-10-17T06:32:42+00:00",
+  "sprawdzono_utc": "2026-10-17T15:17:59+00:00",
   "url": "https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries",
   "typ": "wfs_capabilities",
-  "status": "niedostepne",
-  "powod": "https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries: odmowa połączenia przez proxy (403 Forbidden)"
+  "wynik": {
+    "wersja": "2.0.0",
+    "typy_obiektow": [
+      {
+        "Name": "ms:W12_Przystan_morska",
+        "Title": "W12_Przystan_morska",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W11_Port_morski",
+        "Title": "W11_Port_morski",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W10_Reda",
+        "Title": "W10_Reda",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W09_Pas_techniczny",
+        "Title": "W09_Pas_techniczny",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W08_Pas_ochronny",
+        "Title": "W08_Pas_ochronny",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W07_Pas_nadbrzezny",
+        "Title": "W07_Pas_nadbrzezny",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W06_Morskie_linie_brzegowe",
+        "Title": "W06_Morskie_linie_brzegowe",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W05_Strefa_przylegla",
+        "Title": "W05_Strefa_przylegla",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W04_Wylaczna_strefa_ekonomiczna",
+        "Title": "W04_Wylaczna_strefa_ekonomiczna",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W03_Morskie_wody_wewnetrzne",
+        "Title": "W03_Morskie_wody_wewnetrzne",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W02_Morze_terytorialne_RP",
+        "Title": "W02_Morze_terytorialne_RP",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:W01_Linia_podstawowa_morza_terytorialnego",
+        "Title": "W01_Linia_podstawowa_morza_terytorialnego",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U11_Urzad_zeglugi_srodladowej",
+        "Title": "U11_Urzad_zeglugi_srodladowej",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U10_Urzad_morski",
+        "Title": "U10_Urzad_morski",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U09_Regionalny_zarzad_gospodarki_wodnej_PGWWP",
+        "Title": "U09_Regionalny_zarzad_gospodarki_wodnej_PGWWP",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U08_Zarzad_zlewni_PGWWP",
+        "Title": "U08_Zarzad_zlewni_PGWWP",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U07_Regionalna_dyrekcja_lasow_panstwowych",
+        "Title": "U07_Regionalna_dyrekcja_lasow_panstwowych",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U06_Nadlesnictwo",
+        "Title": "U06_Nadlesnictwo",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U05_Izba_administracji_skarbowej",
+        "Title": "U05_Izba_administracji_skarbowej",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U04_Urzad_celno-skarbowy",
+        "Title": "U04_Urzad_celno-skarbowy",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U03_Wyspecjalizowany_urzad_skarbowy",
+        "Title": "U03_Wyspecjalizowany_urzad_skarbowy",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U02_Urzad_skarbowy",
+        "Title": "U02_Urzad_skarbowy",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:U01_Archiwum_panstwowe",
+        "Title": "U01_Archiwum_panstwowe",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K13_Obszar_dzialania_szefa_obrony_cywilnej_gminy",
+        "Title": "K13_Obszar_dzialania_szefa_obrony_cywilnej_gminy",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K12_Obszar_dzialania_szefa_obrony_cywilnej_powiatu",
+        "Title": "K12_Obszar_dzialania_szefa_obrony_cywilnej_powiatu",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K11_Obszar_dzialania_szefa_obrony_cywilnej_wojewodztwa",
+        "Title": "K11_Obszar_dzialania_szefa_obrony_cywilnej_wojewodztwa",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K10_Dywizjon_strazy_granicznej",
+        "Title": "K10_Dywizjon_strazy_granicznej",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K09_Placowka_strazy_granicznej",
+        "Title": "K09_Placowka_strazy_granicznej",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K08_Oddzial_strazy_granicznej",
+        "Title": "K08_Oddzial_strazy_granicznej",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K07_Komenda_powiatowa_strazy_pozarnej",
+        "Title": "K07_Komenda_powiatowa_strazy_pozarnej",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K06_Komenda_wojewodzka_strazy_pozarnej",
+        "Title": "K06_Komenda_wojewodzka_strazy_pozarnej",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K05_Komisariat_policji",
+        "Title": "K05_Komisariat_policji",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K04_Komenda_rejonowa_policji",
+        "Title": "K04_Komenda_rejonowa_policji",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K03_Komenda_stoleczna_policji",
+        "Title": "K03_Komenda_stoleczna_policji",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K02_Komenda_powiatowa_policji",
+        "Title": "K02_Komenda_powiatowa_policji",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:K01_Komenda_wojewodzka_policji",
+        "Title": "K01_Komenda_wojewodzka_policji",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:P03_Prokuratura_rejonowa",
+        "Title": "P03_Prokuratura_rejonowa",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:P02_Prokuratura_okregowa",
+        "Title": "P02_Prokuratura_okregowa",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:P01_Prokuratura_regionalna",
+        "Title": "P01_Prokuratura_regionalna",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:S04_Wojewodzki_sad_administracyjny",
+        "Title": "S04_Wojewodzki_sad_administracyjny",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180",
+        "pola": {}
+      },
+      {
+        "Name": "ms:S03_Sad_rejonowy",
+        "Title": "S03_Sad_rejonowy",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:S02_Sad_okregowy",
+        "Title": "S02_Sad_okregowy",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:S01_Sad_apelacyjny",
+        "Title": "S01_Sad_apelacyjny",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:R02_Granice_obwodow_spisowych",
+        "Title": "R02_Granice_obwodow_spisowych",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:R01_Granice_rejonow_statystycznych",
+        "Title": "R01_Granice_rejonow_statystycznych",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:A06_Granice_obrebow_ewidencyjnych",
+        "Title": "A06_Granice_obrebow_ewidencyjnych",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:A05_Granice_jednostek_ewidencyjnych",
+        "Title": "A05_Granice_jednostek_ewidencyjnych",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:A04_Granice_miast",
+        "Title": "A04_Granice_miast",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:A03_Granice_gmin",
+        "Title": "A03_Granice_gmin",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:A02_Granice_powiatow",
+        "Title": "A02_Granice_powiatow",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:A01_Granice_wojewodztw",
+        "Title": "A01_Granice_wojewodztw",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      },
+      {
+        "Name": "ms:A00_Granice_panstwa",
+        "Title": "A00_Granice_panstwa",
+        "DefaultCRS": "urn:ogc:def:crs:EPSG::2180"
+      }
+    ],
+    "formaty_wyjsciowe": [
+      "application/gml+xml; version=3.2",
+      "text/xml; subtype=gml/3.2.1",
+      "text/xml; subtype=gml/3.1.1",
+      "text/xml; subtype=gml/2.1.2",
+      "application/gml+xml; version=3.2",
+      "text/xml; subtype=gml/3.2.1",
+      "text/xml; subtype=gml/3.1.1",
+      "text/xml; subtype=gml/2.1.2",
+      "application/gml+xml; version=3.2",
+      "text/xml; subtype=gml/3.2.1",
+      "text/xml; subtype=gml/3.1.1",
+      "text/xml; subtype=gml/2.1.2"
+    ]
+  },
+  "status": "ok"
 }

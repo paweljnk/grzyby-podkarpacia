@@ -1,31 +1,35 @@
-# Mapowanie surowych atrybutów BDL na kolumny znormalizowane forest.wydzielenie.
-#
-# CELOWO PUSTE (null). Nazw pól nie zgadujemy. Wypełnij po uruchomieniu `make probe`
-# na podstawie rzeczywistego schematu zapisanego w docs/schemas/bdl_ogcapi*.json.
-# Dopóki pole = null, kolumna pozostaje NULL z pochodzeniem 'brak'.
+# Mapowanie atrybutów źródeł na kolumny znormalizowane.
+# BDL — na podstawie RZECZYWISTEGO schematu z docs/schemas/bdl_ogcapi.json i OpenAPI usługi
+# (próbka z GitHub Actions, 2026-10-17; gałąź dane/probe). Licencja usługi: CC BY 4.0 (OpenAPI info.license).
 bdl_ogcapi:
-  kolekcja_wydzielen: null        # id kolekcji OGC API z /collections
-  kolekcja_nadlesnictw: null      # id kolekcji z granicami nadleśnictw (jeśli istnieje)
-  pole_nazwy_nadlesnictwa: null
+  # Kolekcje wydzieleń RDLP obejmujących Podkarpacie (próbka: Krosno 7727 i Lublin 4057 obiektów w bbox Głogowa).
+  kolekcje_wydzielen: [RDLP_Krosno_wydzielenia, RDLP_Lublin_wydzielenia]
+  kolekcja_nadlesnictw: nadlesnictwa
+  pole_nazwy_nadlesnictwa: inspectorate_name
+  pole_kodu_rdlp: region_cd
+  pole_kodu_nadlesnictwa: inspectorate_cd
+  # Tylko drzewostany (area_type = D-STAN); pozostałe rodzaje powierzchni (np. drogi, zręby) pomijamy.
+  filtr: {area_type: D-STAN}
   pola:
-    external_id: null
-    adres_lesny: null
-    gatunek_panujacy: null
-    udzial_gatunkow: null
-    wiek: null
-    typ_siedliskowy: null
-    gleba: null
+    external_id: a_i_num
+    adres_lesny: adr_for         # format RR-NN-O-LL-ODDZ-WYDZ-..., RR=RDLP, NN=nadleśnictwo
+    gatunek_panujacy: species_cd
+    udzial_gatunkow: null        # usługa nie udostępnia udziałów gatunków
+    wiek: spec_age               # wiek gatunku panującego
+    typ_siedliskowy: site_type   # kody wielkimi literami bez znaków diakrytycznych, np. BMW, OLJ
+    gleba: null                  # usługa nie udostępnia gleby
+  pola_dodatkowe: [sub_area, forest_fun, prot_categ, stand_stru, rotat_age, silvicult, area_type, part_cd, a_year, nazwa]
 
-# Analogicznie dla form ochrony przyrody (GDOŚ CRFOP).
 gdos_crfop:
-  warstwy: []                     # typeName z GetCapabilities, np. po weryfikacji
+  warstwy: []                     # usługa zwraca 403 także z GitHub Actions (2026-10-17) — do wyjaśnienia
   pola:
     nazwa: null
     kod: null
-  rodzaj_wg_warstwy: {}           # {typeName: park_narodowy|rezerwat|park_krajobrazowy|natura2000_oso|natura2000_soo|...}
+  rodzaj_wg_warstwy: {}
 
 prg:
-  warstwa_wojewodztw: null        # typeName z GetCapabilities usługi PRG
-  pole_teryt: null
+  warstwa_wojewodztw: ms:A01_Granice_wojewodztw   # z GetCapabilities (docs/schemas/prg_wojewodztwa.json)
+  pole_teryt: null                # DescribeFeatureType nie zwrócił pól — wybór geometryczny (punkt niżej)
+  punkt_wewnatrz_wgs84: [22.0, 50.04]   # Rzeszów; województwo = obiekt zawierający ten punkt
   pole_nazwy: null
-  teryt_podkarpackie: "18"        # kod TERYT województwa podkarpackiego (TERC)
+  teryt_podkarpackie: "18"

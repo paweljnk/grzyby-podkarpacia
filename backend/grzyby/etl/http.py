@@ -22,7 +22,8 @@ log = logging.getLogger(__name__)
 
 RETRY_STATUS = {429, 500, 502, 503, 504}
 DENIED_STATUS = {401, 403, 407}
-USER_AGENT = "GrzybyPodkarpacia/0.1 (projekt badawczy; kontakt w README)"
+# Wikimedia i część usług publicznych wymagają User-Agenta z adresem kontaktowym projektu.
+USER_AGENT = "GrzybyPodkarpacia/0.5 (+https://github.com/paweljnk/grzyby-podkarpacia)"
 
 
 class SourceUnavailable(RuntimeError):

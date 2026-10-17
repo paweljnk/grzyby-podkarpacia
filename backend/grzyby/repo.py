@@ -108,7 +108,7 @@ def weather_series(conn, ds: Dataset, komorka_id: str, start: date, end: date) -
             SELECT DISTINCT ON (data_lokalna) data_lokalna, typ, godzin, opad_mm, temp_min_c, temp_sr_c, temp_max_c,
                    wilg_powietrza_pct, wilg_gleby_m3m3, temp_gleby_c, et0_mm, pobrano_utc, model, rozdzielczosc_km
             FROM {T(ds)['dzien']} WHERE komorka_id=%s AND data_lokalna BETWEEN %s AND %s
-            ORDER BY data_lokalna, CASE typ WHEN 'stacja' THEN 0 WHEN 'reanaliza' THEN 1 ELSE 2 END""",
+            ORDER BY data_lokalna, CASE typ WHEN 'stacja' THEN 0 WHEN 'reanaliza' THEN 1 WHEN 'analiza' THEN 2 ELSE 3 END""",
                     (komorka_id, start, end))
         rows = cur.fetchall()
     days = [DailyWeather(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10]) for r in rows]

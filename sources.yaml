@@ -27,11 +27,11 @@ zrodla:
       url: https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries
     uwagi: Alternatywa — paczka PRG do pobrania (SHP) z geoportal.gov.pl / opendata.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:42+00:00'
-      status: niedostepne
-      powod: 'https://mapy.geoportal.gov.pl/wss/service/PZGIK/PRG/WFS/AdministrativeBoundaries: odmowa połączenia
-        przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T10:40:00+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/prg_wojewodztwa.json
+      kanal: GitHub Actions (US)
     ostatni_import: null
   bdl_ogcapi:
     nazwa: Bank Danych o Lasach — OGC API
@@ -41,22 +41,34 @@ zrodla:
     zasieg: lasy w Polsce (LP — pełne opisy taksacyjne; lasy niepaństwowe — zakres do weryfikacji)
     rozdzielczosc: wydzielenie leśne (wektor)
     aktualnosc: null
-    licencja: null
-    atrybucja: null
-    uzyte_pola: []
+    licencja: 'CC BY 4.0 (OpenAPI usługi: info.license)'
+    atrybucja: Bank Danych o Lasach (BULiGL / Lasy Państwowe), CC BY 4.0
+    uzyte_pola:
+    - a_i_num
+    - adr_for
+    - species_cd
+    - spec_age
+    - site_type
+    - area_type
+    - sub_area
+    - forest_fun
+    - prot_categ
+    - stand_stru
+    - rotat_age
     metoda: OGC API Features /collections/{id}/items, bbox obszaru pilotażowego, stronicowanie rel=next
-    do_weryfikacji: true
+    do_weryfikacji: false
     probe:
       typ: ogcapi
       url: https://ogcapi.bdl.lasy.gov.pl/
-    uwagi: Portal BDL potwierdza usługi WMS, WMTS, WFS i OGC API Features (instrukcja_ogc.pdf, wyszukiwanie 2026-10-17).
-      W WMS są warstwy wydzieleń 'w PGL LP' i 'poza PGL LP wg UPUL'. Listy kolekcji OGC API, schematu pól i licencji/regulaminu
-      nie udało się odczytać (host niedostępny z tego środowiska, narzędzie WebFetch bez DNS).
+    uwagi: 'Schemat odczytany 2026-10-17 z GitHub Actions (z tego środowiska host niedostępny). Kolekcje RDLP_<nazwa>_wydzielenia
+      (Podkarpacie: Krosno, Lublin) i ''nadlesnictwa''. Brak udziałów gatunków i gleby w usłudze. Filtr area_type=D-STAN.
+      Import codziennie przez .github/workflows/dane.yml.'
     weryfikacja:
-      data_utc: '2026-10-17T06:32:43+00:00'
-      status: niedostepne
-      powod: 'https://ogcapi.bdl.lasy.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T10:40:00+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/bdl_ogcapi.json
+      kanal: GitHub Actions (US)
     ostatni_import: null
   bdl_wms:
     nazwa: Bank Danych o Lasach — usługi WMS/WFS (mapserver)
@@ -102,10 +114,12 @@ zrodla:
       Nazwy typeName — z GetCapabilities. Dane Geoserwisu NIE stanowią prawnego ustalenia przebiegu granic form
       ochrony. Zasady zbioru wynikają z aktów ustanawiających.'
     weryfikacja:
-      data_utc: '2026-10-17T06:32:43+00:00'
+      data_utc: '2026-10-17T10:40:00+00:00'
       status: niedostepne
-      powod: 'https://sdi.gdos.gov.pl/wfs: odmowa połączenia przez proxy (403 Forbidden)'
+      powod: HTTP 403 z GitHub Actions (US) — możliwa blokada geograficzna lub User-Agent; ponowić z UA z adresem
+        projektu
       schemat: docs/schemas/gdos_crfop.json
+      kanal: GitHub Actions (US)
     ostatni_import: null
   copernicus_dem_glo30:
     nazwa: Copernicus DEM GLO-30 Public (COG na AWS Open Data)
@@ -155,11 +169,11 @@ zrodla:
       url: https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF
     uwagi: Preferowane źródło rzeźby terenu (DTM). Zastąpi Copernicus DEM po odblokowaniu dostępu.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:45+00:00'
-      status: niedostepne
-      powod: 'https://mapy.geoportal.gov.pl/wss/service/PZGIK/NMT/GRID1/WCS/DigitalTerrainModelFormatTIFF: odmowa
-        połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T10:40:00+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/gugik_nmt.json
+      kanal: GitHub Actions (US)
     ostatni_import: null
   bdot10k:
     nazwa: BDOT10k (pokrycie terenu, tereny wojskowe, drogi)
@@ -179,10 +193,11 @@ zrodla:
       url: https://opendata.geoportal.gov.pl/
     uwagi: Źródło dla lasów niepaństwowych (pokrycie PTLZ) i terenów zamkniętych.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:46+00:00'
-      status: niedostepne
-      powod: 'https://opendata.geoportal.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T10:40:00+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/bdot10k.json
+      kanal: GitHub Actions (US)
     ostatni_import: null
   copernicus_hrl_forest:
     nazwa: Copernicus HRL Tree Cover Density / Forest Type
@@ -228,10 +243,11 @@ zrodla:
       2026-10-17). Dostęp alternatywny: WCS/WebDAV ISRIC lub zasoby Google Earth Engine (projects/soilgrids-isric/...).
       Licencja CC BY 4.0 potwierdzona.'
     weryfikacja:
-      data_utc: '2026-10-17T06:32:46+00:00'
-      status: niedostepne
-      powod: 'https://rest.isric.org/soilgrids/v2.0/docs: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T10:40:00+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/soilgrids.json
+      kanal: GitHub Actions (US)
     ostatni_import: null
   open_meteo_forecast:
     nazwa: Open-Meteo Forecast API
@@ -254,11 +270,11 @@ zrodla:
       glebowych prognozy (soil_moisture_3_to_9cm, soil_temperature_6cm) NIEPOTWIERDZONE — strony modeli ECMWF podają
       warstwy 0–7/7–28/28–100/100–255 cm; zweryfikować próbką.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:46+00:00'
-      status: niedostepne
-      powod: 'https://api.open-meteo.com/v1/forecast?latitude=49.35&longitude=22.3&daily=precipitation_sum,temperature_2m_mean&hourly=soil_moisture_0_to_1cm&forecast_days=2&timezone=Europe%2FWarsaw:
-        odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T10:40:00+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/open_meteo_forecast.json
+      kanal: GitHub Actions (US)
     ostatni_import: null
   open_meteo_archive:
     nazwa: Open-Meteo Historical Weather API (ERA5 / ERA5-Land)
@@ -281,11 +297,11 @@ zrodla:
       ET₀ (FAO-56 Penman-Monteith, suma z poprzedzającej godziny). Pełnej listy nazw nie odczytano — weryfikacja
       próbką.'
     weryfikacja:
-      data_utc: '2026-10-17T06:32:47+00:00'
-      status: niedostepne
-      powod: 'https://archive-api.open-meteo.com/v1/archive?latitude=49.35&longitude=22.3&start_date=2026-09-01&end_date=2026-09-03&daily=precipitation_sum&timezone=Europe%2FWarsaw:
-        odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T10:40:00+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/open_meteo_archive.json
+      kanal: GitHub Actions (US)
     ostatni_import: null
   imgw_synop:
     nazwa: IMGW-PIB — dane publiczne (synop, opady)
@@ -306,10 +322,11 @@ zrodla:
     uwagi: Regulaminu danepubliczne.imgw.pl nie odczytano (2026-10-17). Inne serwisy IMGW wymagają wskazania IMGW-PIB
       jako źródła i oznaczenia danych przetworzonych — przyjmujemy to samo do czasu odczytania regulaminu.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:47+00:00'
-      status: niedostepne
-      powod: 'https://danepubliczne.imgw.pl/api/data/synop: odmowa połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T10:40:00+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/imgw_synop.json
+      kanal: GitHub Actions (US)
     ostatni_import: null
   gbif:
     nazwa: GBIF Occurrence API
@@ -329,11 +346,11 @@ zrodla:
       url: https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2
     uwagi: Obciążenie próby, zaokrąglone współrzędne.
     weryfikacja:
-      data_utc: '2026-10-17T06:32:47+00:00'
-      status: niedostepne
-      powod: 'https://api.gbif.org/v1/occurrence/search?country=PL&scientificName=Boletus%20edulis&limit=2: odmowa
-        połączenia przez proxy (403 Forbidden)'
+      data_utc: '2026-10-17T10:40:00+00:00'
+      status: ok
+      powod: null
       schemat: docs/schemas/gbif.json
+      kanal: GitHub Actions (US)
     ostatni_import: null
   jpl_ephemeris:
     nazwa: Efemerydy JPL DE421 / DE440 (dla skyfield)
@@ -391,12 +408,27 @@ zrodla:
     aktualnosc: bieżąca
     licencja: per plik — przyjmujemy tylko CC0, domenę publiczną, CC BY i CC BY-SA (lista w atlas/config_zdjecia.yaml)
     atrybucja: per plik — autor i licencja w podpisie każdego zdjęcia
-    uzyte_pola: [extmetadata.Artist, extmetadata.LicenseShortName, extmetadata.LicenseUrl, extmetadata.ImageDescription, descriptionurl, thumburl, sha1, mime]
+    uzyte_pola:
+    - extmetadata.Artist
+    - extmetadata.LicenseShortName
+    - extmetadata.LicenseUrl
+    - extmetadata.ImageDescription
+    - descriptionurl
+    - thumburl
+    - sha1
+    - mime
     metoda: kandydaci z kategorii gatunku → status do_weryfikacji → ręczne zatwierdzenie (ujęcie, osoba) → publikacja
     do_weryfikacji: true
     probe:
       typ: http_get
       url: https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=categorymembers&gcmtitle=Category:Boletus%20edulis&gcmtype=file&gcmlimit=2&prop=imageinfo&iiprop=url|extmetadata|size|mime|sha1&iiurlwidth=1024
-    uwagi: Nazwy pól wg dokumentacji MediaWiki; parser pomija pliki bez autora lub licencji. CC BY-SA — przeróbki (kadry) udostępniamy na tej samej licencji.
-    weryfikacja: null
+    uwagi: Nazwy pól wg dokumentacji MediaWiki; parser pomija pliki bez autora lub licencji. CC BY-SA — przeróbki
+      (kadry) udostępniamy na tej samej licencji.
+    weryfikacja:
+      data_utc: '2026-10-17T10:40:00+00:00'
+      status: niedostepne
+      powod: HTTP 403 z GitHub Actions (US) — możliwa blokada geograficzna lub User-Agent; ponowić z UA z adresem
+        projektu
+      schemat: docs/schemas/wikimedia_commons.json
+      kanal: GitHub Actions (US)
     ostatni_import: null

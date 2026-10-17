@@ -15,6 +15,10 @@ def main() -> int:
     imp.add_argument("layer", choices=["prg", "bdl", "dem", "gdos", "weather", "all"])
     sub.add_parser("demo", help="wygeneruj DANE DEMONSTRACYJNE w schemacie demo")
     sub.add_parser("check-data")
+    sn = sub.add_parser("snapshot", help="paczka danych rzeczywistych: eksport / wczytanie")
+    sn.add_argument("akcja", choices=["export", "load"])
+    sn.add_argument("cel", nargs="?", help="katalog (export) albo URL/katalog (load)")
+    sn.add_argument("--force", action="store_true")
     at = sub.add_parser("atlas", help="atlas: kandydaci zdjęć, zatwierdzanie, kontrola treści")
     asub = at.add_subparsers(dest="acmd", required=True)
     k = asub.add_parser("kandydaci", help="pobierz kandydatów z Wikimedia Commons (status do_weryfikacji)")
@@ -51,6 +55,15 @@ def main() -> int:
     if args.cmd == "demo":
         from .demo import generate
         print(generate())
+        return 0
+    if args.cmd == "snapshot":
+        from pathlib import Path
+        from . import snapshot
+        if args.akcja == "export":
+            m = snapshot.export(Path(args.cel) if args.cel else snapshot.default_export_dir())
+            print({"wygenerowano": m["wygenerowano_utc"], "wiersze": m["wiersze"]})
+        else:
+            print(snapshot.load(args.cel, args.force))
         return 0
     if args.cmd == "atlas":
         import json

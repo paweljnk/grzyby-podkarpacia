@@ -1,0 +1,8 @@
+{
+  "source_id": "wikimedia_commons",
+  "sprawdzono_utc": "2026-10-17T15:19:19+00:00",
+  "url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=categorymembers&gcmtitle=Category:Boletus%20edulis&gcmtype=file&gcmlimit=2&prop=imageinfo&iiprop=url|extmetadata|size|mime|sha1&iiurlwidth=1024",
+  "typ": "http_get",
+  "status": "niedostepne",
+  "powod": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=categorymembers&gcmtitle=Category:Boletus%20edulis&gcmtype=file&gcmlimit=2&prop=imageinfo&iiprop=url|extmetadata|size|mime|sha1&iiurlwidth=1024: HTTP 403 — dostęp zabroniony / wymaga uwierzytelnienia"
+}

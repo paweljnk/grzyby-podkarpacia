@@ -1,8 +1,740 @@
 {
   "source_id": "bdl_ogcapi",
-  "sprawdzono_utc": "2026-10-17T06:32:43+00:00",
+  "sprawdzono_utc": "2026-10-17T15:18:39+00:00",
   "url": "https://ogcapi.bdl.lasy.gov.pl/",
   "typ": "ogcapi",
-  "status": "niedostepne",
-  "powod": "https://ogcapi.bdl.lasy.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)"
+  "wynik": {
+    "landing": {
+      "links": [
+        "object",
+        "<11 elementów>"
+      ],
+      "title": "string",
+      "description": "string"
+    },
+    "kolekcje": [
+      {
+        "id": "rdlp",
+        "title": "RDLP",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 3,
+          "typ_geometrii": {
+            "MultiPolygon": 3
+          },
+          "pola": {
+            "region_name": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "KROSNO"
+            },
+            "region_cd": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "04"
+            },
+            "a_year": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 2026
+            }
+          }
+        },
+        "numberMatched": 3
+      },
+      {
+        "id": "nadlesnictwa",
+        "title": "Nadleśnictwa",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 3,
+          "typ_geometrii": {
+            "MultiPolygon": 3
+          },
+          "pola": {
+            "a_year": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 2026
+            },
+            "region_cd": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "16"
+            },
+            "inspectorate_name": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "Staszów"
+            },
+            "adress_forest": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "16-22- -  -      -    -"
+            },
+            "inspectorate_cd": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "22"
+            }
+          }
+        },
+        "numberMatched": 8
+      },
+      {
+        "id": "lesnictwa",
+        "title": "Leśnictwa",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 3,
+          "typ_geometrii": {
+            "MultiPolygon": 3
+          },
+          "pola": {
+            "adress_forest": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "04-08-2-11-      -    -"
+            },
+            "a_year": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 2026
+            },
+            "forest_range_name": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "Kłapówka"
+            }
+          }
+        },
+        "numberMatched": 42
+      },
+      {
+        "id": "RDLP_Bialystok_wydzielenia",
+        "title": "RDLP Białystok wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Katowice_wydzielenia",
+        "title": "RDLP Katowice wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Krakow_wydzielenia",
+        "title": "RDLP Kraków wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Krosno_wydzielenia",
+        "title": "RDLP Krosno wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 3,
+          "typ_geometrii": {
+            "MultiPolygon": 3
+          },
+          "pola": {
+            "adr_for": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "04-08-2-09-163   -k   -00"
+            },
+            "site_type": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "OLJ"
+            },
+            "forest_fun": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "GOSP"
+            },
+            "rotat_age": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 80
+            },
+            "prot_categ": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "OCH USZK"
+            },
+            "part_cd": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "5"
+            },
+            "a_year": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 2026
+            },
+            "a_i_num": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 408016782
+            },
+            "area_type": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "D-STAN"
+            },
+            "silvicult": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "S"
+            },
+            "stand_stru": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "DRZEW"
+            },
+            "sub_area": {
+              "typy": {
+                "number": 3
+              },
+              "przyklad": 0.07
+            },
+            "species_cd": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "GB"
+            },
+            "spec_age": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 25
+            },
+            "nazwa": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "BDL_04_08_GLOGOW_2026"
+            }
+          }
+        },
+        "numberMatched": 7727
+      },
+      {
+        "id": "RDLP_Lublin_wydzielenia",
+        "title": "RDLP Lublin wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 3,
+          "typ_geometrii": {
+            "MultiPolygon": 3
+          },
+          "pola": {
+            "adr_for": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "05-03-2-06-186   -b   -00"
+            },
+            "site_type": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "BMW"
+            },
+            "forest_fun": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "GOSP"
+            },
+            "stand_stru": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "DRZEW"
+            },
+            "sub_area": {
+              "typy": {
+                "number": 3
+              },
+              "przyklad": 15.33
+            },
+            "species_cd": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "SO"
+            },
+            "spec_age": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 95
+            },
+            "nazwa": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "BDL_05_03_NOWA_DEBA_2026"
+            },
+            "a_i_num": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 503003833
+            },
+            "area_type": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "D-STAN"
+            },
+            "silvicult": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "S"
+            },
+            "rotat_age": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 100
+            },
+            "prot_categ": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "OCH OBR"
+            },
+            "part_cd": {
+              "typy": {
+                "string": 3
+              },
+              "przyklad": "9"
+            },
+            "a_year": {
+              "typy": {
+                "integer": 3
+              },
+              "przyklad": 2026
+            }
+          }
+        },
+        "numberMatched": 4057
+      },
+      {
+        "id": "RDLP_Lodz_wydzielenia",
+        "title": "RDLP Łódź wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Olsztyn_wydzielenia",
+        "title": "RDLP Olsztyn wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Pila_wydzielenia",
+        "title": "RDLP Piła wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Poznan_wydzielenia",
+        "title": "RDLP Poznań wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Szczecin_wydzielenia",
+        "title": "RDLP Szczecin wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Szczecinek_wydzielenia",
+        "title": "RDLP Szczecinek wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Torun_wydzielenia",
+        "title": "RDLP Toruń wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Wroclaw_wydzielenia",
+        "title": "RDLP Wrocław wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Zielona_Gora_wydzielenia",
+        "title": "RDLP Zielona Góra wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Gdansk_wydzielenia",
+        "title": "RDLP Gdańsk wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Radom_wydzielenia",
+        "title": "RDLP Radom wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      },
+      {
+        "id": "RDLP_Warszawa_wydzielenia",
+        "title": "RDLP Warszawa wydzielenia",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                13,
+                48,
+                25,
+                56
+              ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          }
+        },
+        "probka": {
+          "liczba_obiektow_w_probce": 0,
+          "typ_geometrii": {},
+          "pola": {}
+        },
+        "numberMatched": 0
+      }
+    ]
+  },
+  "status": "ok"
 }

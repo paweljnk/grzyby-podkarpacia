@@ -1,8 +1,12 @@
 {
   "source_id": "bdot10k",
-  "sprawdzono_utc": "2026-10-17T06:32:46+00:00",
+  "sprawdzono_utc": "2026-10-17T15:19:14+00:00",
   "url": "https://opendata.geoportal.gov.pl/",
   "typ": "http_get",
-  "status": "niedostepne",
-  "powod": "https://opendata.geoportal.gov.pl/: odmowa połączenia przez proxy (403 Forbidden)"
+  "wynik": {
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "rozmiar_b": 25
+  },
+  "status": "ok"
 }

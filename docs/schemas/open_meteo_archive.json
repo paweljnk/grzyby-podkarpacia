@@ -1,8 +1,35 @@
 {
   "source_id": "open_meteo_archive",
-  "sprawdzono_utc": "2026-10-17T06:32:47+00:00",
+  "sprawdzono_utc": "2026-10-17T15:19:17+00:00",
   "url": "https://archive-api.open-meteo.com/v1/archive?latitude=49.35&longitude=22.3&start_date=2026-09-01&end_date=2026-09-03&daily=precipitation_sum&timezone=Europe%2FWarsaw",
   "typ": "http_get",
-  "status": "niedostepne",
-  "powod": "https://archive-api.open-meteo.com/v1/archive?latitude=49.35&longitude=22.3&start_date=2026-09-01&end_date=2026-09-03&daily=precipitation_sum&timezone=Europe%2FWarsaw: odmowa połączenia przez proxy (403 Forbidden)"
+  "wynik": {
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "rozmiar_b": 338,
+    "schemat": {
+      "latitude": "number",
+      "longitude": "number",
+      "generationtime_ms": "number",
+      "utc_offset_seconds": "integer",
+      "timezone": "string",
+      "timezone_abbreviation": "string",
+      "elevation": "number",
+      "daily_units": {
+        "time": "string",
+        "precipitation_sum": "string"
+      },
+      "daily": {
+        "time": [
+          "string",
+          "<3 elementów>"
+        ],
+        "precipitation_sum": [
+          "number",
+          "<3 elementów>"
+        ]
+      }
+    }
+  },
+  "status": "ok"
 }
