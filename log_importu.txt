@@ -1,0 +1,270 @@
+2026-10-17 20:28:55,206 INFO grzyby.etl.bdl_province: LP 05-02 Biłgoraj: 8553 obiektów
+2026-10-17 20:28:58,524 INFO grzyby.etl.bdl_province: LP 04-07 Dynów: 1607 obiektów
+2026-10-17 20:29:03,910 INFO grzyby.etl.bdl_province: LP 04-23 Stuposiany: 1004 obiektów
+2026-10-17 20:29:11,036 INFO grzyby.etl.bdl_province: LP 04-01 Baligród: 2769 obiektów
+2026-10-17 20:29:14,969 INFO grzyby.etl.bdl_province: LP 03-03 Dąbrowa Tarnowska: 3505 obiektów
+2026-10-17 20:29:19,975 INFO grzyby.etl.bdl_province: LP 04-06 Dukla: 2324 obiektów
+2026-10-17 20:29:24,429 INFO grzyby.etl.bdl_province: LP 04-19 Oleszyce: 2636 obiektów
+2026-10-17 20:29:30,361 INFO grzyby.etl.bdl_province: LP 05-28 Tomaszów: 5372 obiektów
+2026-10-17 20:29:38,303 INFO grzyby.etl.bdl_province: LP 04-27 Lubaczów: 5101 obiektów
+2026-10-17 20:29:46,209 INFO grzyby.etl.bdl_province: LP 05-21 Rudnik: 4671 obiektów
+2026-10-17 20:29:59,138 INFO grzyby.etl.bdl_province: LP 05-31 Janów Lubelski: 9994 obiektów
+2026-10-17 20:30:06,706 INFO grzyby.etl.bdl_province: LP 04-02 Bircza: 3811 obiektów
+2026-10-17 20:30:12,236 INFO grzyby.etl.bdl_province: LP 04-08 Głogów: 3487 obiektów
+2026-10-17 20:30:17,074 INFO grzyby.etl.bdl_province: LP 04-09 Kańczuga: 2155 obiektów
+2026-10-17 20:30:22,740 INFO grzyby.etl.bdl_province: LP 04-21 Sieniawa: 3717 obiektów
+2026-10-17 20:30:28,914 INFO grzyby.etl.bdl_province: LP 04-16 Lutowiska: 1823 obiektów
+2026-10-17 20:30:33,700 INFO grzyby.etl.bdl_province: LP 03-04 Dębica: 2363 obiektów
+2026-10-17 20:30:38,788 INFO grzyby.etl.bdl_province: LP 03-05 Gorlice: 2328 obiektów
+2026-10-17 20:30:45,798 INFO grzyby.etl.bdl_province: LP 04-28 Jarosław: 4493 obiektów
+2026-10-17 20:30:50,201 INFO grzyby.etl.bdl_province: LP 04-11 Kołaczyce: 2069 obiektów
+2026-10-17 20:30:58,972 INFO grzyby.etl.bdl_province: LP 05-03 Nowa Dęba: 5559 obiektów
+2026-10-17 20:31:07,603 INFO grzyby.etl.bdl_province: LP 04-15 Leżajsk: 5710 obiektów
+2026-10-17 20:31:11,388 INFO grzyby.etl.bdl_province: LP 04-17 Mielec: 2273 obiektów
+2026-10-17 20:31:18,939 INFO grzyby.etl.bdl_province: LP 05-20 Rozwadów: 4361 obiektów
+2026-10-17 20:31:23,615 INFO grzyby.etl.bdl_province: LP 04-13 Krasiczyn: 2229 obiektów
+2026-10-17 20:31:29,202 INFO grzyby.etl.bdl_province: LP 04-14 Lesko: 2447 obiektów
+2026-10-17 20:31:31,964 INFO grzyby.etl.bdl_province: LP 03-06 Gromnik: 1413 obiektów
+2026-10-17 20:31:36,555 INFO grzyby.etl.bdl_province: LP 04-04 Brzozów: 2126 obiektów
+2026-10-17 20:31:44,019 INFO grzyby.etl.bdl_province: LP 05-07 Józefów: 6849 obiektów
+2026-10-17 20:31:51,624 INFO grzyby.etl.bdl_province: LP 04-03 Ustrzyki Dolne: 3172 obiektów
+2026-10-17 20:31:57,101 INFO grzyby.etl.bdl_province: LP 04-12 Komańcza: 2124 obiektów
+2026-10-17 20:32:01,689 INFO grzyby.etl.bdl_province: LP 04-10 Kolbuszowa: 2679 obiektów
+2026-10-17 20:32:07,708 INFO grzyby.etl.bdl_province: LP 05-05 Gościeradów: 4717 obiektów
+2026-10-17 20:32:13,369 INFO grzyby.etl.bdl_province: LP 04-20 Rymanów: 2495 obiektów
+2026-10-17 20:32:20,209 INFO grzyby.etl.bdl_province: LP 04-18 Narol: 4104 obiektów
+2026-10-17 20:32:26,068 INFO grzyby.etl.bdl_province: LP 04-05 Cisna: 2156 obiektów
+2026-10-17 20:32:32,006 INFO grzyby.etl.bdl_province: LP 04-24 Tuszyma: 3304 obiektów
+2026-10-17 20:32:36,611 INFO grzyby.etl.bdl_province: LP 04-22 Strzyżów: 2159 obiektów
+{
+ "nadlesnictwa": [
+  {
+   "kod": "05-02",
+   "nazwa": "Biłgoraj",
+   "ha_w_wojewodztwie": 16817
+  },
+  {
+   "kod": "04-07",
+   "nazwa": "Dynów",
+   "ha_w_wojewodztwie": 26804
+  },
+  {
+   "kod": "04-23",
+   "nazwa": "Stuposiany",
+   "ha_w_wojewodztwie": 38842
+  },
+  {
+   "kod": "04-01",
+   "nazwa": "Baligród",
+   "ha_w_wojewodztwie": 30579
+  },
+  {
+   "kod": "03-03",
+   "nazwa": "Dąbrowa Tarnowska",
+   "ha_w_wojewodztwie": 22667
+  },
+  {
+   "kod": "04-06",
+   "nazwa": "Dukla",
+   "ha_w_wojewodztwie": 78752
+  },
+  {
+   "kod": "04-19",
+   "nazwa": "Oleszyce",
+   "ha_w_wojewodztwie": 34437
+  },
+  {
+   "kod": "05-28",
+   "nazwa": "Tomaszów",
+   "ha_w_wojewodztwie": 604
+  },
+  {
+   "kod": "04-27",
+   "nazwa": "Lubaczów",
+   "ha_w_wojewodztwie": 54011
+  },
+  {
+   "kod": "05-21",
+   "nazwa": "Rudnik",
+   "ha_w_wojewodztwie": 48717
+  },
+  {
+   "kod": "05-31",
+   "nazwa": "Janów Lubelski",
+   "ha_w_wojewodztwie": 15819
+  },
+  {
+   "kod": "04-02",
+   "nazwa": "Bircza",
+   "ha_w_wojewodztwie": 50349
+  },
+  {
+   "kod": "04-08",
+   "nazwa": "Głogów",
+   "ha_w_wojewodztwie": 75273
+  },
+  {
+   "kod": "04-09",
+   "nazwa": "Kańczuga",
+   "ha_w_wojewodztwie": 104340
+  },
+  {
+   "kod": "04-21",
+   "nazwa": "Sieniawa",
+   "ha_w_wojewodztwie": 44727
+  },
+  {
+   "kod": "04-16",
+   "nazwa": "Lutowiska",
+   "ha_w_wojewodztwie": 27445
+  },
+  {
+   "kod": "03-04",
+   "nazwa": "Dębica",
+   "ha_w_wojewodztwie": 74588
+  },
+  {
+   "kod": "03-05",
+   "nazwa": "Gorlice",
+   "ha_w_wojewodztwie": 2266
+  },
+  {
+   "kod": "04-28",
+   "nazwa": "Jarosław",
+   "ha_w_wojewodztwie": 78213
+  },
+  {
+   "kod": "04-11",
+   "nazwa": "Kołaczyce",
+   "ha_w_wojewodztwie": 83559
+  },
+  {
+   "kod": "05-03",
+   "nazwa": "Nowa Dęba",
+   "ha_w_wojewodztwie": 77915
+  },
+  {
+   "kod": "04-15",
+   "nazwa": "Leżajsk",
+   "ha_w_wojewodztwie": 89812
+  },
+  {
+   "kod": "04-17",
+   "nazwa": "Mielec",
+   "ha_w_wojewodztwie": 28385
+  },
+  {
+   "kod": "05-20",
+   "nazwa": "Rozwadów",
+   "ha_w_wojewodztwie": 59912
+  },
+  {
+   "kod": "04-13",
+   "nazwa": "Krasiczyn",
+   "ha_w_wojewodztwie": 60586
+  },
+  {
+   "kod": "04-14",
+   "nazwa": "Lesko",
+   "ha_w_wojewodztwie": 53517
+  },
+  {
+   "kod": "03-06",
+   "nazwa": "Gromnik",
+   "ha_w_wojewodztwie": 145
+  },
+  {
+   "kod": "04-04",
+   "nazwa": "Brzozów",
+   "ha_w_wojewodztwie": 72642
+  },
+  {
+   "kod": "05-07",
+   "nazwa": "Józefów",
+   "ha_w_wojewodztwie": 1
+  },
+  {
+   "kod": "04-03",
+   "nazwa": "Ustrzyki Dolne",
+   "ha_w_wojewodztwie": 46962
+  },
+  {
+   "kod": "04-12",
+   "nazwa": "Komańcza",
+   "ha_w_wojewodztwie": 28559
+  },
+  {
+   "kod": "04-10",
+   "nazwa": "Kolbuszowa",
+   "ha_w_wojewodztwie": 42298
+  },
+  {
+   "kod": "05-05",
+   "nazwa": "Gościeradów",
+   "ha_w_wojewodztwie": 25176
+  },
+  {
+   "kod": "04-20",
+   "nazwa": "Rymanów",
+   "ha_w_wojewodztwie": 46687
+  },
+  {
+   "kod": "04-18",
+   "nazwa": "Narol",
+   "ha_w_wojewodztwie": 35623
+  },
+  {
+   "kod": "04-05",
+   "nazwa": "Cisna",
+   "ha_w_wojewodztwie": 22219
+  },
+  {
+   "kod": "04-24",
+   "nazwa": "Tuszyma",
+   "ha_w_wojewodztwie": 52872
+  },
+  {
+   "kod": "04-22",
+   "nazwa": "Strzyżów",
+   "ha_w_wojewodztwie": 132163
+  }
+ ],
+ "lp": {
+  "pobrane": 133659,
+  "z_cache": 0,
+  "zapisane": 99412,
+  "duplikaty": 209,
+  "naprawione_geometrie": 116,
+  "poza_wojewodztwem": 34038,
+  "bez_geometrii": 0
+ },
+ "poza_lp": {
+  "pobrane": 228369,
+  "z_cache": 0,
+  "zapisane": 145121,
+  "duplikaty": 15141,
+  "naprawione_geometrie": 257,
+  "poza_wojewodztwem": 68107,
+  "bez_geometrii": 0
+ },
+ "siedliska": {
+  "pobrane": 138037,
+  "z_cache": 0,
+  "zapisane": 97842,
+  "duplikaty": 12668,
+  "naprawione_geometrie": 135,
+  "poza_wojewodztwem": 27527,
+  "bez_geometrii": 0
+ },
+ "zakazy": {
+  "w_kraju": 789,
+  "w_wojewodztwie": 0
+ }
+}
+dem-woj 244533
+soilgrids 243640
+worldcover 17907
+{"komorek": 17907, "las_ref_ha": 963380, "pokryte_ha_szac": 662534, "bdl_ha_w_komorkach": 671576, "pokrycie_proc": 68.8, "komorki_pelniejsze": 5799, "komorki_czesciowe": 5856, "komorki_brak_oceny": 6252}
+268 komórek
+{'procent_pokrycia': 68.8, 'nadlesnictw': 38}
+{'pakiet': 'baza', 'wygenerowano': '2026-10-17T18:53:34+00:00', 'wiersze': {'ref.obszar_pilotazowy': 1, 'ref.wojewodztwo': 1, 'ref.nadlesnictwo': 38, 'forest.wydzielenie': 244533, 'terrain.wydzielenie_teren': 244533, 'terrain.raster': 3, 'weather.komorka': 268, 'forest.wydzielenie_komorka': 244533, 'protection.forma_ochrony': 0, 'coverage.siatka': 17907}}
