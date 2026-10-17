@@ -1,24 +1,29 @@
-# Pokrycie danych — pilotaż
+# Pokrycie danych — województwo podkarpackie
 
 ## Stan danych rzeczywistych (2026-10-17, import z GitHub Actions)
 
-Dane pobiera codziennie `.github/workflows/dane.yml` (serwery GitHuba mają dostęp do źródeł, którego nie ma
-środowisko deweloperskie). Paczka: gałąź `dane/pilot` (manifest, raport `check-data`, log). Aplikacja wczytuje ją sama.
+Pakiet `baza` (co miesiąc, `.github/workflows/dane-baza.yml`, gałąź `dane/baza`) i pakiet `dzienne` (codziennie,
+`dane.yml`, gałąź `dane/dzienne`). Pełny raport: `raport_pokrycia.md` na gałęzi `dane/baza` (`make raport` lokalnie).
 
-| Warstwa | Źródło | Rekordy | Braki |
+| Warstwa | Źródło | Rekordy (w granicach województwa) | Braki |
 |---|---|---|---|
-| Granice nadleśnictw (obszary pilotażowe) | BDL, kolekcja `nadlesnictwa` | 2 (Głogów Małopolski 04-08, Baligród 04-01) | — |
-| Wydzielenia (tylko drzewostany, `area_type=D-STAN`) | BDL OGC API, RDLP Krosno | 6256 (Głogów 3487, Baligród 2769) | gatunek panujący, wiek, TSL: 0%; **udziały gatunków i gleba: 100%** (usługa ich nie udostępnia) |
-| Rzeźba terenu dla wydzieleń | Copernicus DEM GLO-30 (DSM) | 6256 | 0% |
-| Pogoda | Open-Meteo: reanaliza (ERA5+ERA5-Land), analiza (ostatnie 10 dni), prognoza (7 dni) | 23 komórki, ok. 1770 dób | opad i ET₀ 100% |
-| Granica województwa | PRG (WFS, warstwa `ms:A01_Granice_wojewodztw`) | 1 | pola TERYT nie zmapowane (wybór geometryczny) |
-| Formy ochrony przyrody | GDOŚ | 0 | **HTTP 403 także z GitHub Actions** — do wyjaśnienia |
-| Zakazy wstępu | — | 0 | brak źródła — aplikacja pokazuje „nie da się sprawdzić” |
+| Nadleśnictwa przecinające województwo (≥1 ha) | BDL ArcGIS REST, warstwa „Nadleśnictwa” | 38 (RDLP Krosno 26, Lublin 8, Kraków 4 — także częściowo poza województwem) | — |
+| Drzewostany LP (`D-STAN%`) | BDL REST „Wydzielenia PGL LP” | 99 412 wydzieleń, 489 444 ha | udział panującego: 3; gleba: 18 645; uwilgotnienie: 21 471 |
+| Drzewostany poza LP (wg PUL) | BDL REST „Wydzielenia poza PGL LP” | 145 121 wydzieleń, 178 544 ha (prywatne 112 tys. ha, parki narodowe 40 tys. ha, gminne 25 tys. ha) | gleba i uwilgotnienie: ~100% (warstwa siedlisk obejmuje lasy LP) |
+| Siedliska (gleba, uwilgotnienie) | BDL REST „Siedliska leśne” | 97 842 płatów | słownik `moisture_cd` nieopublikowany |
+| pH gleby | SoilGrids 2.0 (model 250 m, Q0.05–Q0.95) | 243 640 wydzieleń | 893 bez wartości |
+| Rzeźba terenu | Copernicus DEM GLO-30 | 244 533 | — |
+| Warstwa referencyjna lasów | ESA WorldCover 2021, „Tree cover” | 17 907 komórek 1 km, 963 380 ha | obejmuje też zadrzewienia |
+| Zakazy wstępu do lasu | BDL REST | 789 w kraju, 0 w województwie (w RDLP Krosno brak zakazów 17.10.2026) | — |
+| Formy ochrony przyrody | GDOŚ | 0 | HTTP 403 także z GitHub Actions; parki narodowe z kategorii własności BDL |
 
-Wnioski z prawdziwych danych (poprawione w kodzie):
-- Model `era5_land` w Open-Meteo nie podaje opadu ani ET₀ — archiwum korzysta z domyślnego połączenia ERA5 + ERA5-Land.
-- BDL używa dokładniejszych kodów siedlisk górskich (LGŚW, LMGŚW, BMGŚW, LŁG, OLJG…) — słownik ujednolicony.
-- Kod `DB.C` (dąb czerwony, gatunek obcy) jest rozdzielony od dębów rodzimych.
+**Pokrycie** (min(BDL, WorldCover) w komórkach 1 km): **68,8%** całej klasy „Tree cover”; **79,8%** w komórkach
+zdominowanych przez las (≥50 ha drzew/km²). Komórki: pełniejsze 5 799, częściowe 5 856, bez możliwości oceny 6 252.
+Liczba nadleśnictw nie oznacza pełnego pokrycia: lasy prywatne bez planu urządzenia lasu nie mają opisu w BDL.
+
+Kontrola jakości: duplikaty pominięte przy imporcie (LP 209, poza LP 15 141, siedliska 12 668 — nakładające się kafle);
+naprawione geometrie: 116 / 257 / 135; niepoprawne geometrie po imporcie: 0; duplikaty adresu LP: 0; identyczne
+geometrie: 30 par.
 
 # Pilotaż — Etap 1 (stan pierwotny)
 
