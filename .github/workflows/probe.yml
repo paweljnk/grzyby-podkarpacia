@@ -1,0 +1,39 @@
+# Próbkowanie źródeł danych z serwerów GitHuba (normalny dostęp do internetu).
+# Uruchamia się po wysłaniu zmian na gałąź `zadanie/probe` (albo ręcznie).
+# Wyniki (docs/schemas/*.json, sources.yaml, log) zapisuje na gałęzi `dane/probe`.
+name: probe-zrodel
+on:
+  push:
+    branches: ["zadanie/probe"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalacja
+        run: pip install ./backend
+      - name: Probe wszystkich źródeł
+        env:
+          GRZYBY_ROOT: ${{ github.workspace }}
+        run: |
+          set -o pipefail
+          python -m grzyby.cli probe 2>&1 | tee docs/schemas/_log_probe.txt || true
+          # pełna dokumentacja OpenAPI BDL i lista kolekcji (do mapowania pól)
+          curl -sS -m 60 -o docs/schemas/bdl_openapi.json "https://ogcapi.bdl.lasy.gov.pl/openapi?f=json" -w "openapi %{http_code}\n" >> docs/schemas/_log_probe.txt 2>&1 || true
+          curl -sS -m 60 -o docs/schemas/bdl_collections_raw.json "https://ogcapi.bdl.lasy.gov.pl/collections?f=json" -w "collections %{http_code}\n" >> docs/schemas/_log_probe.txt 2>&1 || true
+          echo "runner: $(curl -s -m 10 https://ipinfo.io/country || echo ?)" >> docs/schemas/_log_probe.txt
+      - name: Zapis wyników na gałąź dane/probe
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git checkout -B dane/probe
+          git add -f docs/schemas sources.yaml
+          git commit -m "Wyniki probe $(date -u +%Y-%m-%dT%H:%MZ)" || echo "brak zmian"
+          git push -f origin dane/probe
