@@ -21,6 +21,7 @@ services:
 
   etl:
     build: ./backend
+    image: grzyby-backend:latest
     depends_on:
       db:
         condition: service_healthy
@@ -32,6 +33,22 @@ services:
       - ./:/app
     working_dir: /app
     command: ["sleep", "infinity"]
+
+  api:
+    image: grzyby-backend:latest   # ten sam obraz co etl (budowany przez usługę etl)
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://grzyby:${POSTGRES_PASSWORD:-grzyby}@db:5432/grzyby
+      GRZYBY_ROOT: /app
+      TZ: Europe/Warsaw
+    volumes:
+      - ./:/app
+    working_dir: /app
+    ports:
+      - "${API_PORT:-8000}:8000"
+    command: ["uvicorn", "grzyby.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 volumes:
   pgdata:

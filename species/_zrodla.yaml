@@ -1,5 +1,6 @@
 # Bibliografia bazy wiedzy o gatunkach.
 # klasa: A — publikacja naukowa; B — monografia / przewodnik / baza nomenklatoryczna; C — wiedza praktyczna / założenie.
+# zweryfikowano: metadane = autorzy/tytuł/czasopismo/DOI potwierdzone wyszukiwaniem (2026-10-17), treści nie czytano;
 # zweryfikowano: false = opis bibliograficzny podany z pamięci autora pliku; przed publikacją sprawdzić
 # w bibliotece/katalogu (tytuł, rok, strony) i potwierdzić, że treść reguły rzeczywiście z niego wynika.
 zrodla:
@@ -24,24 +25,28 @@ zrodla:
     klasa: B
     zweryfikowano: false
   dentinger_2010:
-    opis: "Dentinger B.T.M. i in. 2010. Molecular phylogenetics of porcini mushrooms (Boletus section Boletus). Molecular Phylogenetics and Evolution 57: 1276–1292"
+    opis: "Dentinger B.T.M. i in. 2010. Molecular phylogenetics of porcini mushrooms (Boletus section Boletus). Molecular Phylogenetics and Evolution 57(3): 1276–1292. doi:10.1016/j.ympev.2010.10.004"
     klasa: A
-    zweryfikowano: false
+    zweryfikowano: metadane
   vizzini_2014:
-    opis: "Vizzini A. 2014. Nomenclatural novelties. Index Fungorum 147 (Imleria badia comb. nov.)"
+    opis: "Vizzini A. 2014. Nomenclatural novelties. Index Fungorum 147: 1 (rodzaj Imleria; Imleria badia (Fr.) Vizzini). Data wydania podawana różnie: 12.05 lub 12.06.2014"
     klasa: A
-    zweryfikowano: false
+    zweryfikowano: metadane
   olariaga_2017:
-    opis: "Olariaga I. i in. 2017. Cantharellus (Cantharellales, Basidiomycota) revisited in Europe through a multigene phylogeny. Fungal Diversity 83: 263–292"
+    opis: "Olariaga I., Moreno G., Manjón J.L., Salcedo I., Hofstetter V., Rodríguez D., Buyck B. 2017. Cantharellus (Cantharellales, Basidiomycota) revisited in Europe through a multigene phylogeny. Fungal Diversity 83(1): 263–292. doi:10.1007/s13225-016-0376-7 (8 gatunków w Europie; epityp C. cibarius)"
     klasa: A
-    zweryfikowano: false
+    zweryfikowano: metadane
   boddy_2014:
-    opis: "Boddy L. i in. 2014. Climate variation effects on fungal fruiting. Fungal Ecology 10: 20–33 (przegląd: wpływ opadów i temperatury na owocnikowanie; bez progów dla gatunków)"
+    opis: "Boddy L. i in. 2014. Climate variation effects on fungal fruiting. Fungal Ecology 10: 20–33. doi:10.1016/j.funeco.2013.10.006 (przegląd: wydłużanie sezonów w Europie; brak progów liczbowych dla gatunków)"
     klasa: A
-    zweryfikowano: false
+    zweryfikowano: metadane
   kauserud_2008:
-    opis: "Kauserud H. i in. 2008. Mushroom fruiting and climate change. PNAS 105: 3811–3814 (przesunięcia sezonu owocnikowania)"
+    opis: "Kauserud H. i in. 2008. Mushroom fruiting and climate change. PNAS 105: 3811–3814. doi:10.1073/pnas.0709037105 (Norwegia, ~34,5 tys. rekordów zielnikowych 1940–2006; opóźnienie jesiennego owocnikowania o 12,9 dnia od 1980)"
     klasa: A
+    zweryfikowano: metadane
+  zarzynski_grzyby_polskich_lasow:
+    opis: "Zarzyński P. Grzyby polskich lasów. Centrum Informacyjne Lasów Państwowych, Warszawa (atlas, ok. 508 s., >200 gatunków). Rok i ISBN do ustalenia w katalogu CILP/BN"
+    klasa: B
     zweryfikowano: false
   zalozenie_projektowe:
     opis: Założenie projektowe zespołu — wartość startowa do kalibracji na obserwacjach (Etap 6); nie jest ustaloną zależnością biologiczną

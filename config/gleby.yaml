@@ -1,0 +1,14 @@
+# Przełożenie opisu gleby z opisu taksacyjnego na cechy porównywane z species/*.yaml (komponent A).
+# Dopasowanie po początku nazwy (bez wielkości liter). Założenie projektowe, klasa C — do sprawdzenia
+# po odczytaniu rzeczywistych wartości pola gleby w BDL (mogą to być kody, nie nazwy).
+typy:
+  - {prefiks: bielicow,        odczyn: kwasny,       zyznosc: uboga}
+  - {prefiks: rdzaw,           odczyn: kwasny,       zyznosc: uboga}
+  - {prefiks: brunatno-rdzaw,  odczyn: kwasny,       zyznosc: srednia}
+  - {prefiks: brunatn kwaśn,   odczyn: kwasny,       zyznosc: srednia}
+  - {prefiks: brunatna kwaśna, odczyn: kwasny,       zyznosc: srednia}
+  - {prefiks: brunatna właściwa, odczyn: lekko_kwasny, zyznosc: zyzna}
+  - {prefiks: płow,            odczyn: lekko_kwasny, zyznosc: srednia}
+  - {prefiks: glejow,          odczyn: kwasny,       zyznosc: srednia}
+  - {prefiks: torfow,          odczyn: kwasny,       zyznosc: uboga}
+  - {prefiks: mad,             odczyn: obojetny,     zyznosc: zyzna}

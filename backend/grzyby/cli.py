@@ -12,7 +12,8 @@ def main() -> int:
     pr = sub.add_parser("probe", help="pobierz próbki i zapisz schematy źródeł")
     pr.add_argument("sources", nargs="*")
     imp = sub.add_parser("import", help="import danych pilotażowych")
-    imp.add_argument("layer", choices=["prg", "bdl", "dem", "gdos", "all"])
+    imp.add_argument("layer", choices=["prg", "bdl", "dem", "gdos", "weather", "all"])
+    sub.add_parser("demo", help="wygeneruj DANE DEMONSTRACYJNE w schemacie demo")
     sub.add_parser("check-data")
     args = p.parse_args()
 
@@ -23,11 +24,17 @@ def main() -> int:
         return 0
     if args.cmd == "import":
         from .etl import dem, vector
-        steps = {"prg": vector.import_prg, "bdl": vector.import_bdl, "gdos": vector.import_gdos, "dem": dem.import_dem}
+        from .weather.openmeteo import import_weather
+        steps = {"prg": vector.import_prg, "bdl": vector.import_bdl, "gdos": vector.import_gdos, "dem": dem.import_dem,
+                 "weather": import_weather}
         # Kolejność: granice → wydzielenia → teren (statystyki strefowe wymagają wydzieleń) → ochrona.
         order = ["prg", "bdl", "dem", "gdos"] if args.layer == "all" else [args.layer]
         for name in order:
             steps[name]()
+        return 0
+    if args.cmd == "demo":
+        from .demo import generate
+        print(generate())
         return 0
     if args.cmd == "check-data":
         from .check_data import main as check

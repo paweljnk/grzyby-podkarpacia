@@ -2,11 +2,14 @@
 COMPOSE ?= docker compose
 RUN := $(COMPOSE) run --rm etl
 
-.PHONY: up down build probe import-pilot check-data test test-db reset-db
+.PHONY: up down build migrate probe import-pilot import-weather demo-data api check-data test test-db e2e reset-db
 
 up:            ## baza + kontener ETL
 	$(COMPOSE) up -d --build --wait db
-	$(COMPOSE) up -d --build etl
+	$(COMPOSE) up -d --build etl api
+
+migrate:       ## idempotentne zastosowanie db/init/*.sql na istniejącej bazie
+	for f in db/init/*.sql; do $(COMPOSE) exec -T db psql -q -v ON_ERROR_STOP=1 -c "SET client_min_messages=warning" -U grzyby -d grzyby -f /docker-entrypoint-initdb.d/$$(basename $$f) || exit 1; done
 
 down:
 	$(COMPOSE) down
@@ -19,6 +22,12 @@ probe:         ## próbki źródeł → docs/schemas/*.json + weryfikacja w sour
 
 import-pilot:  ## PRG, BDL, DEM (+ statystyki strefowe), GDOŚ dla obszarów pilotażowych
 	$(RUN) python -m grzyby.cli import all
+
+import-weather: ## pogoda Open-Meteo dla komórek siatki pokrywających wydzielenia
+	$(RUN) python -m grzyby.cli import weather
+
+demo-data:     ## DANE DEMONSTRACYJNE w schemacie demo (fikcyjne drzewostany i pogoda; prawdziwy DEM)
+	$(RUN) python -m grzyby.cli demo
 
 check-data:    ## liczba rekordów i braków w każdej warstwie
 	$(RUN) python -m grzyby.cli check-data
