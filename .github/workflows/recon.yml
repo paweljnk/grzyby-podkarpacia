@@ -1,0 +1,23 @@
+# Rozpoznanie źródeł danych — uruchamiane po wysłaniu na gałąź `zadanie/recon`; wyniki na gałęzi `dane/recon`.
+name: recon
+on:
+  push:
+    branches: ["zadanie/recon"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: sudo apt-get install -y poppler-utils >/dev/null 2>&1 || true; pip install httpx
+      - run: python scripts/recon.py recon || true
+      - name: Publikacja
+        run: |
+          cd recon && git init -q -b dane/recon && git config user.name gha && git config user.email gha@users.noreply.github.com
+          git add -A && git commit -qm "recon $(date -u +%FT%TZ)"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dane/recon
