@@ -11,6 +11,7 @@ niedostępne (polityka sieci), dlatego aplikację można oglądać na **jawnie o
 ## Instalacja na iPhonie
 
 Krok po kroku (komputer w domu + tunel HTTPS, wystarczy Docker): [docs/instalacja_iphone.md](docs/instalacja_iphone.md).
+Bez Dockera na komputerze (np. firmowy Windows): [docs/instalacja_bez_dockera.md](docs/instalacja_bez_dockera.md) — GitHub Codespaces albo serwer + Tailscale.
 
 ## Szybki start (deweloperski)
 

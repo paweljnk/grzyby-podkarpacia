@@ -1,0 +1,13 @@
+{
+  "name": "Grzyby Podkarpacia",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "hostRequirements": { "cpus": 2, "memory": "4gb" },
+  "postStartCommand": "docker compose -f docker-compose.home.yml up -d --build",
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": { "label": "Grzyby Podkarpacia", "onAutoForward": "notify" }
+  }
+}
