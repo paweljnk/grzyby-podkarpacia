@@ -169,5 +169,3 @@ button:disabled { opacity: .5; }
   .map-rank { max-height: 46dvh; overflow-y: auto; border-top: 1px solid var(--line); }
   .map-rank-head { position: sticky; top: 0; background: var(--bg); z-index: 1; padding-bottom: 4px; }
 }
-.theme-pick { display: flex; gap: 8px; align-items: center; margin: 0 0 8px; }
-.theme-pick select { padding: 4px; border-radius: 6px; }

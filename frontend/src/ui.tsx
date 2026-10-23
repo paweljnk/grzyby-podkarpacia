@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type React from "react";
 import type { Component, Envelope, Gate } from "./types";
 
@@ -69,38 +68,9 @@ export function Warnings({ env }: { env: Envelope | null }) {
 
 const fmt = (iso: string | null) => (iso ? new Date(iso).toLocaleString("pl-PL", { timeZone: "Europe/Warsaw", dateStyle: "short", timeStyle: "short" }) : "brak");
 
-export const THEMES = [["obecny", "obecny"], ["las", "mapa gospodarcza"], ["szlak", "szlak"]] as const;
-export type Theme = (typeof THEMES)[number][0];
-const THEME_COLOR: Record<Theme, string> = { obecny: "#2f4a2c", las: "#1d3a2b", szlak: "#ffffff" };
-
-export function applyTheme(t: Theme) {
-  document.documentElement.dataset.motyw = t;
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", THEME_COLOR[t]);
-  try { localStorage.setItem("motyw", t); } catch { /* tryb prywatny */ }
-}
-export function initialTheme(): Theme {
-  const fromUrl = new URLSearchParams(location.search).get("motyw");
-  let saved: string | null = null;
-  try { saved = localStorage.getItem("motyw"); } catch { /* tryb prywatny */ }
-  const v = fromUrl ?? saved ?? "obecny";
-  return (THEMES.some(([k]) => k === v) ? v : "obecny") as Theme;
-}
-
-function ThemePicker() {
-  const [t, setT] = useState<Theme>(initialTheme);
-  return (
-    <label className="theme-pick small">Wygląd aplikacji{" "}
-      <select value={t} onChange={(e) => { const v = e.target.value as Theme; setT(v); applyTheme(v); }} data-testid="theme">
-        {THEMES.map(([k, label]) => <option key={k} value={k}>{label}</option>)}
-      </select>
-    </label>
-  );
-}
-
 export function Footer({ env }: { env: Envelope | null }) {
   return (
     <footer className="footer" data-testid="footer">
-      <ThemePicker />
       {env && (
         <>
           <p className="disclaimer">{env.zastrzezenie}</p>
