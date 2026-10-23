@@ -404,6 +404,76 @@ zrodla:
       powod: null
       kanal: GitHub Actions (US)
     ostatni_import: null
+  ibl_gleby_lesne:
+    nazwa: IBL — baza „Gleby leśne”, podbaza „Siedliska lasowe”
+    dostawca: Instytut Badawczy Leśnictwa, Zakład Ekologii Lasu
+    url: https://www.ibles.pl/baza-danych/gleby-lesne/siedliska-lasowe/
+    typ_uslugi: baza zamknięta (dane laboratoryjne)
+    zasieg: siedliska lasowe w Polsce, ok. 59 188 rekordów
+    rozdzielczosc: adres leśny (RDLP, nadleśnictwo, leśnictwo, oddział, adres), warstwy 0–5 i 5–15 cm
+    aktualnosc: nieznana
+    licencja: brak — udostępnienie wyłącznie na prośbę do autorów danych
+    atrybucja: Instytut Badawczy Leśnictwa
+    uzyte_pola: []
+    metoda: nieużywane — wymaga zgody IBL (pH KCl, pH H2O, C, N, kationy)
+    do_weryfikacji: true
+    probe: {typ: http_get, url: https://www.ibles.pl/baza-danych/gleby-lesne/siedliska-lasowe/}
+    uwagi: Najlepsze źródło pomiarów pH gleb leśnych; adres leśny pozwala połączyć rekordy z wydzieleniami BDL.
+    weryfikacja: {data_utc: '2026-10-23T16:00:00+00:00', status: niedostepne, powod: baza zamknięta, kanal: GitHub Actions (US)}
+    ostatni_import: null
+  lucas_2018_topsoil:
+    nazwa: ESDAC — LUCAS 2018 Topsoil
+    dostawca: Komisja Europejska, JRC (ESDAC)
+    url: https://esdac.jrc.ec.europa.eu/content/lucas-2018-topsoil-data
+    typ_uslugi: pliki CSV + SHP po rejestracji (formularz)
+    zasieg: UE, 18 984 próbek (punkty)
+    rozdzielczosc: punkt
+    aktualnosc: '2018'
+    licencja: własność UE; nieodpłatnie po rejestracji, obowiązek cytowania; dane „nie są reprezentatywne dla warunków lokalnych”
+    atrybucja: European Commission, Joint Research Centre — LUCAS 2018 Topsoil
+    uzyte_pola: []
+    metoda: nieużywane — możliwa kontrola SoilGrids w regionie (wymaga rejestracji właściciela projektu)
+    do_weryfikacji: true
+    probe: {typ: http_get, url: https://esdac.jrc.ec.europa.eu/content/lucas-2018-topsoil-data}
+    uwagi: null
+    weryfikacja: {data_utc: '2026-10-23T16:00:00+00:00', status: wymaga_rejestracji, powod: formularz z adresem e-mail, kanal: GitHub Actions (US)}
+    ostatni_import: null
+  gugik_mapa_glebowo_rolnicza:
+    nazwa: GUGiK — mapa glebowo-rolnicza 1:5000 (woj. podkarpackie)
+    dostawca: Główny Urząd Geodezji i Kartografii (PZGiK)
+    url: https://mapy.geoportal.gov.pl/wss/service/pub/guest/MapaGlebowoRolnicza/MapServer/WMSServer
+    typ_uslugi: WMS/WMTS (przeglądanie, GetFeatureInfo); GML na wniosek z PZGiK
+    zasieg: województwo podkarpackie (uzupełniona 2026-02-04)
+    rozdzielczosc: 1:5000
+    aktualnosc: kartowanie 1966–1980
+    licencja: usługi przeglądania publiczne; dane GML z PZGiK na wniosek (odpłatnie lub nieodpłatnie dla wybranych celów)
+    atrybucja: Główny Urząd Geodezji i Kartografii
+    uzyte_pola: []
+    metoda: nieużywane — sprawdzone w 16 wydzieleniach: lasy LP „Ls” bez opisu gleby (8/8), lasy poza LP z typem i gatunkiem
+      gleby (6/8); bez pH
+    do_weryfikacji: true
+    probe: {typ: http_get, url: 'https://mapy.geoportal.gov.pl/wss/service/pub/guest/MapaGlebowoRolnicza/MapServer/WMSServer?SERVICE=WMS&REQUEST=GetCapabilities'}
+    uwagi: Warstwa KONTURY_GLEBOWE (KOMPLEKS, TYPPODTYP, PODLOZE1–5, SZKIELETOWOSC1–5, ...). Masowe GetFeatureInfo dla
+      145 tys. wydzieleń byłoby nadużyciem usługi przeglądania — właściwa droga to GML z PZGiK.
+    weryfikacja: {data_utc: '2026-10-23T16:00:00+00:00', status: ok, powod: null, kanal: GitHub Actions (US)}
+    ostatni_import: null
+  oschr_rzeszow:
+    nazwa: Okręgowa Stacja Chemiczno-Rolnicza w Rzeszowie
+    dostawca: OSChR Rzeszów
+    url: https://www.rzeszow.oschr.gov.pl/
+    typ_uslugi: laboratorium (analizy na zlecenie), nie zbiór danych
+    zasieg: próbki dostarczone przez zleceniodawcę
+    rozdzielczosc: próbka
+    aktualnosc: na zlecenie
+    licencja: wyniki należą do zleceniodawcy; opłaty wg rozporządzenia MRiRW (Dz.U. 1866/2025)
+    atrybucja: null
+    uzyte_pola: []
+    metoda: nieużywane — możliwe własne pomiary pH (pomiar użytkownika)
+    do_weryfikacji: false
+    probe: {typ: http_get, url: https://www.rzeszow.oschr.gov.pl/}
+    uwagi: null
+    weryfikacja: {data_utc: '2026-10-23T16:00:00+00:00', status: ok, powod: null, kanal: GitHub Actions (US)}
+    ostatni_import: null
   jpl_ephemeris:
     nazwa: Efemerydy JPL DE421 / DE440 (dla skyfield)
     dostawca: NASA JPL
