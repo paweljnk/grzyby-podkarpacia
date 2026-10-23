@@ -2,12 +2,21 @@
   "name": "Grzyby Podkarpacia",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "hostRequirements": { "cpus": 2, "memory": "4gb" },
-  "postStartCommand": "docker compose -f docker-compose.home.yml up -d --build",
-  "forwardPorts": [8000],
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb"
+  },
+  "postStartCommand": "docker compose -f docker-compose.home.yml up -d --build; gh codespace ports visibility 8000:public -c \"$CODESPACE_NAME\" || echo 'Ustaw port 8000 jako Public ręcznie: zakładka Porty → prawy przycisk → Widoczność portu → Public'",
+  "forwardPorts": [
+    8000
+  ],
   "portsAttributes": {
-    "8000": { "label": "Grzyby Podkarpacia", "onAutoForward": "notify" }
+    "8000": {
+      "label": "Grzyby Podkarpacia",
+      "onAutoForward": "notify"
+    }
   }
 }

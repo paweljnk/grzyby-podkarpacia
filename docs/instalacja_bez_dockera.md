@@ -17,6 +17,9 @@ Serwer w chmurze GitHuba z Dockerem, obsługiwany z przeglądarki.
    - **prywatnie (domyślnie):** otwórz adres w Safari na iPhonie i zaloguj się na to samo konto GitHub;
    - **publicznie:** prawy klik na porcie → *Port Visibility* → *Public*. Każdy, kto zna adres, zobaczy aplikację
      (tylko odczyt).
+   - **Jeśli iPhone proponuje „pobranie” pliku 0 KB** — port jest prywatny (GitHub odpowiada pustą odmową 401).
+     Ustaw port na **Public** (wyżej) i otwórz adres ponownie. Przy pierwszym wejściu GitHub może pokazać stronę
+     ostrzegawczą o porcie codespace'a — stuknij „Continue”.
 5. Safari → **Udostępnij → „Do ekranu początkowego”**. Po pierwszym starcie aplikacja sama pobiera dane rzeczywiste
    (ok. 60 MB, 1–2 min) — do tego czasu widać komunikat o braku danych.
 
