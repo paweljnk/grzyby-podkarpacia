@@ -16,8 +16,9 @@ Serwer w chmurze GitHuba z Dockerem, obsługiwany z przeglądarki.
 4. Dostęp z iPhone'a — wybierz jedno:
    - **prywatnie (domyślnie):** otwórz adres w Safari na iPhonie i zaloguj się na to samo konto GitHub;
    - **publicznie:** prawy klik na porcie → *Port Visibility* → *Public*. Każdy, kto zna adres, zobaczy aplikację
-     (tylko odczyt, dane demonstracyjne).
-5. Safari → **Udostępnij → „Do ekranu początkowego”** → w aplikacji wybierz **„dane demo”**.
+     (tylko odczyt).
+5. Safari → **Udostępnij → „Do ekranu początkowego”**. Po pierwszym starcie aplikacja sama pobiera dane rzeczywiste
+   (ok. 60 MB, 1–2 min) — do tego czasu widać komunikat o braku danych.
 
 Ograniczenia Codespaces:
 - serwer usypia po okresie bezczynności (domyślnie 30 min; w ustawieniach GitHuba → Codespaces można wydłużyć do 4 h)
@@ -55,7 +56,7 @@ sudo tailscale serve status  # pokaże adres https://<nazwa-serwera>.<twoja-sie�
 **iPhone:**
 1. Zainstaluj aplikację **Tailscale** z App Store i zaloguj się na **to samo konto**. Włącz połączenie (VPN).
 2. Otwórz w Safari adres `https://<nazwa-serwera>.<twoja-sieć>.ts.net`.
-3. **Udostępnij → „Do ekranu początkowego”**, w aplikacji wybierz **„dane demo”**.
+3. **Udostępnij → „Do ekranu początkowego”**. Dane rzeczywiste aplikacja pobiera sama (co 6 h sprawdza nowe paczki).
 
 Aplikacja działa w telefonie, gdy Tailscale jest włączony. Nikt spoza Twojej sieci Tailscale jej nie zobaczy.
 (Jeśli chcesz udostępnić ją komuś bez Tailscale: `sudo tailscale funnel --bg 8000` — wtedy adres jest publiczny.)
