@@ -3,6 +3,7 @@ import maplibregl, { type StyleSpecification } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { api, type Query } from "./api";
 import type { Envelope, RankingResp } from "./types";
+import { icons } from "./icons";
 import { SCORE_STOPS, TREE_NAMES, Warnings, Footer, ErrorBox, ScoreBadge, Conditions, scoreColor } from "./ui";
 
 const PINS = 20;   // tyle pierwszych miejsc rankingu ma numerowany znacznik na mapie
@@ -58,7 +59,8 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
   const [rank, setRank] = useState<RankingResp | null>(null);
   const [rankErr, setRankErr] = useState<string | null>(null);
   const [sel, setSel] = useState<number | null>(null);
-  const [moved, setMoved] = useState(false);   // środek mapy daleko od punktu rankingu
+  const [moved, setMoved] = useState(false);
+  const [sheet, setSheet] = useState<"peek" | "half" | "full">("half");   // panel rankingu na telefonie   // środek mapy daleko od punktu rankingu
   const pins = useRef<maplibregl.Marker[]>([]);
   const rankIds = useRef<Set<number>>(new Set());
   const qRef = useRef(q);
@@ -142,7 +144,7 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
       el.title = `${i + 1}. ${m.nazwa} — wskaźnik ${m.wynik == null ? "—" : Math.round(m.wynik)}/100`;
       el.dataset.testid = "map-pin";
       el.dataset.id = String(m.id);
-      el.addEventListener("click", (ev) => { ev.stopPropagation(); setSel(m.id); });
+      el.addEventListener("click", (ev) => { ev.stopPropagation(); setSel(m.id); setSheet((x) => (x === "peek" ? "half" : x)); });
       return new maplibregl.Marker({ element: el }).setLngLat([m.lon, m.lat]).addTo(map.current!);
     });
     // mapa pokazuje punkt wyszukiwania i wszystkie numerowane miejsca
@@ -151,7 +153,11 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
     else {
       const b = new maplibregl.LngLatBounds([q.lon, q.lat], [q.lon, q.lat]);
       top.forEach((m) => b.extend([m.lon, m.lat]));
-      map.current.fitBounds(b, { padding: 50, maxZoom: 13, duration: 600 });
+      const wide = window.innerWidth >= 900;
+      const panel = document.querySelector<HTMLElement>(".sheet");
+      const pad = wide ? { top: 70, bottom: 40, left: (panel?.offsetWidth ?? 0) + 50, right: 50 }
+                       : { top: 110, bottom: (panel?.offsetHeight ?? 0) + 30, left: 30, right: 30 };
+      map.current.fitBounds(b, { padding: pad, maxZoom: 13, duration: 600 });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, rank]);
@@ -162,10 +168,9 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
     for (const p of pins.current) p.getElement().classList.toggle("sel", p.getElement().dataset.id === String(sel));
     // przewijamy tylko listę rankingu (nie całą stronę — mapa ma zostać na ekranie)
     const row = sel != null ? document.querySelector<HTMLElement>(`[data-rank-id="${sel}"]`) : null;
-    const list = row?.closest<HTMLElement>(".map-rank");
+    const list = row?.closest<HTMLElement>(".sheet-body");
     if (row && list) {
-      const head = list.querySelector<HTMLElement>(".map-rank-head")?.offsetHeight ?? 0;
-      const top = row.getBoundingClientRect().top - list.getBoundingClientRect().top + list.scrollTop - head - 8;
+      const top = row.getBoundingClientRect().top - list.getBoundingClientRect().top + list.scrollTop - 8;
       list.scrollTo({ top, behavior: "smooth" });
     }
   }, [ready, sel]);
@@ -210,70 +215,88 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
 
   return (
     <section className="view view-map">
-      <Warnings env={env} />
-      {err && <ErrorBox error={err} />}
-      {!basemapOk && <div className="banner banner-warn">Podkład mapowy niedostępny — widoczne tylko warstwy aplikacji.</div>}
-      {zoomHint && <div className="banner banner-info" data-testid="zoom-hint">Przybliż, aby zobaczyć ocenę wszystkich wydzieleń.</div>}
-      <div className="map-controls">
-        <label>Warstwa{" "}
-          <select value={mode} onChange={(e) => setMode(e.target.value as Mode)} data-testid="map-mode">
-            <option value="wynik">warunki (przezroczystość = pewność)</option>
-            <option value="pokrycie">pokrycie danymi</option>
-            <option value="drzewostan">drzewostany (gatunek panujący)</option>
-            <option value="siedlisko">siedliska (typ siedliskowy)</option>
-            <option value="opad">opady z 7 dni</option>
-          </select>
-        </label>
-        <label className="chk"><input type="checkbox" checked={showProt} onChange={(e) => setShowProt(e.target.checked)} /> ochrona i zakazy</label>
-        {loading && <span className="muted small">ładowanie…</span>}
-      </div>
-      <div className="map-split">
-        <div className="map-col">
-          <div ref={box} className="map" data-testid="map" />
+      <div className="map-stage">
+        <div ref={box} className="map" data-testid="map" />
+
+        <div className="map-float">
+          <div className="chips">
+            <label className="chip">
+              {icons.warstwy}
+              <select value={mode} onChange={(e) => setMode(e.target.value as Mode)} data-testid="map-mode" aria-label="Warstwa mapy">
+                <option value="wynik">Warunki</option>
+                <option value="pokrycie">Pokrycie danymi</option>
+                <option value="drzewostan">Drzewostany</option>
+                <option value="siedlisko">Siedliska</option>
+                <option value="opad">Opady 7 dni</option>
+              </select>
+            </label>
+            <label className={`chip${showProt ? " chip-on" : ""}`}>
+              {icons.tarcza}
+              <input type="checkbox" checked={showProt} onChange={(e) => setShowProt(e.target.checked)} />
+              Ochrona i zakazy
+            </label>
+            {loading && <span className="chip chip-quiet" aria-live="polite"><span className="spin" />Wczytywanie</span>}
+          </div>
+          <div className="toasts">
+            <Warnings env={env} />
+            {err && <ErrorBox error={err} />}
+            {!basemapOk && <div className="banner banner-warn">Podkład mapowy niedostępny — widać tylko warstwy aplikacji.</div>}
+            {zoomHint && <div className="banner banner-info" data-testid="zoom-hint">Przybliż, aby zobaczyć ocenę wszystkich wydzieleń.</div>}
+          </div>
           {moved && (
             <button className="map-here" data-testid="search-here"
               onClick={() => { const c = map.current!.getCenter(); setQ({ lat: +c.lat.toFixed(4), lon: +c.lng.toFixed(4) }); }}>
-              Szukaj w tym obszarze
+              {icons.szukaj} Szukaj w tym obszarze
             </button>
           )}
-          <Legend mode={mode} />
         </div>
-        <aside className="map-rank" aria-label="Ranking miejsc">
-          <div className="map-rank-head">
-            <strong>Ranking</strong>{" "}
-            <span className="muted small">
-              {rank ? `${rank.miejsca.length} najlepszych z ${rank.liczba_ocenionych} wydzieleń w promieniu ${q.radius_km} km` : "ładowanie…"}
-            </span>
-            <label className="small radius">promień {q.radius_km} km
+
+        <aside className={`sheet sheet-${sheet}`} aria-label="Ranking miejsc">
+          <button className="sheet-handle" onClick={() => setSheet(sheet === "peek" ? "half" : sheet === "half" ? "full" : "peek")}
+            aria-label={sheet === "full" ? "Zwiń listę" : "Rozwiń listę"} data-testid="sheet-handle"><span /></button>
+          <div className="sheet-head">
+            <div>
+              <h2>Najlepsze miejsca</h2>
+              <p className="muted small">
+                {rank ? `${rank.miejsca.length} z ${rank.liczba_ocenionych.toLocaleString("pl-PL")} wydzieleń w promieniu ${q.radius_km} km` : "Wczytywanie rankingu…"}
+              </p>
+            </div>
+            <label className="radius small">
+              <span>Promień <strong>{q.radius_km} km</strong></span>
               <input type="range" min={5} max={60} step={5} value={q.radius_km} onChange={(e) => setQ({ radius_km: +e.target.value })} />
             </label>
           </div>
-          {rankErr && <ErrorBox error={rankErr} />}
-          {rank && rank.miejsca.length === 0 && <p className="note">Brak miejsc spełniających warunki w tym promieniu.</p>}
-          <ol className="mrank" data-testid="map-ranking">
-            {rank?.miejsca.map((m, i) => (
-              <li key={m.id} data-rank-id={m.id} className={sel === m.id ? "sel" : ""}>
-                <button className="mrank-main" onClick={() => focus(m.id, m.lon, m.lat)} data-testid="map-ranking-item">
-                  <span className="mrank-pos">{i + 1}</span>
-                  <ScoreBadge value={m.wynik} excluded={!m.rekomendowane} />
-                  <span className="rank-text">
-                    <strong>{m.nazwa}</strong>
-                    <span className="muted small">
-                      {m.odleglosc_km != null && <>{m.odleglosc_km} km (linia prosta) · </>}
-                      {m.gatunek_panujacy ? TREE_NAMES[m.gatunek_panujacy] ?? m.gatunek_panujacy : "drzewostan: brak"}
+          <div className="sheet-body">
+            {rankErr && <ErrorBox error={rankErr} />}
+            {rank && rank.miejsca.length === 0 && <p className="note">Brak miejsc spełniających warunki w tym promieniu. Zwiększ promień albo zmień dzień.</p>}
+            <ol className="mrank" data-testid="map-ranking">
+              {rank?.miejsca.map((m, i) => (
+                <li key={m.id} data-rank-id={m.id} className={sel === m.id ? "sel" : ""}>
+                  <button className="mrank-main" onClick={() => focus(m.id, m.lon, m.lat)} data-testid="map-ranking-item">
+                    <span className="mrank-pos">{i + 1}</span>
+                    <ScoreBadge value={m.wynik} excluded={!m.rekomendowane} />
+                    <span className="rank-text">
+                      <strong>{m.nazwa}</strong>
+                      <span className="muted small">
+                        {m.gatunek_panujacy ? TREE_NAMES[m.gatunek_panujacy] ?? m.gatunek_panujacy : "drzewostan: brak"}
+                        {m.odleglosc_km != null && <> · {m.odleglosc_km} km w linii prostej</>}
+                      </span>
+                      <Conditions v={m.warunki} lo={m.warunki_min} hi={m.warunki_max} pewnosc={m.pewnosc} opis={m.pewnosc_opis} />
                     </span>
-                    <Conditions v={m.warunki} lo={m.warunki_min} hi={m.warunki_max} pewnosc={m.pewnosc} opis={m.pewnosc_opis} />
-                  </span>
-                </button>
-                <button className="secondary mrank-open" onClick={() => onOpen(m.id)} data-testid="map-ranking-open">Szczegóły ›</button>
-              </li>
-            ))}
-          </ol>
-          <p className="muted tiny pad">Liczba w kwadracie to wskaźnik rekomendacji 0–100 (nie procent ani prawdopodobieństwo).
-            Numer na mapie = pozycja w rankingu; kliknij znacznik, aby zobaczyć miejsce na liście, albo pozycję na liście, aby pokazać je na mapie.</p>
+                  </button>
+                  <button className="mrank-open" onClick={() => onOpen(m.id)} data-testid="map-ranking-open" aria-label={`Szczegóły: ${m.nazwa}`}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="m9 6 6 6-6 6" /></svg>
+                  </button>
+                </li>
+              ))}
+            </ol>
+            <p className="muted tiny explain">Liczba to wskaźnik rekomendacji 0–100 — nie procent ani prawdopodobieństwo.
+              Numer na mapie odpowiada pozycji na liście.</p>
+            <Legend mode={mode} />
+            <Footer env={env} />
+          </div>
         </aside>
       </div>
-      <Footer env={env} />
     </section>
   );
 }

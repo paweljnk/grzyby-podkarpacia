@@ -18,9 +18,7 @@ test("atlas działa offline dla gatunków MVP i ich sobowtórów (390×844)", as
     await expect(page.getByRole("heading", { level: 2 })).toBeVisible();
     await expect(page.getByTestId("atlas-notice")).toBeVisible();
     // brakujące ujęcia oznaczone jako brak, nie zastąpione zdjęciem innego gatunku
-    const missing = await page.getByTestId("photo-missing").count();
-    const imgs = await page.locator(".ph-img img").count();
-    expect(missing + imgs).toBe(5);
+    await expect.poll(async () => (await page.getByTestId("photo-missing").count()) + (await page.locator(".ph-img img").count())).toBe(5);
   }
   for (const p of PAIRS) {
     await page.goto(`/#/atlas/para/${p}`);

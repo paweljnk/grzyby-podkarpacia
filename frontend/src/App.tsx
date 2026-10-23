@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { api, type Query } from "./api";
 import { MapView } from "./MapView";
 import type { Dataset, SpeciesItem } from "./types";
+import { icons } from "./icons";
 import { AtlasIndex, AtlasPair, AtlasSafety, AtlasSpecies } from "./atlas";
 import { CompareView, MonthView, PlaceView, RankingView, SearchView } from "./views";
 
@@ -57,9 +58,9 @@ export default function App() {
 
   const sp = species.find((s) => s.id === q.species);
   return (
-    <div className="app">
+    <div className={`app${!route || route === "mapa" ? " app-map" : ""}`}>
       <header className="top">
-        <h1>Grzyby Podkarpacia</h1>
+        <h1><span className="logo" aria-hidden>{icons.grzyb}</span>Grzyby Podkarpacia</h1>
         <div className="top-row">
           <select aria-label="Gatunek" value={q.species} onChange={(e) => setQ({ species: e.target.value })} data-testid="species-top">
             {species.map((s) => <option key={s.id} value={s.id}>{s.nazwa_polska}</option>)}
@@ -80,8 +81,10 @@ export default function App() {
       </header>
       <main>{view}</main>
       <nav className="tabs" aria-label="Nawigacja">
-        {[["#/mapa", "Mapa", "🗺️"], ["#/szukaj", "Szukaj", "🔎"], ["#/ranking", "Ranking", "📋"], ["#/kalendarz", "Kalendarz", "📅"], ["#/porownanie", `Porównaj${compareIds.length ? ` (${compareIds.length})` : ""}`, "⚖️"], ["#/atlas", "Atlas", "📖"]].map(([h, label, ic]) => (
-          <a key={h} href={h} className={hash.startsWith(h) ? "active" : ""} data-testid={`tab-${h.slice(2)}`}><span aria-hidden>{ic}</span>{label}</a>
+        {[["#/mapa", "Mapa", "mapa"], ["#/szukaj", "Szukaj", "szukaj"], ["#/ranking", "Ranking", "ranking"], ["#/kalendarz", "Kalendarz", "kalendarz"], ["#/porownanie", "Porównaj", "porownanie"], ["#/atlas", "Atlas", "atlas"]].map(([h, label, ic]) => (
+          <a key={h} href={h} className={hash.startsWith(h) ? "active" : ""} data-testid={`tab-${h.slice(2)}`}>
+            <span className="tab-ic" aria-hidden>{icons[ic]}{ic === "porownanie" && compareIds.length > 0 && <b className="badge">{compareIds.length}</b>}</span>{label}
+          </a>
         ))}
       </nav>
     </div>
