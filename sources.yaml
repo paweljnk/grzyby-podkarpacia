@@ -449,8 +449,8 @@ zrodla:
     licencja: usługi przeglądania publiczne; dane GML z PZGiK na wniosek (odpłatnie lub nieodpłatnie dla wybranych celów)
     atrybucja: Główny Urząd Geodezji i Kartografii
     uzyte_pola: []
-    metoda: nieużywane — sprawdzone w 16 wydzieleniach: lasy LP „Ls” bez opisu gleby (8/8), lasy poza LP z typem i gatunkiem
-      gleby (6/8); bez pH
+    metoda: "nieużywane — sprawdzone w 16 wydzieleniach — lasy LP: „Ls” bez opisu gleby (8/8), lasy poza LP: typ i gatunek
+      gleby (6/8); bez pH"
     do_weryfikacji: true
     probe: {typ: http_get, url: 'https://mapy.geoportal.gov.pl/wss/service/pub/guest/MapaGlebowoRolnicza/MapServer/WMSServer?SERVICE=WMS&REQUEST=GetCapabilities'}
     uwagi: Warstwa KONTURY_GLEBOWE (KOMPLEKS, TYPPODTYP, PODLOZE1–5, SZKIELETOWOSC1–5, ...). Masowe GetFeatureInfo dla
