@@ -10,5 +10,6 @@ export const icons: Record<string, JSX.Element> = {
   atlas: <svg viewBox="0 0 24 24" {...P}><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z" /><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5" /></svg>,
   warstwy: <svg viewBox="0 0 24 24" {...P}><path d="m12 3 9 5-9 5-9-5 9-5Z" /><path d="m3 13 9 5 9-5" /></svg>,
   tarcza: <svg viewBox="0 0 24 24" {...P}><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z" /></svg>,
+  lokalizacja: <svg viewBox="0 0 24 24" {...P}><circle cx="12" cy="12" r="3.5" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" /><circle cx="12" cy="12" r="7.5" /></svg>,
   grzyb: <svg viewBox="0 0 24 24" {...P}><path d="M3.5 12a8.5 7 0 0 1 17 0H3.5Z" /><path d="M9.5 12v5.5a2.5 2.5 0 0 0 5 0V12" /></svg>,
 };

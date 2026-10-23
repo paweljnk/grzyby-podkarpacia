@@ -107,3 +107,11 @@ def test_truncated_ranking_warns_instead_of_silently_cutting(client, monkeypatch
     assert d["liczba_ocenionych"] == 3
     assert any("najbliższych wydzieleń" in w for w in d["ostrzezenia"])
     assert "_ostrzezenia" not in d
+
+
+def test_ranking_points_cover_all_scored_stands(client):
+    d = client.get(f"/api/ranking?{Q}&punkty=true&limit=5").json()
+    assert len(d["punkty"]) == d["liczba_ocenionych"] and len(d["miejsca"]) <= 5
+    lon, lat, wynik, rek, pew, sid = d["punkty"][0]
+    assert 21 < lon < 24 and 49 < lat < 51 and rek in (0, 1) and 0 <= pew <= 1
+    assert "punkty" not in client.get(f"/api/ranking?{Q}&limit=5").json()

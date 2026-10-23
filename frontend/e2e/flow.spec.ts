@@ -76,7 +76,35 @@ test("mapa i ranking na jednym ekranie: znacznik ↔ pozycja na liście", async 
   // pozycja nr 1 na liście → podświetla znacznik nr 1
   await rows.first().click();
   await expect(pins.first()).toHaveClass(/sel/);
-  // szczegóły → karta miejsca
+  // szczegóły → karta miejsca w panelu mapy; powrót do listy bez przeładowania mapy
+  const pinsBefore = await pins.count();
   await page.getByTestId("map-ranking-open").first().click();
-  await expect(page).toHaveURL(/#\/miejsce\/\d+/);
+  await expect(page.getByTestId("place-card")).toBeVisible();
+  await expect(page).toHaveURL(/#\/mapa|\/$/);
+  await page.getByTestId("place-back").click();
+  await expect(rows.first()).toBeVisible();
+  expect(await pins.count()).toBe(pinsBefore);
+  // inna zakładka i powrót — mapa zachowuje ranking (bez ponownego ładowania)
+  let reloaded = false;
+  page.on("request", (r) => { if (r.url().includes("/api/ranking") && r.url().includes("punkty=true")) reloaded = true; });
+  await page.getByTestId("tab-atlas").click();
+  await page.getByTestId("tab-mapa").click();
+  await expect(rows.first()).toBeVisible();
+  expect(reloaded).toBe(false);
+});
+
+test("mapa: kropki wszystkich ocenionych wydzieleń i moja lokalizacja", async ({ page, context }) => {
+  await context.grantPermissions(["geolocation"]);
+  await context.setGeolocation({ latitude: 49.40, longitude: 22.20 });
+  await page.goto("/#/mapa");
+  await page.getByTestId("dataset").selectOption("demo");
+  const loaded = page.waitForResponse((r) => r.url().includes("/api/ranking") && r.url().includes("lat=49.4") && r.url().includes("punkty=true"));
+  await page.getByTestId("my-location").click();
+  const resp = await loaded;
+  const body = await resp.json();
+  expect(body.punkty.length).toBe(body.liczba_ocenionych);
+  expect(body.punkty.length).toBeGreaterThan(body.miejsca.length);
+  await context.setGeolocation({ latitude: 52.23, longitude: 21.01 });      // Warszawa — poza województwem
+  await page.getByTestId("my-location").click();
+  await expect(page.getByTestId("geo-msg")).toContainText("poza województwem");
 });

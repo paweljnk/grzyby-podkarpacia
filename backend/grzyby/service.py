@@ -94,7 +94,9 @@ def score_place(conn, ds: repo.Dataset, row: repo.StandRow, sp: Species, day: da
     if weather_cache is not None and bkey in weather_cache:
         B, ind_json, gates = weather_cache[bkey]
     else:
-        B, ind, gates = weather(sp, daily, day, row.stand.wys_sr, cfg, sun_bin)
+        # pasy wysokości co 50 m i klasy nasłonecznienia co 0.1 — ta sama wartość w rankingu, na mapie i w karcie
+        alt_band = None if row.stand.wys_sr is None else round(row.stand.wys_sr / 50) * 50
+        B, ind, gates = weather(sp, daily, day, alt_band, cfg, sun_bin)
         ind_json = _ind_json(ind)
         if weather_cache is not None:
             weather_cache[bkey] = (B, ind_json, gates)
@@ -193,7 +195,7 @@ def access_status(conn, ds: repo.Dataset, prot: list[dict], bans: list[dict]) ->
 
 
 def ranking(conn, ds: repo.Dataset, sp: Species, lat: float, lon: float, radius_km: float, day: date,
-            calendar_on: bool, limit: int = 50, include_excluded: bool = False) -> dict:
+            calendar_on: bool, limit: int = 50, include_excluded: bool = False, points: bool = False) -> dict:
     cfg = load_yaml("model.yaml")
     lim = cfg["zapytania"]["limit_wydzielen_ranking"]
     rows = repo.stands_near(conn, ds, lat, lon, radius_km, limit=lim + 1)
@@ -207,9 +209,12 @@ def ranking(conn, ds: repo.Dataset, sp: Species, lat: float, lon: float, radius_
     ids = [r.stand.id for r in rows]
     prefetch = {"prot": repo.protection_bulk(conn, ds, ids), "bans": repo.bans_bulk(conn, ds, ids, day),
                 "obs": repo.observations_region(conn, ds, sp.id, lat, lon, day, radius_km + cfg["obserwacje"]["promien_km"])}
-    scored, excluded = [], 0
+    scored, excluded, pts = [], 0, []
     for row in rows:
         s, extra = score_place(conn, ds, row, sp, day, calendar_on, cal, wc, prefetch)
+        if points:      # wszystkie ocenione wydzielenia do mapy: [lon, lat, wskaźnik, rekomendowane, pewność, id]
+            pts.append([round(row.lon, 5), round(row.lat, 5), None if s.wynik is None else round(s.wynik),
+                        1 if s.rekomendowane else 0, round(s.kompletnosc, 2), row.stand.id])
         if not s.rekomendowane:
             excluded += 1
             if not include_excluded:
@@ -222,8 +227,11 @@ def ranking(conn, ds: repo.Dataset, sp: Species, lat: float, lon: float, radius_
                          "opad_7d_mm": extra["wskazniki_pogody"]["opad_mm"].get("7"),
                          "sklad_typow": extra["wskazniki_pogody"]["sklad_typow"]}}
              for s, extra, row in scored[:limit]]
-    return {"miejsca": items, "liczba_ocenionych": len(rows), "wykluczone": excluded,
-            "kalendarz": calendar_json(cal) if calendar_on else None, "_ostrzezenia": warn}
+    out = {"miejsca": items, "liczba_ocenionych": len(rows), "wykluczone": excluded,
+           "kalendarz": calendar_json(cal) if calendar_on else None, "_ostrzezenia": warn}
+    if points:
+        out["punkty"] = pts
+    return out
 
 
 MAP_MAX_KM2 = 900          # powyżej: mapa pokazuje tylko pokrycie danymi (przybliż, aby zobaczyć wskaźnik)

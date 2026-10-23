@@ -58,7 +58,8 @@ export default function App() {
   else if (route === "szukaj") view = <SearchView q={q} species={species} setQ={setQ} go={go} />;
   else if (route === "kalendarz") view = <MonthView q={q} placeId={arg ? +arg : undefined} go={go} />;
   else if (route === "porownanie") view = <CompareView q={q} ids={compareIds} open={open} clear={() => { setCompare([]); store.set("compare", []); }} />;
-  else view = <MapView q={q} setQ={setQ} onOpen={open} />;
+  else view = null;          // mapa jest zawsze zamontowana (niżej) — zachowuje widok i dane między zakładkami
+  const isMap = view === null;
 
   const sp = species.find((s) => s.id === q.species);
   return (
@@ -83,7 +84,12 @@ export default function App() {
           </div>
         )}
       </header>
-      <main>{view}</main>
+      <main>
+        <div className="map-keep" style={{ display: isMap ? "flex" : "none" }}>
+          <MapView q={q} setQ={setQ} go={go} visible={isMap} compareIds={compareIds} toggleCompare={toggleCompare} />
+        </div>
+        {view}
+      </main>
       <nav className="tabs" aria-label="Nawigacja">
         {[["#/mapa", "Mapa", "mapa"], ["#/szukaj", "Szukaj", "szukaj"], ["#/ranking", "Ranking", "ranking"], ["#/kalendarz", "Kalendarz", "kalendarz"], ["#/porownanie", "Porównaj", "porownanie"], ["#/atlas", "Atlas", "atlas"]].map(([h, label, ic]) => (
           <a key={h} href={h} className={hash.startsWith(h) ? "active" : ""} data-testid={`tab-${h.slice(2)}`}>

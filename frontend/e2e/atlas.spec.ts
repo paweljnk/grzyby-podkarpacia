@@ -26,7 +26,7 @@ test("atlas działa offline dla gatunków MVP i ich sobowtórów (390×844)", as
     await expect(page.getByTestId("single-feature-warning")).toContainText("Pojedyncza cecha");
   }
   await page.goto("/#/atlas/bezpieczenstwo");
-  await expect(page.getByText("112").first()).toBeVisible();
+  await expect(page.locator("a.call-112")).toBeVisible();
   await expect(page.getByTestId("myths")).toContainText("srebrnej łyżeczki");
   await context.setOffline(false);
 

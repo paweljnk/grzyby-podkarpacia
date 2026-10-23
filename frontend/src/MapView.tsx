@@ -4,6 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { api, type Query } from "./api";
 import type { Envelope, RankingResp } from "./types";
 import { icons } from "./icons";
+import { PlaceView } from "./views";
 import { SCORE_STOPS, TREE_NAMES, Warnings, Footer, ErrorBox, ScoreBadge, Conditions, scoreColor } from "./ui";
 
 const PINS = 20;   // tyle pierwszych miejsc rankingu ma numerowany znacznik na mapie
@@ -44,7 +45,12 @@ const km = (a: [number, number], b: [number, number]) =>
 
 const bboxOf = (m: maplibregl.Map) => { const b = m.getBounds(); return [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()].map((x) => x.toFixed(4)).join(","); };
 
-export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query>) => void; onOpen: (id: number) => void }) {
+const BOUNDS = { lat: [48.9, 51.0], lon: [21.0, 23.7] };   // zakres API (województwo podkarpackie z zapasem)
+
+export function MapView({ q, setQ, go, visible = true, compareIds, toggleCompare }: {
+  q: Query; setQ: (p: Partial<Query>) => void; go: (h: string) => void; visible?: boolean;
+  compareIds: number[]; toggleCompare: (id: number) => void;
+}) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
   const [ready, setReady] = useState(false);
@@ -60,7 +66,11 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
   const [rankErr, setRankErr] = useState<string | null>(null);
   const [sel, setSel] = useState<number | null>(null);
   const [moved, setMoved] = useState(false);
-  const [sheet, setSheet] = useState<"peek" | "half" | "full">("half");   // panel rankingu na telefonie   // środek mapy daleko od punktu rankingu
+  const [sheet, setSheet] = useState<"peek" | "half" | "full">("half");   // panel rankingu na telefonie
+  const [detail, setDetail] = useState<number | null>(null);             // karta miejsca w panelu (bez opuszczania mapy)
+  const [geoMsg, setGeoMsg] = useState<string | null>(null);
+  const [locating, setLocating] = useState(false);
+  const me = useRef<maplibregl.Marker | null>(null);
   const pins = useRef<maplibregl.Marker[]>([]);
   const rankIds = useRef<Set<number>>(new Set());
   const qRef = useRef(q);
@@ -82,7 +92,7 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
       m.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
       m.on("load", () => {
         const empty: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
-        for (const id of ["lasy", "ochrona", "zasieg", "pokrycie"]) m.addSource(id, { type: "geojson", data: empty });
+        for (const id of ["lasy", "ochrona", "zasieg", "pokrycie", "punkty"]) m.addSource(id, { type: "geojson", data: empty });
         // warstwy aplikacji pod nazwami miejscowości i dróg podkładu — mapa pozostaje czytelna
         const labels = m.getStyle().layers.find((l) => l.type === "symbol")?.id;
         const addLayer = (l: maplibregl.AddLayerObject) => m.addLayer(l, l.type === "fill" ? labels : undefined);
@@ -97,15 +107,27 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
           "line-color": "#24502a", "line-opacity": 0.35, "line-width": 0.5 } });
         addLayer({ id: "lasy-sel", type: "line", source: "lasy", filter: ["==", ["get", "id"], -1], paint: {
           "line-color": "#d9480f", "line-width": 3 } });
+        // wszystkie ocenione wydzielenia w promieniu (kropki) — widoczne, gdy mapa jest oddalona i nie ma kształtów
+        m.addLayer({ id: "punkty", type: "circle", source: "punkty", paint: {
+          "circle-color": ["case", ["==", ["get", "r"], 0], "#9aa19c", ["==", ["get", "w"], null], "#c9c4b8",
+            ["interpolate", ["linear"], ["get", "w"], ...SCORE_STOPS.flat()]] as unknown as Expr,
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 1.6, 10, 3, 13, 5] as unknown as Expr,
+          "circle-opacity": ["case", ["==", ["get", "r"], 0], 0.55, 0.9] as unknown as Expr,
+          "circle-stroke-color": "#ffffff", "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 8, 0, 11, 0.6] as unknown as Expr } });
         addLayer({ id: "ochrona-fill", type: "fill", source: "ochrona", paint: {
           "fill-color": ["match", ["get", "rodzaj"], "park_narodowy", "#b0413e", "zakaz_wstepu", "#d97a1f", "#8a6fb0"] as unknown as Expr, "fill-opacity": 0.18 } });
         m.addLayer({ id: "ochrona-line", type: "line", source: "ochrona", paint: {
           "line-color": ["match", ["get", "rodzaj"], "park_narodowy", "#b0413e", "zakaz_wstepu", "#d97a1f", "#8a6fb0"] as unknown as Expr, "line-width": 2 } });
-        m.on("click", "lasy-fill", (e) => {
-          const id = e.features?.[0]?.properties?.id;
-          if (id == null) return;
-          if (rankIds.current.has(Number(id))) setSel(Number(id)); else onOpen(Number(id));
-        });
+        for (const layer of ["lasy-fill", "punkty"]) {
+          m.on("click", layer, (e) => {
+            const id = e.features?.[0]?.properties?.id;
+            if (id == null) return;
+            if (rankIds.current.has(Number(id))) { setSel(Number(id)); setSheet((x) => (x === "peek" ? "half" : x)); }
+            else openDetail(Number(id));
+          });
+          m.on("mouseenter", layer, () => (m.getCanvas().style.cursor = "pointer"));
+          m.on("mouseleave", layer, () => (m.getCanvas().style.cursor = ""));
+        }
         m.on("mouseenter", "lasy-fill", () => (m.getCanvas().style.cursor = "pointer"));
         m.on("mouseleave", "lasy-fill", () => (m.getCanvas().style.cursor = ""));
         let t: ReturnType<typeof setTimeout>;
@@ -127,9 +149,25 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
 
   useEffect(() => {
     setRank(null); setRankErr(null); setSel(null); setMoved(false);
-    api.ranking(q).then((r) => { setRank(r); rankIds.current = new Set(r.miejsca.map((x) => x.id)); })
+    api.ranking(q, true).then((r) => { setRank(r); rankIds.current = new Set(r.miejsca.map((x) => x.id)); })
       .catch((e) => setRankErr(String(e.message ?? e)));
   }, [q]);
+
+  // kropki: wszystkie ocenione wydzielenia (także poza pierwszą pięćdziesiątką i wykluczone — szare)
+  useEffect(() => {
+    if (!ready || !map.current) return;
+    const feats = (rank?.punkty ?? []).map(([lon, lat, w, r, p, id]) => ({
+      type: "Feature" as const, geometry: { type: "Point" as const, coordinates: [lon, lat] }, properties: { w, r, p, id } }));
+    (map.current.getSource("punkty") as maplibregl.GeoJSONSource).setData({ type: "FeatureCollection", features: feats });
+  }, [ready, rank]);
+
+  useEffect(() => {
+    if (!ready || !map.current) return;
+    map.current.setLayoutProperty("punkty", "visibility", zoomHint ? "visible" : "none");
+  }, [ready, zoomHint]);
+
+  // mapa ukryta (inna zakładka) zachowuje stan; po powrocie przeliczamy jej rozmiar
+  useEffect(() => { if (visible) setTimeout(() => map.current?.resize(), 0); }, [visible]);
 
   // numerowane znaczniki = pozycje w rankingu (ten sam numer na mapie i na liście)
   useEffect(() => {
@@ -175,6 +213,44 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
     }
   }, [ready, sel]);
 
+  function openDetail(id: number) {
+    setDetail(id);
+    setSel(id);
+    setSheet("full");
+  }
+  const closeDetail = () => { setDetail(null); setSheet("half"); };
+
+  const locate = () => {
+    if (!("geolocation" in navigator)) { setGeoMsg("Ta przeglądarka nie udostępnia lokalizacji."); return; }
+    setLocating(true); setGeoMsg(null);
+    navigator.geolocation.getCurrentPosition((pos) => {
+      setLocating(false);
+      const { latitude: lat, longitude: lon } = pos.coords;
+      const m = map.current;
+      if (m) {
+        if (!me.current) {
+          const el = document.createElement("div");
+          el.className = "me-dot";
+          el.title = "Twoja lokalizacja";
+          me.current = new maplibregl.Marker({ element: el });
+        }
+        me.current.setLngLat([lon, lat]).addTo(m);
+      }
+      if (lat < BOUNDS.lat[0] || lat > BOUNDS.lat[1] || lon < BOUNDS.lon[0] || lon > BOUNDS.lon[1]) {
+        setGeoMsg("Jesteś poza województwem podkarpackim — ranking działa tylko dla Podkarpacia.");
+        m?.flyTo({ center: [lon, lat], zoom: 9 });
+        return;
+      }
+      setDetail(null);
+      setQ({ lat: +lat.toFixed(4), lon: +lon.toFixed(4) });
+    }, (e) => {
+      setLocating(false);
+      setGeoMsg(e.code === e.PERMISSION_DENIED
+        ? "Brak zgody na lokalizację. Włącz ją w ustawieniach przeglądarki (Safari: Ustawienia → Prywatność → Usługi lokalizacji)."
+        : "Nie udało się ustalić lokalizacji. Spróbuj ponownie na zewnątrz albo wyszukaj miejscowość w zakładce Szukaj.");
+    }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
+  };
+
   const focus = (id: number, lon: number, lat: number) => {
     setSel(id);
     const m = map.current;
@@ -218,6 +294,7 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
       <div className="map-stage">
         <div ref={box} className="map" data-testid="map" />
 
+        {visible && <>
         <div className="map-float">
           <div className="chips">
             <label className="chip">
@@ -235,13 +312,17 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
               <input type="checkbox" checked={showProt} onChange={(e) => setShowProt(e.target.checked)} />
               Ochrona i zakazy
             </label>
+            <button className="chip" onClick={locate} disabled={locating} data-testid="my-location">
+              {icons.lokalizacja}{locating ? "Ustalanie…" : "Moja lokalizacja"}
+            </button>
             {loading && <span className="chip chip-quiet" aria-live="polite"><span className="spin" />Wczytywanie</span>}
           </div>
           <div className="toasts">
             <Warnings env={env} />
             {err && <ErrorBox error={err} />}
             {!basemapOk && <div className="banner banner-warn">Podkład mapowy niedostępny — widać tylko warstwy aplikacji.</div>}
-            {zoomHint && <div className="banner banner-info" data-testid="zoom-hint">Przybliż, aby zobaczyć ocenę wszystkich wydzieleń.</div>}
+            {geoMsg && <div className="banner banner-warn" role="status" data-testid="geo-msg">{geoMsg}</div>}
+            {zoomHint && <div className="banner banner-info" data-testid="zoom-hint">Kropki to wszystkie ocenione wydzielenia w promieniu (szare — wykluczone). Przybliż, aby zobaczyć ich kształty.</div>}
           </div>
           {moved && (
             <button className="map-here" data-testid="search-here"
@@ -254,7 +335,12 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
         <aside className={`sheet sheet-${sheet}`} aria-label="Ranking miejsc">
           <button className="sheet-handle" onClick={() => setSheet(sheet === "peek" ? "half" : sheet === "half" ? "full" : "peek")}
             aria-label={sheet === "full" ? "Zwiń listę" : "Rozwiń listę"} data-testid="sheet-handle"><span /></button>
-          <div className="sheet-head">
+          {detail != null && (
+            <div className="sheet-body sheet-detail">
+              <PlaceView id={detail} q={q} setQ={setQ} go={go} compareIds={compareIds} toggleCompare={toggleCompare} onBack={closeDetail} />
+            </div>
+          )}
+          <div className="sheet-head" hidden={detail != null}>
             <div>
               <h2>Najlepsze miejsca</h2>
               <p className="muted small">
@@ -266,7 +352,7 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
               <input type="range" min={5} max={60} step={5} value={q.radius_km} onChange={(e) => setQ({ radius_km: +e.target.value })} />
             </label>
           </div>
-          <div className="sheet-body">
+          <div className="sheet-body" hidden={detail != null}>
             {rankErr && <ErrorBox error={rankErr} />}
             {rank && rank.miejsca.length === 0 && <p className="note">Brak miejsc spełniających warunki w tym promieniu. Zwiększ promień albo zmień dzień.</p>}
             <ol className="mrank" data-testid="map-ranking">
@@ -284,7 +370,7 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
                       <Conditions v={m.warunki} lo={m.warunki_min} hi={m.warunki_max} pewnosc={m.pewnosc} opis={m.pewnosc_opis} />
                     </span>
                   </button>
-                  <button className="mrank-open" onClick={() => onOpen(m.id)} data-testid="map-ranking-open" aria-label={`Szczegóły: ${m.nazwa}`}>
+                  <button className="mrank-open" onClick={() => openDetail(m.id)} data-testid="map-ranking-open" aria-label={`Szczegóły: ${m.nazwa}`}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="m9 6 6 6-6 6" /></svg>
                   </button>
                 </li>
@@ -296,6 +382,7 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
             <Footer env={env} />
           </div>
         </aside>
+        </>}
       </div>
     </section>
   );

@@ -151,13 +151,14 @@ def species_list():
 def ranking(species: str, lat: float = Query(ge=48.9, le=51.0), lon: float = Query(ge=21.0, le=23.7),
             radius_km: float = Query(25, gt=0, le=100), date_: date | None = Query(None, alias="date"),
             calendar: Literal["on", "off"] = "off", dataset: Dataset = "real", limit: int = Query(50, le=500),
-            pokaz_wykluczone: bool = False):
+            pokaz_wykluczone: bool = False, punkty: bool = False):
     sp = _sp(species)
     day = date_ or today_local()
     params = {"species": species, "lat": lat, "lon": lon, "radius_km": radius_km, "date": day.isoformat(),
               "calendar": calendar}
     with connect() as conn:
-        body = service.ranking(conn, dataset, sp, lat, lon, radius_km, day, calendar == "on", limit, pokaz_wykluczone)
+        body = service.ranking(conn, dataset, sp, lat, lon, radius_km, day, calendar == "on", limit, pokaz_wykluczone,
+                               punkty)
         return _envelope(conn, dataset, params, body, day)
 
 

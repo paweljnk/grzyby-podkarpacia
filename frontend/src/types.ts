@@ -25,7 +25,11 @@ export interface Scored {
 
 export interface Attribute { atrybut: string; wartosc: string | number | null; zrodlo: string | null; data: string | number | null; oznaczenie: "źródłowa" | "model" | "brak" }
 
-export interface RankingResp extends Envelope { miejsca: (Scored & { pogoda: { opad_7d_mm: number | null } })[]; liczba_ocenionych: number; wykluczone: number }
+export interface RankingResp extends Envelope {
+  miejsca: (Scored & { pogoda: { opad_7d_mm: number | null } })[]; liczba_ocenionych: number; wykluczone: number;
+  /** wszystkie ocenione wydzielenia: [lon, lat, wskaźnik, rekomendowane 0/1, pewność, id] */
+  punkty?: [number, number, number | null, number, number, number][];
+}
 
 export interface CalendarInfo {
   data: string; faza: string; faza_opis: string; oswietlenie: number; typ_biodynamiczny: string;

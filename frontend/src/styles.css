@@ -294,3 +294,15 @@ input[type="checkbox"] { accent-color: var(--brand); width: 18px; height: 18px; 
 .kl-cmp-grid figure { margin: 0; } .kl-cmp-grid img, .kl-cmp-grid .kt-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; }
 .kl-cmp-grid figcaption { font-size: 13px; margin-top: 4px; }
 .kt-sec h4 { font-size: 14px; margin: 12px 0 2px; color: var(--muted); }
+
+/* mapa zachowuje stan między zakładkami; karta miejsca w panelu mapy */
+.map-keep { flex: 1; min-height: 0; flex-direction: column; }
+.sheet-detail { padding: 0 4px 16px; }
+.place-embedded { padding: 4px 12px 0; }
+.back-to-list { display: inline-flex; align-items: center; min-height: 40px; font-weight: 600; text-decoration: none; color: var(--brand); }
+.me-dot { width: 18px; height: 18px; border-radius: 50%; background: #1a73e8; border: 3px solid #fff; box-shadow: 0 0 0 6px rgba(26, 115, 232, .25), 0 1px 4px rgba(0, 0, 0, .4); }
+.chip:disabled { opacity: .7; }
+@media (prefers-color-scheme: dark) {
+  .top-row select, .top-row input { border-color: #3a4740; background-color: #222c27; }
+}
+.sheet [hidden] { display: none !important; }

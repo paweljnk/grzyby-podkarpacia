@@ -3,7 +3,15 @@ import type { Dataset, MonthResp, PlaceCard, RankingResp, SpeciesItem, WeekResp,
 async function get<T>(path: string, params: Record<string, string | number | boolean | undefined> = {}): Promise<T> {
   const q = new URLSearchParams();
   for (const [k, v] of Object.entries(params)) if (v !== undefined && v !== "") q.set(k, String(v));
-  const r = await fetch(`/api/${path}${q.toString() ? "?" + q : ""}`);
+  let r: Response;
+  try {
+    r = await fetch(`/api/${path}${q.toString() ? "?" + q : ""}`, { redirect: "error" });
+  } catch {
+    // brak odpowiedzi serwera (uśpiony codespace, wyłączony komputer, brak sieci albo przekierowanie na logowanie)
+    throw new Error(navigator.onLine
+      ? "Brak połączenia z serwerem aplikacji — serwer jest wyłączony, uśpiony albo wymaga ponownego zalogowania. Spróbuj za chwilę."
+      : "Brak internetu — pokazuję tylko zapisane wcześniej dane.");
+  }
   if (!r.ok) {
     let msg = `Błąd ${r.status}`;
     try { const j = await r.json(); if (typeof j.detail === "string") msg = j.detail; } catch { /* brak treści */ }
@@ -18,7 +26,7 @@ const base = (q: Query) => ({ species: q.species, date: q.date, calendar: q.cale
 
 export const api = {
   species: () => get<SpeciesItem[]>("gatunki"),
-  ranking: (q: Query) => get<RankingResp>("ranking", { ...base(q), lat: q.lat, lon: q.lon, radius_km: q.radius_km }),
+  ranking: (q: Query, punkty = false) => get<RankingResp>("ranking", { ...base(q), lat: q.lat, lon: q.lon, radius_km: q.radius_km, punkty: punkty || undefined }),
   map: (q: Query) => get<Envelope & { geojson: GeoJSON.FeatureCollection }>("mapa", { ...base(q), lat: q.lat, lon: q.lon, radius_km: Math.min(q.radius_km, 30) }),
   mapBbox: (q: Query, bbox: string) => get<Envelope & { tryb: string; geojson: GeoJSON.FeatureCollection }>("mapa", { ...base(q), bbox }),
   coverage: (bbox: string) => get<GeoJSON.FeatureCollection>("pokrycie", { bbox }),

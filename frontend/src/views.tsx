@@ -126,14 +126,17 @@ export function CalendarToggle({ q, setQ }: { q: Query; setQ: (p: Partial<Query>
 }
 
 // ------------------------------------------------------------------ Karta miejsca
-export function PlaceView({ id, q, setQ, go, compareIds, toggleCompare }: {
+export function PlaceView({ id, q, setQ, go, compareIds, toggleCompare, onBack }: {
   id: number; q: Query; setQ: (p: Partial<Query>) => void; go: (h: string) => void; compareIds: number[]; toggleCompare: (id: number) => void;
+  onBack?: () => void;   // osadzona w panelu mapy: powrót do listy bez zmiany ekranu
 }) {
   const { data, err } = useLoad<Envelope & { miejsce: PlaceCard }>(() => api.place(id, q), [id, q]);
   const m = data?.miejsce;
   return (
-    <section className="view pad" data-testid="place-card">
-      <button className="link" onClick={() => go("#/ranking")}>← ranking</button>
+    <section className={onBack ? "view place-embedded" : "view pad"} data-testid="place-card">
+      {onBack
+        ? <button className="link back-to-list" onClick={onBack} data-testid="place-back">‹ Wróć do listy</button>
+        : <button className="link" onClick={() => go("#/ranking")}>← ranking</button>}
       <Warnings env={data} />
       {err && <ErrorBox error={err} />}
       {!data && !err && <Loading />}
