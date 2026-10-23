@@ -61,7 +61,9 @@ test("mapa, kalendarz miesięczny i porównanie działają", async ({ page }) =>
 test("mapa i ranking na jednym ekranie: znacznik ↔ pozycja na liście", async ({ page }) => {
   await page.goto("/#/mapa");
   await page.getByTestId("dataset").selectOption("demo");
+  const loaded = page.waitForResponse((r) => r.url().includes("/api/ranking") && r.url().includes("imleria_badia") && r.url().includes("dataset=demo"));
   await page.getByTestId("species-top").selectOption("imleria_badia");   // borowik szlachetny w demo bywa poza sezonem
+  await loaded;                                                          // znaczniki z poprzedniego rankingu są wtedy już wymienione
   const rows = page.getByTestId("map-ranking-item");
   await expect(rows.first()).toBeVisible({ timeout: 20000 });
   const pins = page.getByTestId("map-pin");
