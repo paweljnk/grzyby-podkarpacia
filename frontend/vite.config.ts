@@ -26,6 +26,9 @@ export default defineConfig({
       workbox: {
         navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
+          // kroje pisma motywów — w lesie bez zasięgu z pamięci podręcznej
+          { urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\//, handler: "CacheFirst",
+            options: { cacheName: "fonty", expiration: { maxEntries: 30, maxAgeSeconds: 365 * 86400 }, cacheableResponse: { statuses: [0, 200] } } },
           // Atlas: zdjęcia zatwierdzone są niezmienne — z pamięci podręcznej (działa w lesie bez zasięgu).
           { urlPattern: /\/api\/atlas\/zdjecie\//, handler: "CacheFirst",
             options: { cacheName: "atlas-zdjecia", expiration: { maxEntries: 500, maxAgeSeconds: 365 * 86400 }, cacheableResponse: { statuses: [200] } } },

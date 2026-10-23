@@ -38,7 +38,7 @@ button:disabled { opacity: .5; }
 .hit { display: block; width: 100%; text-align: left; background: var(--surface); color: var(--text); border: 1px solid var(--line); margin: 4px 0; }
 .chk { display: inline-flex; gap: 6px; align-items: center; }
 
-.score { display: inline-grid; place-items: center; font-weight: 700; border-radius: 10px; flex: none; border: 1px solid rgba(0,0,0,.08); }
+.score { background: var(--score-c); color: var(--score-fg); display: inline-grid; place-items: center; font-weight: 700; border-radius: 10px; flex: none; border: 1px solid rgba(0,0,0,.08); }
 .score-md { width: 46px; height: 46px; font-size: 18px; } .score-lg { width: 72px; height: 72px; font-size: 28px; }
 .score-excluded { outline: 2px dashed var(--bad); outline-offset: 2px; }
 .breakdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 6px 0; }
@@ -136,7 +136,8 @@ button:disabled { opacity: .5; }
 .map-col { position: relative; }
 .map-here { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 2; min-height: 36px; padding: 6px 14px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
 .map-pin { width: 28px; height: 28px; min-height: 0; padding: 0; border-radius: 7px; border: 2px solid #fff; font-weight: 700; font-size: 13px;
-  box-shadow: 0 1px 4px rgba(0,0,0,.45); cursor: pointer; display: grid; place-items: center; }
+  box-shadow: 0 1px 4px rgba(0,0,0,.45); cursor: pointer; display: grid; place-items: center;
+  background: var(--score-c); color: var(--score-fg); }
 .map-pin.sel { outline: 3px solid #d9480f; outline-offset: 1px; z-index: 3; transform: scale(1.2); }
 .map-rank { background: var(--bg); }
 .map-rank-head { padding: 8px 16px 0; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
@@ -168,3 +169,5 @@ button:disabled { opacity: .5; }
   .map-rank { max-height: 46dvh; overflow-y: auto; border-top: 1px solid var(--line); }
   .map-rank-head { position: sticky; top: 0; background: var(--bg); z-index: 1; padding-bottom: 4px; }
 }
+.theme-pick { display: flex; gap: 8px; align-items: center; margin: 0 0 8px; }
+.theme-pick select { padding: 4px; border-radius: 6px; }

@@ -136,9 +136,9 @@ export function MapView({ q, setQ, onOpen }: { q: Query; setQ: (p: Partial<Query
     pins.current = (rank?.miejsca ?? []).slice(0, PINS).map((m, i) => {
       const el = document.createElement("button");
       el.className = "map-pin";
-      el.textContent = String(i + 1);
-      el.style.background = scoreColor(m.wynik);
-      el.style.color = (m.wynik ?? 0) > 55 ? "#fff" : "#1d2a1b";
+      el.innerHTML = `<span>${i + 1}</span>`;
+      el.style.setProperty("--score-c", scoreColor(m.wynik));
+      el.style.setProperty("--score-fg", (m.wynik ?? 0) > 55 ? "#fff" : "#1d2a1b");
       el.title = `${i + 1}. ${m.nazwa} — wskaźnik ${m.wynik == null ? "—" : Math.round(m.wynik)}/100`;
       el.dataset.testid = "map-pin";
       el.dataset.id = String(m.id);
