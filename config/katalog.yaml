@@ -1,0 +1,38 @@
+# Katalog gatunków do przeglądania. Źródła sprawdzone rekonesansem (scripts/recon5.py, gałąź dane/recon).
+klasy_gbif:                      # klucze klas GBIF (species/match, rank=CLASS)
+  Agaricomycetes: 186
+  Pezizomycetes: 316
+limit_gatunkow: 450              # najczęściej notowane w Polsce (GBIF), po odfiltrowaniu rang innych niż gatunek
+facet_limit: 1500
+prostokat_wojewodztwa: {lat: "49.0,50.9", lon: "21.1,23.6"}   # GBIF: zakres współrzędnych (przybliżenie granic)
+wikidata_cechy:                  # właściwości potwierdzone w wbsearchentities (P789 'edibility' celowo pominięta)
+  hymenium: P783                 # hymenium type
+  kapelusz: P784                 # mushroom cap shape
+  przyczepienie: P785            # hymenium attachment
+  trzon: P786                    # stipe character
+  wysyp: P787                    # spore print color
+  ekologia: P788                 # mushroom ecological type
+sekcje_wikipedii:                # nagłówki artykułów pl.wikipedia (== ... ==); sekcja 'Znaczenie' (jadalność) pomijana
+  opis_budowa: ["Morfologia", "Budowa", "Charakterystyka"]
+  opis_wystepowanie: ["Występowanie i siedlisko", "Występowanie", "Siedlisko"]
+  opis_podobne: ["Gatunki podobne"]
+  opis_ochrona: ["Ochrona"]
+max_znakow_sekcji: 2500
+# Słowa kluczowe w opisie występowania → cechy siedliska (wynik dopasowania tekstu, oznaczany jako „z opisu Wikipedii”).
+gleba:
+  kwaśna: ["kwaśn", "kwasow"]
+  wapienna: ["wapien", "wapni", "zasadow", "węglanow"]
+  piaszczysta: ["piaszczyst", "piaskach", "wydm"]
+  żyzna: ["żyzn", "próchnic", "bogat"]
+  podmokła / torfowa: ["podmokł", "wilgotn", "torfowis", "bagien", "mokrad"]
+drzewa:
+  sosna: ["sosn"]
+  świerk: ["świerk"]
+  jodła: ["jodł", "jodeł"]
+  modrzew: ["modrzew"]
+  buk: ["buk", "buczyn"]
+  dąb: ["dęb", "dąb", "dąbr"]
+  brzoza: ["brzoz", "brzezin"]
+  grab: ["grab"]
+  topola / osika: ["topol", "osik"]
+  olsza: ["olsz", "olch"]

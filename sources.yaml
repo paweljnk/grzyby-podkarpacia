@@ -342,7 +342,8 @@ zrodla:
     licencja: per rekord — używamy tylko CC0 i CC BY
     atrybucja: per rekord / zbiór danych; cytować DOI pobrania
     uzyte_pola: []
-    metoda: Etap 3/6 — tylko kalibracja modelu siedliskowego (dane typu obecność)
+    metoda: Etap 3/6 — kalibracja modelu siedliskowego (dane typu obecność); katalog gatunków — facet speciesKey
+      (gatunki najczęściej notowane w Polsce i w rejonie województwa), /species/{key}, /species/{key}/vernacularNames
     do_weryfikacji: true
     probe:
       typ: http_get
@@ -353,6 +354,54 @@ zrodla:
       status: ok
       powod: null
       schemat: docs/schemas/gbif.json
+      kanal: GitHub Actions (US)
+    ostatni_import: null
+  wikidata:
+    nazwa: Wikidata — elementy gatunków grzybów
+    dostawca: Wikimedia Foundation
+    url: https://query.wikidata.org/sparql
+    typ_uslugi: SPARQL (JSON)
+    zasieg: globalny
+    rozdzielczosc: gatunek
+    aktualnosc: bieżąca
+    licencja: CC0
+    atrybucja: Wikidata
+    uzyte_pola: [P225 taxon name, P18 image, sitelink pl.wikipedia, P783 hymenium type, P784 mushroom cap shape,
+      P785 hymenium attachment, P786 stipe character, P787 spore print color, P788 mushroom ecological type]
+    metoda: katalog gatunków (atlas) — co miesiąc w GitHub Actions; P789 (edibility) celowo pomijana
+    do_weryfikacji: false
+    probe:
+      typ: http_get
+      url: https://www.wikidata.org/w/api.php?action=wbsearchentities&search=hymenium%20type&type=property&language=en&format=json
+    uwagi: Identyfikatory właściwości potwierdzone przez wbsearchentities (scripts/recon5.py, gałąź dane/recon).
+    weryfikacja:
+      data_utc: '2026-10-23T12:00:00+00:00'
+      status: ok
+      powod: null
+      kanal: GitHub Actions (US)
+    ostatni_import: null
+  wikipedia_pl:
+    nazwa: Wikipedia, wolna encyklopedia (pl) — opisy gatunków
+    dostawca: Wikimedia Foundation / autorzy artykułów
+    url: https://pl.wikipedia.org/w/api.php
+    typ_uslugi: MediaWiki API (prop=extracts, explaintext, exsectionformat=wiki)
+    zasieg: artykuły o gatunkach z katalogu
+    rozdzielczosc: gatunek
+    aktualnosc: bieżąca
+    licencja: CC BY-SA 4.0
+    atrybucja: „Wikipedia, wolna encyklopedia” — link do artykułu i historii zmian przy każdym opisie
+    uzyte_pola: [wstęp, Morfologia, Występowanie i siedlisko, Gatunki podobne, Ochrona]
+    metoda: sekcja „Znaczenie” (jadalność) pomijana; teksty skracane na granicy zdania; cechy gleby i drzew z opisu
+      występowania przez dopasowanie słów (config/katalog.yaml) — oznaczane jako „z opisu Wikipedii”
+    do_weryfikacji: false
+    probe:
+      typ: http_get
+      url: https://pl.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&exsectionformat=wiki&titles=Borowik%20szlachetny&format=json&formatversion=2
+    uwagi: null
+    weryfikacja:
+      data_utc: '2026-10-23T12:00:00+00:00'
+      status: ok
+      powod: null
       kanal: GitHub Actions (US)
     ostatni_import: null
   jpl_ephemeris:

@@ -1,0 +1,80 @@
+# Katalog gatunków grzybów (GBIF + Wikidata + Wikipedia PL + Wikimedia Commons) — co miesiąc, gałąź `dane/katalog`.
+name: katalog
+on:
+  schedule:
+    - cron: "23 2 5 * *"
+  push:
+    branches: ["zadanie/katalog"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: katalog
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    services:
+      db:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_DB: grzyby
+          POSTGRES_USER: grzyby
+          POSTGRES_PASSWORD: grzyby
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U grzyby -d grzyby" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgresql://grzyby:grzyby@localhost:5432/grzyby
+      GRZYBY_ROOT: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/pyproject.toml
+      - uses: actions/cache@v4
+        with:
+          path: data/cache/http
+          key: katalog-http-${{ github.run_id }}
+          restore-keys: katalog-http-
+      - name: Instalacja
+        run: pip install ./backend
+      - name: Schemat bazy
+        run: python -c "from grzyby.db import migrate; print(migrate())"
+      - name: Import katalogu
+        run: python -m grzyby.cli import katalog 2>&1 | tee -a log.txt
+      - name: Eksport paczki
+        run: python -m grzyby.cli snapshot export out --pakiet katalog 2>&1 | tee -a log.txt
+      - name: Publikacja na gałęzi dane/katalog
+        run: |
+          grep -vE "HTTP Request|INFO httpx" log.txt > out/log_importu.txt || true
+          cat > out/README.md <<'MD'
+          # Katalog gatunków grzybów — Grzyby Podkarpacia
+
+          Materiał poglądowy, nie służy do oznaczania okazów. Aplikacja nie ocenia jadalności.
+
+          Źródła i licencje:
+          - GBIF.org — lista gatunków i liczba obserwacji (zbiory CC0 / CC BY; cytowanie: GBIF.org, data pobrania w manifest.json)
+          - Wikidata — CC0
+          - Wikipedia, wolna encyklopedia (pl.wikipedia.org) — teksty CC BY-SA 4.0, autorzy w historii artykułów (link przy gatunku)
+          - Wikimedia Commons — zdjęcia; autor i licencja podane przy każdym zdjęciu
+          MD
+          cd out
+          git init -q -b dane/katalog
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -qm "Katalog $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dane/katalog
+      - name: Log błędu na gałęzi dane/log
+        if: failure()
+        run: |
+          mkdir -p errlog && cp -f log.txt errlog/ 2>/dev/null || true
+          echo "katalog run ${{ github.run_id }} $(date -u)" > errlog/run.txt
+          cd errlog && git init -q -b dane/log && git config user.name gha && git config user.email gha@users.noreply.github.com
+          git add -A && git commit -qm "log błędu" && git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dane/log

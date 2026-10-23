@@ -28,8 +28,9 @@ PACKAGES = {
              "terrain.wydzielenie_teren", "terrain.raster", "weather.komorka", "forest.wydzielenie_komorka",
              "protection.forma_ochrony", "coverage.siatka"],
     "dzienne": ["weather.dzien", "access.zakaz"],
+    "katalog": ["atlas.katalog"],          # katalog gatunków do przeglądania (co miesiąc)
 }
-TABLES = PACKAGES["baza"] + PACKAGES["dzienne"]
+TABLES = PACKAGES["baza"] + PACKAGES["dzienne"] + PACKAGES["katalog"]
 SEQUENCES = {"forest.wydzielenie": "id", "ref.wojewodztwo": "id", "protection.forma_ochrony": "id", "access.zakaz": "id"}
 # Uproszczenie geometrii TYLKO w paczce dla aplikacji (analizy w GitHub Actions liczone na pełnych geometriach).
 SIMPLIFY_M = {"forest.wydzielenie": 1.0, "ref.nadlesnictwo": 5.0, "ref.wojewodztwo": 5.0, "ref.obszar_pilotazowy": 5.0}
@@ -175,7 +176,12 @@ def load_all(force: bool = False) -> list[dict]:
     """Baza, potem dzienne. Nowa baza czyści komórki pogody (CASCADE), więc wtedy dzienne wczytujemy zawsze."""
     r1 = load(pakiet="baza", force=force)
     r2 = load(pakiet="dzienne", force=force or r1.get("wczytano", False))
-    return [r1, r2]
+    try:
+        r3 = load(pakiet="katalog", force=force)
+    except Exception as e:                  # brak paczki katalogu nie blokuje danych o lasach i pogodzie
+        log.warning("Katalog gatunków niedostępny: %s", e)
+        r3 = {"pakiet": "katalog", "wczytano": False, "powod": str(e)}
+    return [r1, r2, r3]
 
 
 def default_export_dir() -> Path:

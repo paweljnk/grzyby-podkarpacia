@@ -13,7 +13,7 @@ def main() -> int:
     pr.add_argument("sources", nargs="*")
     imp = sub.add_parser("import", help="import danych pilotażowych")
     imp.add_argument("layer", choices=["prg", "bdl", "dem", "gdos", "weather", "all", "wojewodztwo", "dem-woj",
-                                        "soilgrids", "worldcover", "pokrycie", "zakazy", "wojewodztwo-all"])
+                                        "soilgrids", "worldcover", "pokrycie", "zakazy", "wojewodztwo-all", "katalog"])
     sub.add_parser("demo", help="wygeneruj DANE DEMONSTRACYJNE w schemacie demo")
     sub.add_parser("check-data")
     rp = sub.add_parser("raport", help="raport pokrycia danymi (json + md)")
@@ -22,7 +22,7 @@ def main() -> int:
     sn.add_argument("akcja", choices=["export", "load", "verify"])
     sn.add_argument("cel", nargs="?", help="katalog (export) albo URL/katalog (load)")
     sn.add_argument("--force", action="store_true")
-    sn.add_argument("--pakiet", choices=["baza", "dzienne", "wszystkie"], default="wszystkie")
+    sn.add_argument("--pakiet", choices=["baza", "dzienne", "katalog", "wszystkie"], default="wszystkie")
     at = sub.add_parser("atlas", help="atlas: kandydaci zdjęć, zatwierdzanie, kontrola treści")
     asub = at.add_subparsers(dest="acmd", required=True)
     k = asub.add_parser("kandydaci", help="pobierz kandydatów z Wikimedia Commons (status do_weryfikacji)")
@@ -71,6 +71,11 @@ def main() -> int:
             print(_json.dumps(worldcover.compute_coverage(), ensure_ascii=False))
 
         from .etl.http import HttpClient as HttpClient_
+        def _katalog():
+            from .etl.katalog import import_katalog
+            return import_katalog()
+
+        steps["katalog"] = _katalog
         steps.update({"wojewodztwo": _woj, "dem-woj": dem.import_dem_province, "soilgrids": soilgrids.import_soilgrids,
                       "worldcover": worldcover.import_reference, "pokrycie": _pokrycie, "zakazy": _zakazy})
         if args.layer == "all":
