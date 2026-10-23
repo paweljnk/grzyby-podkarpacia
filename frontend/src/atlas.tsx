@@ -78,10 +78,18 @@ export function AtlasIndex({ go }: { go: (h: string) => void }) {
     <section className="view pad" data-testid="atlas">
       <h2>Atlas</h2>
       <AtlasNotice env={d} />
+      <div className="at-entry">
+        <button className="at-big" onClick={() => go("#/atlas/katalog")} data-testid="atlas-katalog">
+          <strong>Przeglądaj grzyby</strong><span>Kilkaset gatunków z Polski: zdjęcia, budowa, występowanie, gatunki podobne</span>
+        </button>
+        <button className="at-big" onClick={() => go("#/atlas/oznacz")} data-testid="atlas-oznacz">
+          <strong>Pomóż oznaczyć</strong><span>Zrób zdjęcie, odpowiedz na kilka pytań i porównaj z pasującymi gatunkami</span>
+        </button>
+      </div>
       {e && <div className="banner banner-warn">{e}</div>}
       <button className="secondary" onClick={saveOffline} data-testid="atlas-offline">💾 Zapisz atlas offline</button>
       {saved && <p className="note small" data-testid="atlas-offline-status">{saved}</p>}
-      <h3>Gatunki</h3>
+      <h3>Gatunki opracowane szczegółowo</h3>
       <ul className="atlas-list">
         {d?.gatunki.map((g) => (
           <li key={g.id}><button className="atlas-item" onClick={() => go(`#/atlas/gatunek/${g.id}`)} data-testid="atlas-species">

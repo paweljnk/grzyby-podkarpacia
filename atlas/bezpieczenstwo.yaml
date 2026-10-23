@@ -9,7 +9,8 @@ weryfikacja:
   data: null
 
 atlas_nie_robi:
-  - Nie rozpoznaje gatunku ze zdjęcia.
+  - Nie rozpoznaje gatunku ze zdjęcia. Zdjęcie zrobione w „Pomóż oznaczyć” zostaje w telefonie i służy tylko do porównania
+    z fotografiami z katalogu; podpowiedzi wynikają z odpowiedzi na pytania o cechy, nie z analizy obrazu.
   - Nie ocenia jadalności żadnego konkretnego okazu.
   - Nie łączy rankingu miejsc z atlasem — wskaźnik rekomendacji nie oznacza, że w danym miejscu rosną grzyby jadalne.
   - Pojedyncza cecha nigdy nie wystarcza do oznaczenia; okazy bywają nietypowe (wiek, pogoda, uszkodzenia).

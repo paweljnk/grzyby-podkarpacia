@@ -248,3 +248,49 @@ input[type="checkbox"] { accent-color: var(--brand); width: 18px; height: 18px; 
   .chip { flex: none; height: 36px; font-size: 13.5px; }
   .toasts .banner { padding: 8px 10px; font-size: 12.5px; }
 }
+
+/* katalog gatunków i „Pomóż oznaczyć” */
+.at-entry { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 12px 0 4px; }
+@media (min-width: 640px) { .at-entry { grid-template-columns: 1fr 1fr; } }
+.at-big { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; padding: 16px; border-radius: 16px; min-height: 0; }
+.at-big strong { font-size: 17px; } .at-big span { font-size: 13px; font-weight: 400; opacity: .9; }
+.at-big + .at-big { background: var(--surface); color: var(--text); border: 1px solid var(--line); }
+.banner-danger { background: color-mix(in srgb, var(--bad) 12%, var(--surface)); color: var(--bad); font-weight: 500; }
+.kt-tools { display: grid; grid-template-columns: 1fr; gap: 8px; margin: 12px 0; }
+@media (min-width: 720px) { .kt-tools { grid-template-columns: 2fr 1fr 1fr; } }
+.kt-tools input, .kt-tools select { height: 42px; padding: 0 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--text); min-width: 0; }
+.kt-grid { list-style: none; padding: 0; margin: 8px 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.kt-grid-small { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+.kt-card { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; height: 100%; text-align: left; padding: 0 0 10px;
+  background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; min-height: 0; font-weight: 400; }
+.kt-card .kt-name { font-weight: 600; font-size: 14px; padding: 0 10px; line-height: 1.25; }
+.kt-card .kt-sci { font-size: 12px; color: var(--muted); padding: 0 10px; }
+.kt-img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: var(--surface-2); margin-bottom: 6px; }
+.kt-img-big { aspect-ratio: 16 / 10; border-radius: 16px; margin: 8px 0 4px; }
+.kt-noimg { display: grid; place-items: center; color: var(--muted); font-size: 11px; text-align: center; padding: 8px; }
+.kt-more { width: 100%; margin: 8px 0; }
+.kt-credit { margin: 0 0 8px; }
+.kt-detail h2 { margin-top: 4px; }
+.kt-sec p { margin: 6px 0; max-width: 70ch; }
+.tag-src { font-size: 11px; color: var(--muted); background: var(--surface-2); border-radius: 999px; padding: 1px 7px; }
+.kl-photo { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin: 12px 0; }
+.kl-photo img, .kl-photo-empty { width: 100%; max-width: 520px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 16px; }
+.kl-photo-empty { display: grid; place-items: center; text-align: center; padding: 16px; border: 2px dashed var(--line); color: var(--muted); background: var(--surface); }
+.kl-q { border: 0; padding: 0; margin: 14px 0; }
+.kl-q legend { font-weight: 650; margin-bottom: 8px; padding: 0; }
+.kl-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.kl-opt { background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 999px; min-height: 40px; padding: 6px 14px; font-weight: 500; }
+.kl-opt.on { background: var(--brand); color: #fff; border-color: var(--brand); }
+@media (prefers-color-scheme: dark) { .kl-opt.on { color: #08140d; } }
+.kl-hits { list-style: none; padding: 0; margin: 8px 0; }
+.kl-hits li { margin: 8px 0; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); overflow: hidden; }
+.kl-hits li.danger { border-color: var(--bad); }
+.kl-hit { display: flex; gap: 12px; align-items: center; width: 100%; text-align: left; background: none; color: var(--text); padding: 8px; min-height: 0; font-weight: 400; }
+.kl-hit .kt-img { width: 96px; flex: none; margin: 0; border-radius: 10px; }
+.kl-hit .ok { color: var(--brand); } .kl-hit .bad, .kl-hits .bad { color: var(--bad); }
+.kl-cmp { position: fixed; inset: 0; z-index: 50; background: rgba(0, 0, 0, .55); display: grid; place-items: center; padding: 16px; }
+.kl-cmp-box { background: var(--surface); border-radius: 20px; padding: 14px; width: min(760px, 100%); max-height: 90dvh; overflow: auto; }
+.kl-cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.kl-cmp-grid figure { margin: 0; } .kl-cmp-grid img, .kl-cmp-grid .kt-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; }
+.kl-cmp-grid figcaption { font-size: 13px; margin-top: 4px; }
+.kt-sec h4 { font-size: 14px; margin: 12px 0 2px; color: var(--muted); }

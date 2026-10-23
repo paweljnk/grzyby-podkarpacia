@@ -36,3 +36,23 @@ test("atlas działa offline dla gatunków MVP i ich sobowtórów (390×844)", as
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(0);
 });
+
+test("katalog: przeglądanie, karta gatunku, pomoc w oznaczaniu bez rozpoznawania zdjęcia", async ({ page }) => {
+  await page.goto("/#/atlas");
+  await page.getByTestId("atlas-katalog").click();
+  const cards = page.getByTestId("katalog-gatunek");
+  await expect(cards.first()).toBeVisible({ timeout: 20000 });
+  await page.getByTestId("katalog-szukaj").fill("borowik");
+  await expect(cards.first()).toContainText(/orowik/i);
+  await cards.first().click();
+  await expect(page.getByTestId("katalog-karta")).toBeVisible();
+  await expect(page.getByTestId("katalog-uwaga")).toBeVisible();
+  await page.goto("/#/atlas/oznacz");
+  await expect(page.getByTestId("klucz-ostrzezenie")).toBeVisible();
+  await page.getByTestId("klucz-hymenium-blaszki").click();
+  await page.getByTestId("klucz-trzon-pochwa").click();
+  await expect(page.getByTestId("klucz-wynik").first()).toBeVisible();
+  await expect(page.getByTestId("klucz-wyniki")).toContainText(/uchomor/);
+  await page.getByTestId("klucz-wynik").first().click();
+  await expect(page.getByTestId("klucz-porownanie")).toBeVisible();
+});

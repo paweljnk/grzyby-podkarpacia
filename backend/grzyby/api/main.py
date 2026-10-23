@@ -68,10 +68,12 @@ async def _snapshot_loop():
 app = FastAPI(title="Grzyby Podkarpacia API", version="0.4.0", lifespan=lifespan)
 
 from .atlas_routes import router as atlas_router  # noqa: E402
+from .katalog_routes import router as katalog_router  # noqa: E402
 
 app.add_middleware(GZipMiddleware, minimum_size=2000)   # mapa GeoJSON przez sieć komórkową
 
 app.include_router(atlas_router)
+app.include_router(katalog_router)
 Dataset = Literal["real", "demo"]
 
 

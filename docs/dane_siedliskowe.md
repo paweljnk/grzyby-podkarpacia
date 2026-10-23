@@ -41,14 +41,35 @@ słownika gleb ani uwilgotnienia.**
 | SoilGrids 2.0 | REST wstrzymany; **WCS działa** (`maps.isric.org`, pokrycia `phh2o_0-5cm_mean/Q0.05/Q0.95`) |
 | ESA WorldCover 2021 v200 | warstwa referencyjna lasów (10 m, CC BY 4.0) do oceny pokrycia; „Tree cover” obejmuje też zadrzewienia |
 
-## Jak to wpływa na ocenę
+## Jak to wpływa na ocenę (stan 2026-10-23)
 
-- **Warunki** liczone są tylko z dostępnych cech. Brak gleby, wieku czy części składu **nie obniża warunków**.
-- Nieznana część składu drzewostanu (1 − udział gatunku panującego) daje **przedział warunków** (dolna granica:
-  brak drzew partnerskich w nieznanej części, górna: same silne drzewa partnerskie). Udziałów nie zgadujemy.
-- **Pewność danych** (0–1) to średnia ważona wiarygodności wejść: źródło BDL = 1, model (SoilGrids, DEM) = 0,5–0,8,
-  brak = 0, obniżana dodatkowo o szerokość przedziału warunków. Jest pokazywana obok warunków i na mapie (przezroczystość).
-- Bramka „siedlisko poniżej progu” działa na **górnej** granicy przedziału, więc brak danych nie wyklucza miejsca.
+Cechy siedliska liczone są **osobno**, każda z własnym źródłem i oznaczeniem (źródłowa / model / brak):
+
+| Cecha | Źródło | Porównanie z wymaganiem gatunku (species/*.yaml) |
+|---|---|---|
+| Typ siedliskowy lasu | BDL, opis taksacyjny | `typy_siedliskowe` (preferowany / dopuszczalny / inny) |
+| Typ i podtyp gleby + gatunek gleby (utwór) | BDL, warstwa „Siedliska leśne” | `gleba.zyznosc` — żyzność z podtypu, a gdy podtyp jej nie daje — z uziarnienia (config/gleby_bdl.yaml, założenie C) |
+| Uwilgotnienie | BDL — człon kodu typu siedliskowego (św / w / b / s; Ol, OlJ) | `gleba.uwilgotnienie` |
+| pH | **wyłącznie** SoilGrids 2.0 (model 250 m, Q0.05–Q0.95) — BDL nie podaje pH | `gleba.odczyn`; gdy przedział obejmuje odczyn zgodny i niezgodny → przedział warunków |
+| Nasłonecznienie stoku | obliczenie z DEM (nachylenie, ekspozycja) i położenia Słońca dla wybranego dnia (Duffie & Beckman, r. 1.6.1) | zmienia parowanie w bilansie wody (B): stok południowy szybciej przesycha (config/model.yaml → `pogoda.naslonecznienie`) |
+
+**pH nie jest wyprowadzane z typu gleby.** Wcześniejsza wersja przypisywała podtypom gleby „klasę odczynu” — usunięte.
+
+Stan danych w województwie (import 2026-10-17):
+- podtyp i gatunek gleby z BDL: 81,2% wydzieleń LP, 0,1% lasów poza LP (warstwa siedlisk obejmuje lasy LP);
+- pH z SoilGrids: 99,8% / 99,5% wydzieleń, ale średnia szerokość przedziału Q0.05–Q0.95 to 3,3 jednostki pH — przedział
+  prawie zawsze obejmuje kilka klas odczynu, więc pH zwykle **poszerza przedział warunków i podnosi pewność tylko o połowę wagi**;
+- uwilgotnienie: z kodu typu siedliskowego dla wszystkich wydzieleń z typem w nomenklaturze (św/w/b/s).
+
+Szukano innych źródeł pH gleb leśnych: baza „Gleby leśne” IBL (pomiary pH w H₂O i KCl, punktowe, bez otwartego pobierania),
+mapy pH ESDAC/LUCAS (500 m, rejestracja, warunki „do badań”, bez jawnej licencji otwartej), monitoring chemizmu GIOŚ
+(tylko gleby orne). Żadne nie daje otwartego pH dla wydzieleń.
+
+Zasady ogólne bez zmian:
+- **Warunki** liczone są tylko z dostępnych cech; brak cechy **obniża pewność, nie warunki**.
+- Nieznana część składu drzewostanu i niepewne pH dają **przedział warunków**; udziałów nie zgadujemy.
+- **Pewność danych** (0–1): źródło BDL = 1, model (SoilGrids, DEM) = 0,5–0,8, brak = 0; obniżana o szerokość przedziału.
+- Bramka „siedlisko poniżej progu” działa na **górnej** granicy przedziału.
 
 ## Co można jeszcze zrobić (wymaga decyzji użytkownika)
 

@@ -16,7 +16,7 @@ def client():
         yield c
 
 
-Q = "species=boletus_edulis&lat=49.33&lon=22.28&radius_km=15&dataset=demo"
+Q = "species=imleria_badia&lat=49.33&lon=22.28&radius_km=15&dataset=demo"   # borowik szlachetny w demo bywa już po sezonie (zależne od daty)
 
 
 def test_ranking_has_breakdown_gates_completeness_and_reasons(client):
@@ -87,7 +87,7 @@ def test_ranking_exposes_conditions_and_certainty_separately(client):
     m = client.get(f"/api/ranking?{Q}&limit=3").json()["miejsca"][0]
     assert m["warunki"] == m["wynik"] and 0 <= m["pewnosc"] <= 1 and m["pewnosc_opis"] in {"wysoka", "srednia", "niska"}
     assert m["warunki_min"] <= m["warunki"] <= m["warunki_max"]
-    card = client.get(f"/api/miejsce/{m['id']}?species=boletus_edulis&dataset=demo").json()["miejsce"]
+    card = client.get(f"/api/miejsce/{m['id']}?species=imleria_badia&dataset=demo").json()["miejsce"]
     kinds = {a["atrybut"]: a["oznaczenie"] for a in card["atrybuty"]}
     assert kinds["Pełny skład gatunkowy z udziałami"] == "brak"
     assert set(kinds.values()) <= {"źródłowa", "model", "brak"}

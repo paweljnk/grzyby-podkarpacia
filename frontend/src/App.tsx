@@ -3,6 +3,7 @@ import { api, type Query } from "./api";
 import { MapView } from "./MapView";
 import type { Dataset, SpeciesItem } from "./types";
 import { icons } from "./icons";
+import { KatalogSpecies, KatalogView, KluczView } from "./katalog";
 import { AtlasIndex, AtlasPair, AtlasSafety, AtlasSpecies } from "./atlas";
 import { CompareView, MonthView, PlaceView, RankingView, SearchView } from "./views";
 
@@ -45,7 +46,10 @@ export default function App() {
   const [, route, arg, arg2] = hash.split("/");
   let view;
   if (route === "atlas") {
-    view = arg === "gatunek" && arg2 ? <AtlasSpecies id={arg2} go={go} />
+    view = arg === "katalog" && arg2 ? <KatalogSpecies id={arg2} go={go} />
+      : arg === "katalog" ? <KatalogView go={go} />
+      : arg === "oznacz" ? <KluczView go={go} />
+      : arg === "gatunek" && arg2 ? <AtlasSpecies id={arg2} go={go} />
       : arg === "para" && arg2 ? <AtlasPair id={arg2} go={go} />
       : arg === "bezpieczenstwo" ? <AtlasSafety go={go} />
       : <AtlasIndex go={go} />;

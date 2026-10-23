@@ -59,7 +59,7 @@ SELECT w.id, w.gatunek_panujacy, w.udzial_gatunkow, w.wiek, w.typ_siedliskowy, w
        w.udzial_panujacego, w.ph_model, w.ph_q05, w.ph_q95,
        w.zarzad, w.wlasnosc, w.rok_danych, w.w_wojewodztwie_frac, w.gleba_gatunek, w.uwilgotnienie_kod,
        w.siedlisko_zrodlo, w.siedlisko_rok, w.siedlisko_pokrycie, w.klasa_danych, w.nadl_kod,
-       w.udzial_panujacego_pochodzenie, w.ph_pochodzenie
+       w.udzial_panujacego_pochodzenie, w.ph_pochodzenie, t.ekspozycja_sr_deg
 FROM {wydz} w
 CROSS JOIN LATERAL (SELECT ST_Transform(ST_PointOnSurface(w.geom), 4326) p) c
 LEFT JOIN {teren} t ON t.wydzielenie_id = w.id
@@ -72,7 +72,8 @@ def _row(r) -> StandRow:
     # Normalizacja kodów także przy odczycie — dane zaimportowane starszym słownikiem dają ten sam wynik.
     from .etl.bdl_codes import site_type, species
     st = Stand(r[0], species(r[1]), shares, r[3], site_type(r[4]), r[5], r[6], r[7],
-               udzial_panujacego=r[27], ph_model=r[28], ph_q05=r[29], ph_q95=r[30])
+               udzial_panujacego=r[27], ph_model=r[28], ph_q05=r[29], ph_q95=r[30], gleba_gatunek=r[35],
+               ekspozycja_deg=r[44])
     prov = dict(zip(["gatunek_panujacy", "udzial_gatunkow", "wiek", "typ_siedliskowy", "gleba", "teren"],
                     [str(x) if x else "brak" for x in r[19:25]]))
     prov["udzial_panujacego"] = str(r[42] or "brak")

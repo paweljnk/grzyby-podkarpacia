@@ -62,7 +62,7 @@ def test_missing_soil_lowers_completeness_but_not_zero():
     nosoil = habitat(Stand(**{**GOOD_STAND.__dict__, "gleba": None}), SP)
     assert 0 < nosoil.kompletnosc < full.kompletnosc
     assert nosoil.wynik is not None and nosoil.wynik > 0
-    assert any("glebow" in r for r in nosoil.uzasadnienie)
+    assert any("gleby" in r for r in nosoil.uzasadnienie)
 
 
 def test_out_of_season_zeroes_weather():
@@ -106,3 +106,11 @@ def test_observations_modifier_sign_decay_and_cap():
     many, _ = observations([Observation(0, 0.1, True, "wysoka")] * 50)
     assert found_now > found_old > 0 and nothing < 0 and many <= 15
     assert observations([Observation(0, 50, True, "wysoka")])[0] == 0
+
+
+def test_south_slope_dries_faster_than_north():
+    daily = series({10: 30.0}, et0=2.5)
+    _, ind_n, _ = weather(SP, daily, DAY, 300, None, 0.7)
+    _, ind_s, _ = weather(SP, daily, DAY, 300, None, 1.3)
+    _, ind_f, _ = weather(SP, daily, DAY, 300, None, 1.0)
+    assert ind_s.bilans_14_mm < ind_f.bilans_14_mm < ind_n.bilans_14_mm

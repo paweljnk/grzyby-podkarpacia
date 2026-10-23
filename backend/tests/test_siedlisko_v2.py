@@ -5,7 +5,8 @@ from shapely.geometry import Polygon
 from grzyby.etl.arcgis import esri_to_shapely, fix_geometry, tiles
 from grzyby.etl.bdl_province import part_share
 from grzyby.model.combine import combine
-from grzyby.model.components import Component, Stand, habitat, ph_class, soil_from_code
+from grzyby.model.components import (Component, Stand, habitat, moisture_from_tsl, ph_class, ph_classes_between,
+                                     soil_from_code, texture_from_code)
 from grzyby.species import all_species
 
 SP = all_species()["imleria_badia"]
@@ -50,23 +51,62 @@ def test_dominant_share_used_not_assumed():
     assert a30.kompletnosc < a100.kompletnosc
 
 
-def test_soilgrids_used_as_model_only_when_certain():
-    certain = habitat(stand(gleba=None, ph_model=4.3, ph_q05=4.0, ph_q95=4.8), SP)
-    f = next(x for x in certain.czynniki if x.nazwa == "gleba")
-    assert f.wartosc == 1.0 and "SoilGrids" in f.opis
-    uncertain = habitat(stand(gleba=None, ph_model=5.4, ph_q05=4.6, ph_q95=6.3), SP)
-    assert next(x for x in uncertain.czynniki if x.nazwa == "gleba").wartosc is None
-    source = habitat(stand(), SP)
-    assert certain.kompletnosc < source.kompletnosc               # model < źródło
-    assert uncertain.kompletnosc < certain.kompletnosc
+def test_ph_is_separate_factor_from_soilgrids_only():
+    # pH NIE wynika z typu gleby: przy samej glebie z BDL czynnik pH ma tylko wartości z modelu
+    only_bdl = habitat(stand(), SP)
+    ph = next(x for x in only_bdl.czynniki if x.nazwa == "ph")
+    assert ph.wartosc is None and "BDL nie podaje" in ph.opis
+    soil = next(x for x in only_bdl.czynniki if x.nazwa == "gleba")
+    assert "odczyn" not in soil.opis and "żyzność" in soil.opis
 
 
-@pytest.mark.parametrize("code,odczyn,zyznosc", [("BRk", "kwasny", "srednia"), ("BRwy", "lekko_kwasny", "srednia"),
-                                                  ("RDb", "kwasny", "uboga"), ("Bgw", "kwasny", "uboga"),
-                                                  ("MDbr", "obojetny", "zyzna"), ("OGw", None, "srednia")])
-def test_bdl_soil_codes(code, odczyn, zyznosc):
+def test_ph_interval_instead_of_dropping():
+    certain = habitat(stand(ph_model=4.3, ph_q05=4.0, ph_q95=4.8), SP)          # cały przedział kwaśny
+    f = next(x for x in certain.czynniki if x.nazwa == "ph")
+    assert f.wartosc == 1.0 and f.zakres is None and "SoilGrids" in f.opis
+    wide = habitat(stand(ph_model=5.4, ph_q05=4.6, ph_q95=7.5), SP)             # kwaśny … zasadowy
+    fw = next(x for x in wide.czynniki if x.nazwa == "ph")
+    assert fw.zakres is not None and fw.zakres[0] < fw.zakres[1]
+    assert wide.zakres[0] < wide.zakres[1]                                     # warunki jako przedział
+    assert certain.kompletnosc > habitat(stand(), SP).kompletnosc               # model dokłada pewności (0.5)
+
+
+def test_ph_classes_between():
+    assert ph_classes_between(4.6, 6.3) == ["kwasny", "lekko_kwasny"]
+    assert ph_classes_between(4.0, 4.8) == ["kwasny"]
+    assert ph_classes_between(3.5, 8.0) == ["kwasny", "lekko_kwasny", "obojetny", "zasadowy"]
+
+
+@pytest.mark.parametrize("code,zyznosc", [("BRk", "srednia"), ("BRwy", "srednia"), ("RDb", "uboga"), ("Bgw", "uboga"),
+                                          ("MDbr", "zyzna"), ("OGw", "srednia")])
+def test_bdl_soil_codes(code, zyznosc):
     t = soil_from_code(code)
-    assert t["odczyn"] == odczyn and t["zyznosc"] == zyznosc
+    assert t["zyznosc"] == zyznosc and "odczyn" not in t
+
+
+@pytest.mark.parametrize("code,grupa", [("pl", "piasek"), ("ps//pl", "piasek"), ("pgl", "piasek"), ("pyi", "pył"),
+                                        ("płz", "pył"), ("gz", "glina"), ("gpyi", "glina"), ("tn", "torf"), ("ms", None)])
+def test_soil_texture_codes(code, grupa):
+    t = texture_from_code(code)
+    assert (t["grupa"] if t else None) == grupa
+
+
+def test_texture_used_when_subtype_has_no_fertility():
+    a = habitat(stand(gleba=None, gleba_gatunek="pl"), SP)
+    f = next(x for x in a.czynniki if x.nazwa == "gleba")
+    assert f.wartosc is not None and "gatunek gleby" in f.opis
+
+
+@pytest.mark.parametrize("tsl,m", [("BMśw", "swieza"), ("LMw", "wilgotna"), ("Bb", "bagienna"), ("Bs", "sucha"),
+                                   ("BMGśw", "swieza"), ("Ol", "bagienna"), ("OlJ", "wilgotna"), ("Lwyż", None), (None, None)])
+def test_moisture_from_site_type(tsl, m):
+    assert moisture_from_tsl(tsl) == m
+
+
+def test_moisture_factor_compared_with_species():
+    a = habitat(stand(typ_siedliskowy="BMśw"), SP)
+    f = next(x for x in a.czynniki if x.nazwa == "uwilgotnienie")
+    assert f.wartosc is not None and "BMśw" in f.opis
 
 
 def test_ph_classes():

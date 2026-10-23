@@ -1,33 +1,53 @@
 # Kody podtypów gleb z warstwy BDL „Siedliska leśne” (soil_subtype_cd) → cechy porównywane z species/*.yaml.
 # Kody: rzeczywiste wartości dla Podkarpacia (rozpoznanie 2026-10-17; najczęstsze: BRwy, BRk, RDb, Bw, BRw, RDbr,
 # OGw, Bgw, Gw, RDw, MDbr…). Dopasowanie po NAJDŁUŻSZYM prefiksie kodu.
-# Przypisanie odczynu i żyzności do typów/podtypów to ZAŁOŻENIE PROJEKTOWE (klasa C) na podstawie ogólnej
-# charakterystyki typów gleb leśnych — nie jest to pomiar. null = nie przypisujemy (cecha nie wchodzi do oceny).
-# pH nie jest częścią opisu taksacyjnego; tu podajemy tylko KLASĘ odczynu typową dla podtypu.
+# Przypisanie ŻYZNOŚCI do typów/podtypów to ZAŁOŻENIE PROJEKTOWE (klasa C) na podstawie ogólnej charakterystyki
+# typów gleb leśnych — nie jest to pomiar. null = nie przypisujemy (cecha nie wchodzi do oceny).
+# Odczynu (pH) NIE wyprowadzamy z typu gleby — pH to osobna cecha (SoilGrids, model z przedziałem niepewności).
 podtypy:
-  BRk:  {nazwa: brunatna kwaśna,          odczyn: kwasny,       zyznosc: srednia}
-  BRb:  {nazwa: brunatna bielicowa,       odczyn: kwasny,       zyznosc: srednia}
-  BRwy: {nazwa: brunatna wyługowana,      odczyn: lekko_kwasny, zyznosc: srednia}
-  BRw:  {nazwa: brunatna właściwa,        odczyn: lekko_kwasny, zyznosc: zyzna}
-  BR:   {nazwa: brunatna,                 odczyn: null,         zyznosc: srednia}
-  RDbr: {nazwa: rdzawa brunatna,          odczyn: kwasny,       zyznosc: srednia}
-  RDb:  {nazwa: rdzawa bielicowa,         odczyn: kwasny,       zyznosc: uboga}
-  RD:   {nazwa: rdzawa,                   odczyn: kwasny,       zyznosc: uboga}
-  Bg:   {nazwa: glejobielicowa,           odczyn: kwasny,       zyznosc: uboga}
-  B:    {nazwa: bielicowa,                odczyn: kwasny,       zyznosc: uboga}
-  P:    {nazwa: płowa,                    odczyn: lekko_kwasny, zyznosc: srednia}
-  OG:   {nazwa: opadowo-glejowa,          odczyn: null,         zyznosc: srednia}
-  G:    {nazwa: gruntowo-glejowa,         odczyn: null,         zyznosc: srednia}
-  MD:   {nazwa: mada,                     odczyn: obojetny,     zyznosc: zyzna}
-  MR:   {nazwa: murszowa,                 odczyn: null,         zyznosc: srednia}
-  Tw:   {nazwa: torfowa torfowisk wysokich, odczyn: kwasny,     zyznosc: uboga}
-  Tp:   {nazwa: torfowa torfowisk przejściowych, odczyn: kwasny, zyznosc: srednia}
-  Tn:   {nazwa: torfowa torfowisk niskich, odczyn: lekko_kwasny, zyznosc: zyzna}
-  RN:   {nazwa: ranker,                   odczyn: kwasny,       zyznosc: srednia}
-  R:    {nazwa: rędzina,                  odczyn: zasadowy,     zyznosc: zyzna}
-  D:    {nazwa: deluwialna,               odczyn: null,         zyznosc: srednia}
-  M:    {nazwa: mułowa,                   odczyn: null,         zyznosc: null}
-  AU:   {nazwa: antropogeniczna,          odczyn: null,         zyznosc: null}
+  BRk:  {nazwa: brunatna kwaśna,          zyznosc: srednia}
+  BRb:  {nazwa: brunatna bielicowa,       zyznosc: srednia}
+  BRwy: {nazwa: brunatna wyługowana,      zyznosc: srednia}
+  BRw:  {nazwa: brunatna właściwa,        zyznosc: zyzna}
+  BR:   {nazwa: brunatna,                 zyznosc: srednia}
+  RDbr: {nazwa: rdzawa brunatna,          zyznosc: srednia}
+  RDb:  {nazwa: rdzawa bielicowa,         zyznosc: uboga}
+  RD:   {nazwa: rdzawa,                   zyznosc: uboga}
+  Bg:   {nazwa: glejobielicowa,           zyznosc: uboga}
+  B:    {nazwa: bielicowa,                zyznosc: uboga}
+  P:    {nazwa: płowa,                    zyznosc: srednia}
+  OG:   {nazwa: opadowo-glejowa,          zyznosc: srednia}
+  G:    {nazwa: gruntowo-glejowa,         zyznosc: srednia}
+  MD:   {nazwa: mada,                     zyznosc: zyzna}
+  MR:   {nazwa: murszowa,                 zyznosc: srednia}
+  Tw:   {nazwa: torfowa torfowisk wysokich, zyznosc: uboga}
+  Tp:   {nazwa: torfowa torfowisk przejściowych, zyznosc: srednia}
+  Tn:   {nazwa: torfowa torfowisk niskich, zyznosc: zyzna}
+  RN:   {nazwa: ranker,                   zyznosc: srednia}
+  R:    {nazwa: rędzina,                  zyznosc: zyzna}
+  D:    {nazwa: deluwialna,               zyznosc: srednia}
+  M:    {nazwa: mułowa,                   zyznosc: null}
+  AU:   {nazwa: antropogeniczna,          zyznosc: null}
+
+# Gatunek gleby (utwór, pole soil_species warstwy „Siedliska leśne”). BDL nie publikuje słownika tego pola;
+# skróty odpowiadają klasyfikacji uziarnienia PTG (1989: pł* = pyły; 2008: py* = pyły). Dopasowanie po NAJDŁUŻSZYM
+# prefiksie pierwszego członu (przed „/” — utwór wierzchni). Żyzność z uziarnienia to założenie (klasa C), używana
+# tylko gdy podtyp gleby nie daje żyzności. Kody nierozpoznane (np. „ms”) pozostają bez interpretacji.
+gatunki:
+  pl:  {nazwa: piasek luźny,          grupa: piasek,  zyznosc: uboga}
+  ps:  {nazwa: piasek słabogliniasty, grupa: piasek,  zyznosc: uboga}
+  pg:  {nazwa: piasek gliniasty,      grupa: piasek,  zyznosc: srednia}
+  py:  {nazwa: pył,                   grupa: pył,     zyznosc: srednia}
+  pł:  {nazwa: pył,                   grupa: pył,     zyznosc: srednia}
+  g:   {nazwa: glina,                 grupa: glina,   zyznosc: zyzna}
+  i:   {nazwa: ił,                    grupa: ił,      zyznosc: zyzna}
+  t:   {nazwa: torf,                  grupa: torf,    zyznosc: null}
+
+# Uwilgotnienie z kodu typu siedliskowego (człon końcowy wg nomenklatury typów siedliskowych lasu):
+# św = świeże, w = wilgotne, b = bagienne, s = suche; olsy: Ol = bagienne, OlJ = wilgotne. Inne (np. „wyż”) — brak.
+uwilgotnienie_tsl:
+  koncowki: {św: swieza, w: wilgotna, b: bagienna, s: sucha}
+  pelne_kody: {Ol: bagienna, OlJ: wilgotna, OlJG: wilgotna}
 
 # Klasy odczynu z pH(H2O) warstwy 0–5 cm (SoilGrids, model) — założenie projektowe.
 ph_klasy:

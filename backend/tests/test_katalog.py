@@ -54,3 +54,28 @@ def test_long_section_cut_at_sentence():
 def test_slug():
     assert slug("Boletus edulis") == "boletus_edulis"
     assert slug("Lactarius deliciosus var. x") == "lactarius_deliciosus_var_x"
+
+
+def test_key_matching_prefers_matching_and_flags_deadly_genus():
+    from grzyby.katalog import match
+    sp = [
+        {"id": "amanita_phalloides", "rodzaj": "Amanita", "obserwacje_woj": 5,
+         "cechy": {"hymenium": ["lamella"], "trzon": ["ring and volva stipe"]}, "siedlisko": {"drzewa": ["dąb", "buk"]}},
+        {"id": "boletus_edulis", "rodzaj": "Boletus", "obserwacje_woj": 50,
+         "cechy": {"hymenium": ["pores"], "trzon": ["bare stipe"]}, "siedlisko": {"drzewa": ["świerk"]}},
+        {"id": "bez_danych", "rodzaj": "X", "obserwacje_woj": 99, "cechy": {}, "siedlisko": {}},
+    ]
+    r = match(sp, {"hymenium": ["blaszki"], "trzon": ["pochwa"], "drzewa": ["buk"]})
+    assert r[0]["gatunek"]["id"] == "amanita_phalloides" and r[0]["ostrzezenie_rodzaj"]
+    assert r[0]["zgodne"] == ["hymenium", "trzon", "drzewa"]
+    # gatunek bez danych nie wygrywa z niezgodnym tylko dzięki popularności — ale też nie jest „zgodny”
+    nd = next(x for x in r if x["gatunek"]["id"] == "bez_danych")
+    assert nd["zgodne"] == [] and set(nd["brak_danych"]) == {"hymenium", "trzon", "drzewa"}
+    b = next(x for x in r if x["gatunek"]["id"] == "boletus_edulis")
+    assert set(b["niezgodne"]) == {"hymenium", "trzon", "drzewa"} and b["punkty"] < nd["punkty"]
+
+
+def test_key_ignores_unknown_answers():
+    from grzyby.katalog import match
+    r = match([{"id": "a", "cechy": {"hymenium": ["gills"]}, "siedlisko": {}}], {"hymenium": ["nieznane"], "x": ["y"]})
+    assert r[0]["punkty"] == 0 and r[0]["niezgodne"] == []

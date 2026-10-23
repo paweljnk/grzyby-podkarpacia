@@ -13,7 +13,8 @@ bramki:
   zakaz_rodzaje: [park_narodowy]  # formy ochrony z zakazem zbioru co do zasady (poza miejscami wyznaczonymi)
 
 siedlisko:                        # A
-  wagi: {drzewa: 0.40, typ_siedliskowy: 0.20, wiek: 0.15, gleba: 0.10, teren: 0.15}
+  # gleba = typ/podtyp i gatunek gleby (żyzność); uwilgotnienie = z typu siedliskowego; ph = SoilGrids (model).
+  wagi: {drzewa: 0.40, typ_siedliskowy: 0.20, wiek: 0.15, gleba: 0.07, uwilgotnienie: 0.07, ph: 0.06, teren: 0.15}
   sila_zwiazku: {silny: 1.0, umiarkowany: 0.6, slaby: 0.3}
   udzial_nasycenia: 0.5           # łączny ważony udział partnerów >= 0.5 → pełna ocena drzew
   tylko_gatunek_panujacy_udzial: 0.6   # gdy znamy tylko gatunek panujący: przyjęty udział (obniża kompletność)
@@ -26,6 +27,10 @@ siedlisko:                        # A
   teren_nachylenie_trudne_mnoznik: 0.6
   gleba_zgodna: 1.0
   gleba_niezgodna: 0.4
+  uwilgotnienie_zgodne: 1.0
+  uwilgotnienie_niezgodne: 0.4
+  ph_zgodne: 1.0
+  ph_niezgodne: 0.5               # pH z modelu 250 m — słabszy wpływ niż opis z BDL
   # Wiarygodność wejścia przy liczeniu PEWNOŚCI (nie warunków): źródło BDL = 1, model = 0.5, brak = 0.
   pewnosc_zrodla: {zrodlowa: 1.0, model: 0.5}
   teren_pewnosc: 0.8                # DEM to model powierzchni (DSM)
@@ -37,6 +42,9 @@ pogoda:                           # B
   brak_epizodu_opadu: 0.2
   wilgotnosc_gleby_m3m3: {sucha: 0.12, optimum: [0.22, 0.38]}   # model (ERA5-Land/prognoza), komórka siatki
   kara_susza_mnoznik_min: 0.2
+  # Nasłonecznienie stoku (model z DEM, grzyby/model/insolation.py): parowanie ET₀ × (1 + k·(indeks − 1)).
+  # k i granice to założenie projektowe (klasa C); indeks 1.0 = teren płaski.
+  naslonecznienie: {wplyw_na_et0: 0.6, mnoznik_min: 0.6, mnoznik_max: 1.4}
 
 obserwacje:                       # C (modyfikator)
   max_pkt: 15

@@ -9,6 +9,7 @@ from functools import lru_cache
 from . import repo
 from .astro import CalendarDay, calendar_day, calendar_modifier
 from .config import load_yaml
+from .model.insolation import insolation_index
 from .model.combine import Score, combine
 from .model.components import habitat, observations, weather
 from .species import Species, all_species
@@ -87,11 +88,13 @@ def score_place(conn, ds: repo.Dataset, row: repo.StandRow, sp: Species, day: da
     else:
         daily = []
     # Ocena pogody zależy od komórki, dnia i (przez sezon) wysokości — pamiętamy ją dla pasów co 50 m.
-    bkey = ("B", sp.id, row.komorka_id, day, None if row.stand.wys_sr is None else round(row.stand.wys_sr / 50))
+    sun = insolation_index(row.lat, row.stand.nachylenie_sr, row.stand.ekspozycja_deg, day)
+    sun_bin = None if sun is None else round(sun, 1)
+    bkey = ("B", sp.id, row.komorka_id, day, None if row.stand.wys_sr is None else round(row.stand.wys_sr / 50), sun_bin)
     if weather_cache is not None and bkey in weather_cache:
         B, ind_json, gates = weather_cache[bkey]
     else:
-        B, ind, gates = weather(sp, daily, day, row.stand.wys_sr, cfg)
+        B, ind, gates = weather(sp, daily, day, row.stand.wys_sr, cfg, sun_bin)
         ind_json = _ind_json(ind)
         if weather_cache is not None:
             weather_cache[bkey] = (B, ind_json, gates)
@@ -290,12 +293,15 @@ def place_card(conn, ds: repo.Dataset, sp: Species, sid: int, day: date, calenda
                            "Nie wjeżdżaj na drogi leśne bez potwierdzenia, że ruch jest dopuszczony.",
                    "nachylenie_sr_deg": row.stand.nachylenie_sr},
         "kalendarz": calendar_json(cal),
-        "atrybuty": attributes_table(row),
+        "atrybuty": attributes_table(row, day),
         "zarzad": (row.meta or {}).get("zarzad"),
     }
 
 
-def attributes_table(row: repo.StandRow) -> list[dict]:
+MOIST = {"sucha": "suche", "swieza": "świeże", "wilgotna": "wilgotne", "bagienna": "bagienne"}
+
+
+def attributes_table(row: repo.StandRow, day: date | None = None) -> list[dict]:
     """Każdy atrybut z wartością, źródłem, datą i oznaczeniem: źródłowa | model | brak."""
     m = row.meta or {}
     st = row.stand
@@ -305,6 +311,10 @@ def attributes_table(row: repo.StandRow) -> list[dict]:
         return {"atrybut": name, "wartosc": value, "zrodlo": src if value is not None else None,
                 "data": date if value is not None else None, "oznaczenie": kind if value is not None else "brak"}
     names = {k: v["nazwa"] for k, v in load_yaml("slowniki.yaml")["drzewa"].items()}
+    from .model.components import moisture_from_tsl, soil_from_code, texture_from_code
+    soil = soil_from_code(st.gleba) if st.gleba else None
+    tex = texture_from_code(m.get("gleba_gatunek"))
+    moist = moisture_from_tsl(st.typ_siedliskowy)
     out = [
         a("Zarząd / własność", (("Lasy Państwowe" if m.get("zarzad") == "LP" else "poza LP")
                                  + (f" — {m['wlasnosc']}" if m.get("wlasnosc") else "")) if m.get("zarzad") else None,
@@ -315,12 +325,20 @@ def attributes_table(row: repo.StandRow) -> list[dict]:
         a("Pełny skład gatunkowy z udziałami", None, None, None, "brak"),
         a("Wiek gatunku panującego", st.wiek, bdl, rok, "źródłowa"),
         a("Typ siedliskowy lasu", st.typ_siedliskowy, bdl, rok, "źródłowa"),
-        a("Podtyp gleby", st.gleba, f"BDL — Siedliska leśne ({m.get('siedlisko_zrodlo') or '—'})", m.get("siedlisko_rok"), "źródłowa"),
-        a("Gatunek gleby (utwór)", m.get("gleba_gatunek"), "BDL — Siedliska leśne", m.get("siedlisko_rok"), "źródłowa"),
-        a("Uwilgotnienie (kod BDL, słownik nieopublikowany)", m.get("uwilgotnienie_kod"), "BDL — Siedliska leśne",
+        a("Typ i podtyp gleby", (f"{soil['nazwa']} ({st.gleba})" if soil else st.gleba),
+          f"BDL — Siedliska leśne ({m.get('siedlisko_zrodlo') or '—'})", m.get("siedlisko_rok"), "źródłowa"),
+        a("Gatunek gleby (utwór)", (f"{tex['nazwa']} ({m.get('gleba_gatunek')})" if tex else m.get("gleba_gatunek")),
+          "BDL — Siedliska leśne", m.get("siedlisko_rok"), "źródłowa"),
+        a("Uwilgotnienie wg typu siedliskowego", MOIST.get(moist) if moist else None,
+          f"BDL — człon kodu typu siedliskowego {st.typ_siedliskowy}", rok, "źródłowa"),
+        a("Uwilgotnienie (kod moisture_cd, słownik nieopublikowany)", m.get("uwilgotnienie_kod"), "BDL — Siedliska leśne",
           m.get("siedlisko_rok"), "źródłowa"),
-        a("pH gleby 0–5 cm", (f"{st.ph_model:.1f} (przedział {st.ph_q05}–{st.ph_q95})" if st.ph_model is not None else None),
-          "SoilGrids 2.0, siatka 250 m — wynik modelu, nie pomiar", "2020", "model"),
+        a("pH gleby 0–5 cm (osobna cecha, nie z typu gleby)",
+          (f"{st.ph_model:.1f} (przedział {st.ph_q05}–{st.ph_q95})" if st.ph_model is not None else None),
+          "SoilGrids 2.0, siatka 250 m — wynik modelu, nie pomiar; BDL nie podaje pH", "2020", "model"),
+        a(f"Nasłonecznienie stoku (wobec terenu płaskiego, {(day or date.today()):%d.%m})",
+          (f"{sun:.2f}×" if (sun := insolation_index(row.lat, st.nachylenie_sr, st.ekspozycja_deg, day or date.today())) is not None else None),
+          "obliczenie z DEM (nachylenie, ekspozycja) i położenia Słońca; bez zacienienia przez stoki i drzewa", "2011–2015", "model"),
         a("Wysokość, nachylenie, ekspozycja", (f"{round(st.wys_sr)} m, {st.nachylenie_sr:.0f}°, {row.ekspozycja}"
                                                if st.wys_sr is not None and st.nachylenie_sr is not None else None),
           "Copernicus DEM GLO-30 (DSM, 25 m)", "2011–2015", "model"),

@@ -1,0 +1,173 @@
+# „Pomóż oznaczyć” — pytania o cechy i ich dopasowanie do katalogu. To podpowiedź, nie oznaczenie.
+# Wartości z Wikidata (etykiety angielskie właściwości P783–P788) → polskie odpowiedzi.
+punkty: {zgodne: 2, niezgodne: -3, brak_danych: 0}
+wynikow: 15
+pytania:
+  - id: hymenium
+    pytanie: Co jest pod kapeluszem?
+    zrodlo: cechy
+    odpowiedzi:
+      blaszki: {etykieta: "Blaszki", wartosci: ["lamella", "gills"]}
+      rurki: {etykieta: "Rurki (gąbka)", wartosci: ["pores"]}
+      listewki: {etykieta: "Listewki (fałdy)", wartosci: ["ridges"]}
+      kolce: {etykieta: "Kolce", wartosci: ["teeth"]}
+      gladko: {etykieta: "Gładko", wartosci: ["smooth"]}
+      gleba: {etykieta: "Brak kapelusza, kulisty owocnik (np. purchawka)", wartosci: ["gleba"]}
+  - id: trzon
+    pytanie: Jaki jest trzon?
+    zrodlo: cechy
+    odpowiedzi:
+      nagi: {etykieta: "Bez pierścienia i bez pochwy", wartosci: ["bare stipe"]}
+      pierscien: {etykieta: "Z pierścieniem", wartosci: ["ring stipe", "ring and volva stipe"]}
+      pochwa: {etykieta: "Z pochwą lub bulwą u podstawy", wartosci: ["volva stipe", "ring and volva stipe"]}
+      zasnowka: {etykieta: "Z pajęczynowatą zasnówką", wartosci: ["cortina stipe"]}
+      brak: {etykieta: "Brak trzonu", wartosci: ["no stipe"]}
+  - id: kapelusz
+    pytanie: Jaki kształt ma kapelusz?
+    zrodlo: cechy
+    odpowiedzi:
+      wypukly: {etykieta: "Wypukły / półkulisty", wartosci: ["convex mushroom cap", "semi-spherical mushroom cap"]}
+      plaski: {etykieta: "Płaski", wartosci: ["flat mushroom cap"]}
+      wklesly: {etykieta: "Wklęsły / lejkowaty", wartosci: ["depressed mushroom cap", "infundibuliform mushroom cap"]}
+      garbek: {etykieta: "Z garbkiem", wartosci: ["umbonate mushroom cap"]}
+      dzwonkowaty: {etykieta: "Dzwonkowaty / stożkowaty / jajowaty", wartosci: ["campanulate mushroom cap", "conical mushroom cap", "ovate mushroom cap"]}
+      bokiem: {etykieta: "Bez typowego kapelusza / przyrośnięty bokiem (np. na pniu)", wartosci: ["offset mushroom cap", "no mushroom cap"]}
+  - id: wysyp
+    pytanie: Jaka jest barwa wysypu zarodników? (kapelusz na kartce na kilka godzin)
+    zrodlo: cechy
+    odpowiedzi:
+      zolty: {etykieta: "Żółty", wartosci: ["yellow"]}
+      bialy: {etykieta: "Biały / kremowy", wartosci: ["white", "cream", "buff"]}
+      rozowy: {etykieta: "Różowy", wartosci: ["pink", "salmon"]}
+      brazowy: {etykieta: "Brązowy / rdzawy / ochrowy", wartosci: ["brown", "tan", "reddish-brown", "yellow-brown", "ochre", "rust"]}
+      oliwkowy: {etykieta: "Oliwkowobrązowy", wartosci: ["olive-brown", "olive brown", "olive"]}
+      ciemny: {etykieta: "Czarny / purpurowobrązowy", wartosci: ["black", "purple-black", "purple-brown", "blackish-brown", "purple", "bordeaux"]}
+  - id: ekologia
+    pytanie: Gdzie rośnie?
+    zrodlo: cechy
+    odpowiedzi:
+      ziemia: {etykieta: "Na ziemi, przy drzewach", wartosci: ["mycorrhiza", "mycorrhizal"]}
+      drewno: {etykieta: "Na drewnie, ściółce lub szczątkach", wartosci: ["saprobiont", "saprotrophic"]}
+      zywy: {etykieta: "Na żywym drzewie lub innym grzybie", wartosci: ["parasitism", "parasitic"]}
+  - id: gleba
+    pytanie: Na jakiej glebie?
+    zrodlo: siedlisko
+    odpowiedzi:
+      kwasna: {etykieta: "Kwaśna (bory, wrzosy, borówki)", wartosci: ["kwaśna"]}
+      wapienna: {etykieta: "Wapienna", wartosci: ["wapienna"]}
+      piaszczysta: {etykieta: "Piaszczysta", wartosci: ["piaszczysta"]}
+      zyzna: {etykieta: "Żyzna, próchniczna", wartosci: ["żyzna"]}
+      mokra: {etykieta: "Podmokła lub torfowa", wartosci: ["podmokła / torfowa"]}
+  - id: drzewa
+    pytanie: Jakie drzewa rosną obok?
+    zrodlo: siedlisko
+    wiele: true
+    odpowiedzi:
+      sosna: {etykieta: "Sosna", wartosci: ["sosna"]}
+      swierk: {etykieta: "Świerk", wartosci: ["świerk"]}
+      jodla: {etykieta: "Jodła", wartosci: ["jodła"]}
+      modrzew: {etykieta: "Modrzew", wartosci: ["modrzew"]}
+      buk: {etykieta: "Buk", wartosci: ["buk"]}
+      dab: {etykieta: "Dąb", wartosci: ["dąb"]}
+      brzoza: {etykieta: "Brzoza", wartosci: ["brzoza"]}
+      grab: {etykieta: "Grab", wartosci: ["grab"]}
+      topola: {etykieta: "Topola / osika", wartosci: ["topola / osika"]}
+      olsza: {etykieta: "Olsza", wartosci: ["olsza"]}
+# Rodzaje, w których są gatunki śmiertelnie trujące — przy każdym takim wyniku stałe ostrzeżenie.
+rodzaje_smiertelne: [Amanita, Galerina, Lepiota, Cortinarius, Inocybe, Clitocybe, Gyromitra, Conocybe]
+ostrzezenie_blaszki: >-
+  Grzyby blaszkowe to grupa z najgroźniejszymi pomyłkami. Muchomor zielonawy (śmiertelnie trujący) ma białe blaszki,
+  pierścień i bulwę w pochwie u podstawy trzonu — bywa mylony z gąskami, czubajką kanią i gołąbkami.
+# Polskie nazwy cech do wyświetlania w karcie gatunku (wartości spoza słownika pokazujemy w oryginale).
+etykiety:
+  hymenium: Spód kapelusza
+  kapelusz: Kapelusz
+  przyczepienie: Przyczepienie blaszek / rurek
+  trzon: Trzon
+  wysyp: Wysyp zarodników
+  ekologia: Tryb życia
+wartosci:
+  lamella: blaszki
+  bare stipe: nagi (bez pierścienia i pochwy)
+  ring stipe: z pierścieniem
+  volva stipe: z pochwą
+  ring and volva stipe: z pierścieniem i pochwą
+  cortina stipe: z zasnówką
+  convex mushroom cap: wypukły
+  semi-spherical mushroom cap: półkulisty
+  flat mushroom cap: płaski
+  conical mushroom cap: stożkowaty
+  depressed mushroom cap: wklęsły
+  umbonate mushroom cap: z garbkiem
+  infundibuliform mushroom cap: lejkowaty
+  offset mushroom cap: przyrośnięty bokiem
+  campanulate mushroom cap: dzwonkowaty
+  ovate mushroom cap: jajowaty
+  no mushroom cap: bez typowego kapelusza
+  adnate hymenium attachment: przyrośnięte
+  decurrent hymenium attachment: zbiegające
+  free hymenium attachment: wolne
+  adnexed hymenium attachment: wycięte
+  no hymenium attachment: nie dotyczy
+  emarginate hymenium attachment: wykrojone
+  mycorrhiza: mikoryzowy (współżyje z drzewami)
+  saprobiont: saprotrof (rozkłada martwą materię)
+  parasitism: pasożyt
+  nematophagous fungus: drapieżny (chwyta nicienie)
+  bordeaux: bordowy
+  purple: purpurowy
+  gills: blaszki
+  pores: rurki
+  ridges: listewki
+  teeth: kolce
+  smooth: gładki
+  gleba: gleba (wnętrze owocnika)
+  bare: nagi
+  ring: z pierścieniem
+  volva: z pochwą
+  ring and volva: z pierścieniem i pochwą
+  cortina: z zasnówką
+  NA: brak trzonu
+  no stipe: brak trzonu
+  convex: wypukły
+  flat: płaski
+  depressed: wklęsły
+  infundibuliform: lejkowaty
+  umbonate: z garbkiem
+  campanulate: dzwonkowaty
+  conical: stożkowaty
+  offset: przyrośnięty bokiem
+  no distinct cap: bez wyraźnego kapelusza
+  ovate: jajowaty
+  umbilicate: z dołkiem
+  white: biały
+  cream: kremowy
+  buff: płowy
+  pink: różowy
+  salmon: łososiowy
+  brown: brązowy
+  tan: jasnobrązowy
+  reddish-brown: czerwonobrązowy
+  yellow-brown: żółtobrązowy
+  ochre: ochrowy
+  rust: rdzawy
+  olive-brown: oliwkowobrązowy
+  olive brown: oliwkowobrązowy
+  olive: oliwkowy
+  black: czarny
+  purple-black: purpurowoczarny
+  purple-brown: purpurowobrązowy
+  blackish-brown: czarnobrązowy
+  yellow: żółty
+  green: zielony
+  mycorrhizal: mikoryzowy (współżyje z drzewami)
+  saprotrophic: saprotrof (rozkłada martwą materię)
+  parasitic: pasożyt
+  adnate: przyrośnięte
+  adnexed: wycięte
+  decurrent: zbiegające
+  free: wolne
+  emarginate: wykrojone
+  sinuate: zatokowato wycięte
+  seceding: odstające
+  subdecurrent: krótko zbiegające

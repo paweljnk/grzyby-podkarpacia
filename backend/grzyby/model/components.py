@@ -20,6 +20,7 @@ class Factor:
     wartosc: float | None          # 0–1; None = brak danych
     waga: float
     opis: str
+    zakres: tuple[float, float] | None = None   # przedział wartości, gdy dane niepewne (np. pH z modelu)
 
 
 @dataclass
@@ -65,19 +66,51 @@ class Stand:
     ph_model: float | None = None           # SoilGrids (model)
     ph_q05: float | None = None
     ph_q95: float | None = None
+    gleba_gatunek: str | None = None        # gatunek gleby (utwór), kod BDL
+    ekspozycja_deg: float | None = None     # azymut spadku stoku z DEM (0° = N)
 
 
 def soil_from_code(code: str) -> dict | None:
-    """Cechy gleby z kodu podtypu BDL (najdłuższy prefiks w config/gleby_bdl.yaml) albo z nazwy (config/gleby.yaml)."""
+    """Typ/podtyp gleby z kodu BDL (najdłuższy prefiks w config/gleby_bdl.yaml) albo z nazwy (config/gleby.yaml).
+    Zwraca nazwę i żyzność — bez odczynu: pH nie jest wyprowadzane z typu gleby."""
     podtypy = load_yaml("gleby_bdl.yaml")["podtypy"]
     c = code.strip()
     for k in sorted(podtypy, key=len, reverse=True):
         if c.startswith(k):
-            return {**podtypy[k], "kod": c}
+            return {"nazwa": podtypy[k]["nazwa"], "zyznosc": podtypy[k].get("zyznosc"), "kod": c}
     g = c.lower()
     for t in load_yaml("gleby.yaml")["typy"]:
         if g.startswith(t["prefiks"]):
-            return {"nazwa": c, "odczyn": t["odczyn"], "zyznosc": t["zyznosc"], "kod": c}
+            return {"nazwa": c, "zyznosc": t["zyznosc"], "kod": c}
+    return None
+
+
+def texture_from_code(code: str | None) -> dict | None:
+    """Gatunek gleby (utwór) z kodu BDL: pierwszy człon (utwór wierzchni), najdłuższy prefiks."""
+    if not code:
+        return None
+    top = code.strip().split("/")[0].strip().lower()
+    gat = load_yaml("gleby_bdl.yaml")["gatunki"]
+    for k in sorted(gat, key=len, reverse=True):
+        if top.startswith(k):
+            return {**gat[k], "kod": code.strip()}
+    return None
+
+
+MOIST_PL = {"sucha": "suche", "swieza": "świeże", "wilgotna": "wilgotne", "bagienna": "bagienne"}
+
+
+def moisture_from_tsl(tsl: str | None) -> str | None:
+    """Uwilgotnienie z kodu typu siedliskowego (np. BMśw → świeże, LMw → wilgotne, Ol → bagienne)."""
+    if not tsl:
+        return None
+    m = load_yaml("gleby_bdl.yaml")["uwilgotnienie_tsl"]
+    t = tsl.strip()
+    if t in m["pelne_kody"]:
+        return m["pelne_kody"][t]
+    for suf in sorted(m["koncowki"], key=len, reverse=True):
+        if t.endswith(suf) and len(t) > len(suf):
+            return m["koncowki"][suf]
     return None
 
 
@@ -86,6 +119,13 @@ def ph_class(ph: float) -> str:
         if ph < k["do"]:
             return k["odczyn"]
     return "zasadowy"
+
+
+def ph_classes_between(lo: float, hi: float) -> list[str]:
+    """Wszystkie klasy odczynu objęte przedziałem pH [lo, hi]."""
+    order = [k["odczyn"] for k in load_yaml("gleby_bdl.yaml")["ph_klasy"]]
+    a, b = order.index(ph_class(lo)), order.index(ph_class(hi))
+    return order[min(a, b):max(a, b) + 1]
 
 
 def _trees_interval(stand: Stand, sp: Species, cfg: dict) -> tuple[float | None, float | None, float, str]:
@@ -166,38 +206,54 @@ def habitat(stand: Stand, sp: Species, cfg: dict | None = None) -> Component:
         factors.append(Factor("wiek", None, w["wiek"], "brak wieku drzewostanu"))
         conf["wiek"] = 0.0
 
-    # gleba: najpierw opis z BDL (źródło), potem SoilGrids (model); niepewny model → cecha pominięta
-    traits = soil_from_code(stand.gleba) if stand.gleba else None
-    if traits and (traits.get("odczyn") or traits.get("zyznosc")):
-        checks = []
-        if traits.get("odczyn"):
-            checks.append(traits["odczyn"] in sp.gleba.odczyn)
-        if traits.get("zyznosc"):
-            checks.append(traits["zyznosc"] in sp.gleba.zyznosc)
-        ok = all(checks)
+    # --- gleba: typ/podtyp (BDL) i gatunek gleby (BDL) → żyzność; NIE odczyn
+    soil = soil_from_code(stand.gleba) if stand.gleba else None
+    tex = texture_from_code(stand.gleba_gatunek)
+    zyz, zsrc = (soil["zyznosc"], "podtyp gleby") if soil and soil.get("zyznosc") else \
+                ((tex["zyznosc"], "gatunek gleby") if tex and tex.get("zyznosc") else (None, None))
+    desc_parts = ([f"{soil['nazwa']} ({soil['kod']})"] if soil else []) + ([f"utwór: {tex['nazwa']} ({tex['kod']})"] if tex else [])
+    if zyz:
+        ok = zyz in sp.gleba.zyznosc
         v = cfg["gleba_zgodna"] if ok else cfg["gleba_niezgodna"]
-        factors.append(Factor("gleba", v, w["gleba"], f"gleba {traits['nazwa']} ({traits['kod']}, BDL) — "
-                                                     f"{'zgodna' if ok else 'mniej typowa'} z wymaganiami gatunku"))
+        d = f"gleba {', '.join(desc_parts)} — żyzność {zyz} (z: {zsrc}; BDL) — {'zgodna' if ok else 'mniej typowa'} dla gatunku"
+        factors.append(Factor("gleba", v, w["gleba"], d))
         conf["gleba"] = cred["zrodlowa"]
-    elif stand.ph_model is not None:
-        classes = {ph_class(x) for x in (stand.ph_model, stand.ph_q05, stand.ph_q95) if x is not None}
-        if len(classes) == 1:
-            cls = classes.pop()
-            ok = cls in sp.gleba.odczyn
-            v = cfg["gleba_zgodna"] if ok else cfg["gleba_niezgodna"]
-            factors.append(Factor("gleba", v, w["gleba"], f"pH {stand.ph_model:.1f} (SoilGrids, model 250 m; przedział "
-                                                         f"{stand.ph_q05}–{stand.ph_q95}) — odczyn {cls}"))
-            conf["gleba"] = cred["model"]
-            reasons.append(f"Gleba: brak opisu w BDL — użyto modelu SoilGrids (pH {stand.ph_model:.1f}, 250 m; to nie pomiar).")
-        else:
-            factors.append(Factor("gleba", None, w["gleba"], f"pH z modelu niepewne ({stand.ph_q05}–{stand.ph_q95}) — pominięte"))
-            conf["gleba"] = 0.0
-            reasons.append("Gleba: brak opisu w BDL, model SoilGrids zbyt niepewny — cecha pominięta (niższa pewność).")
     else:
-        desc = "brak danych glebowych" if not stand.gleba else f"gleba '{stand.gleba}' bez przełożenia na cechy"
-        factors.append(Factor("gleba", None, w["gleba"], desc))
+        d = ("gleba " + ", ".join(desc_parts) + " — bez przełożenia na żyzność") if desc_parts else "brak opisu gleby w BDL"
+        factors.append(Factor("gleba", None, w["gleba"], d))
         conf["gleba"] = 0.0
-        reasons.append("Brak danych glebowych — obniżona pewność, nie gorsze warunki.")
+        reasons.append("Typ i gatunek gleby: brak w BDL — obniżona pewność, nie gorsze warunki.")
+
+    # --- uwilgotnienie z kodu typu siedliskowego (BDL)
+    moist = moisture_from_tsl(stand.typ_siedliskowy)
+    if moist and sp.gleba.uwilgotnienie:
+        ok = moist in sp.gleba.uwilgotnienie
+        v = cfg["uwilgotnienie_zgodne"] if ok else cfg["uwilgotnienie_niezgodne"]
+        factors.append(Factor("uwilgotnienie", v, w["uwilgotnienie"],
+                              f"uwilgotnienie {MOIST_PL.get(moist, moist)} (z typu siedliskowego {stand.typ_siedliskowy}) — "
+                              f"{'zgodne' if ok else 'mniej typowe'} dla gatunku"))
+        conf["uwilgotnienie"] = cred["zrodlowa"]
+    else:
+        factors.append(Factor("uwilgotnienie", None, w["uwilgotnienie"], "brak informacji o uwilgotnieniu"))
+        conf["uwilgotnienie"] = 0.0
+
+    # --- pH: wyłącznie SoilGrids (model 250 m, przedział Q0.05–Q0.95); nigdy z typu gleby
+    if stand.ph_model is not None and stand.ph_q05 is not None and stand.ph_q95 is not None:
+        classes = ph_classes_between(stand.ph_q05, stand.ph_q95)
+        hits = [c for c in classes if c in sp.gleba.odczyn]
+        good, bad = cfg["ph_zgodne"], cfg["ph_niezgodne"]
+        lo, hi = (good, good) if len(hits) == len(classes) else ((bad, bad) if not hits else (bad, good))
+        rng = f"{stand.ph_q05:.1f}–{stand.ph_q95:.1f}"
+        verdict = "zgodne" if lo == hi == good else ("niezgodne" if lo == hi else "niepewne (przedział obejmuje odczyn zgodny i niezgodny)")
+        factors.append(Factor("ph", (lo + hi) / 2, w["ph"],
+                              f"pH {stand.ph_model:.1f}, przedział {rng} (SoilGrids, model 250 m, nie pomiar) — {verdict}",
+                              zakres=(lo, hi) if hi > lo else None))
+        conf["ph"] = cred["model"]
+        if hi > lo:
+            reasons.append(f"pH z modelu SoilGrids {stand.ph_model:.1f} (przedział {rng}) — niepewne, poszerza przedział warunków.")
+    else:
+        factors.append(Factor("ph", None, w["ph"], "brak pH (BDL nie podaje; brak wartości modelu)"))
+        conf["ph"] = 0.0
 
     if stand.wys_sr is not None:
         inside = sp.wysokosc_npm.min_m <= stand.wys_sr <= sp.wysokosc_npm.max_m
@@ -213,16 +269,20 @@ def habitat(stand: Stand, sp: Species, cfg: dict | None = None) -> Component:
         conf["teren"] = 0.0
 
     # Warunki: średnia ważona dostępnych cech (brakujące nie obniżają) × drzewa (czynnik ograniczający).
+    # Cechy z przedziałem (np. pH z modelu) dają dolną i górną granicę średniej.
     others = [f for f in factors if f.nazwa != "drzewa"]
     base, _ = _weighted(others)
     wsum = sum(f.waga for f in factors)
     certainty = sum(f.waga * conf.get(f.nazwa, 0.0) for f in factors) / wsum if wsum else 0.0
     if base is None:
         return Component(None, round(certainty, 3), factors, reasons)
+    at = lambda i: [Factor(f.nazwa, f.zakres[i] if f.zakres else f.wartosc, f.waga, f.opis) for f in others]
+    base_lo, _ = _weighted(at(0))
+    base_hi, _ = _weighted(at(1))
     if trees_lo is None:
-        lo = hi = base
+        lo, hi = base_lo, base_hi
     else:
-        lo, hi = base * trees_lo, base * trees_hi
+        lo, hi = base_lo * trees_lo, base_hi * trees_hi
     comp = Component(round((lo + hi) / 2 * 100, 1), round(certainty, 3), factors, reasons)
     comp.zakres = (round(lo * 100, 1), round(hi * 100, 1))
     return comp
@@ -264,7 +324,7 @@ def _lag_window(sp: Species, t_mean: float) -> tuple[int, int] | None:
 
 
 def weather(sp: Species, daily: list[DailyWeather], day: date, altitude_m: float | None,
-            cfg: dict | None = None) -> tuple[Component, Indicators, dict]:
+            cfg: dict | None = None, insolation: float | None = None) -> tuple[Component, Indicators, dict]:
     full = cfg or load_yaml("model.yaml")
     c = full["pogoda"]
     wcfg = load_yaml("pogoda.yaml")
@@ -275,6 +335,14 @@ def weather(sp: Species, daily: list[DailyWeather], day: date, altitude_m: float
     reasons: list[str] = []
     factors: list[Factor] = []
     gates: dict = {"susza": False}
+
+    # Nasłonecznienie stoku zmienia parowanie: ET₀ komórki siatki × (1 + k·(indeks − 1)) — model, wagi w config.
+    ns = c.get("naslonecznienie") or {}
+    if insolation is not None and ind.et0_14_mm is not None and ind.opad_mm.get(14) is not None and abs(insolation - 1) >= 0.02:
+        f = min(ns["mnoznik_max"], max(ns["mnoznik_min"], 1 + ns["wplyw_na_et0"] * (insolation - 1)))
+        ind.bilans_14_mm = round(ind.opad_mm[14] - ind.et0_14_mm * f, 2)
+        reasons.append(f"Nasłonecznienie stoku {insolation:.2f}× terenu płaskiego (model z DEM) — parowanie ×{f:.2f}"
+                       + (" (szybciej przesycha)." if f > 1 else " (dłużej trzyma wilgoć)."))
 
     season, sdesc = season_factor(sp, day, altitude_m, c["sezon_brzeg"])
     reasons.append(sdesc[0].upper() + sdesc[1:] + ".")

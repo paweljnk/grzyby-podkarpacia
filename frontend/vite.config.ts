@@ -26,6 +26,9 @@ export default defineConfig({
       workbox: {
         navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
+          // Katalog: miniatury z Wikimedia Commons — po obejrzeniu dostępne bez zasięgu.
+          { urlPattern: /^https:\/\/(upload|thumb)\.wikimedia\.org\//, handler: "CacheFirst",
+            options: { cacheName: "katalog-zdjecia", expiration: { maxEntries: 600, maxAgeSeconds: 180 * 86400 }, cacheableResponse: { statuses: [0, 200] } } },
           // Atlas: zdjęcia zatwierdzone są niezmienne — z pamięci podręcznej (działa w lesie bez zasięgu).
           { urlPattern: /\/api\/atlas\/zdjecie\//, handler: "CacheFirst",
             options: { cacheName: "atlas-zdjecia", expiration: { maxEntries: 500, maxAgeSeconds: 365 * 86400 }, cacheableResponse: { statuses: [200] } } },
