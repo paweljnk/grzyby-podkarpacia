@@ -130,3 +130,41 @@ button:disabled { opacity: .5; }
 .attr-none td:nth-child(2) { color: var(--muted); font-style: italic; }
 .tag-k { font-size: 11px; font-weight: 600; }
 .attr-model .tag-k { color: #7a5200; } .attr-src .tag-k { color: #1d4a22; } .attr-none .tag-k { color: var(--muted); }
+
+/* mapa + ranking na jednym ekranie */
+.map-split { display: flex; flex-direction: column; }
+.map-col { position: relative; }
+.map-here { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 2; min-height: 36px; padding: 6px 14px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+.map-pin { width: 28px; height: 28px; min-height: 0; padding: 0; border-radius: 7px; border: 2px solid #fff; font-weight: 700; font-size: 13px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.45); cursor: pointer; display: grid; place-items: center; }
+.map-pin.sel { outline: 3px solid #d9480f; outline-offset: 1px; z-index: 3; transform: scale(1.2); }
+.map-rank { background: var(--bg); }
+.map-rank-head { padding: 8px 16px 0; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.map-rank-head .radius { display: flex; align-items: center; gap: 6px; width: 100%; }
+.map-rank-head .radius input { flex: 1; }
+.mrank { list-style: none; margin: 0; padding: 0 12px; }
+.mrank li { display: flex; align-items: center; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin: 6px 0; padding: 2px 6px; }
+.mrank li.sel { border-color: #d9480f; box-shadow: 0 0 0 2px #d9480f inset; }
+.mrank-main { display: flex; gap: 8px; align-items: center; flex: 1; min-width: 0; text-align: left; background: none; color: var(--text); padding: 6px 0; }
+.mrank-pos { font-weight: 700; color: var(--muted); width: 20px; text-align: right; font-size: 13px; }
+.mrank-open { flex: none; padding: 6px 8px; min-height: 36px; font-size: 13px; }
+@media (min-width: 900px) {
+  .map-split { flex-direction: row; height: calc(100dvh - 150px); }
+  .map-col { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .map-col .map { flex: 1; height: auto; }
+  .map-rank { width: 400px; flex: none; overflow-y: auto; border-left: 1px solid var(--line); }
+}
+.mrank .cond { font-size: 12px; } .mrank .cert { padding: 0 4px; }
+@media (min-width: 900px) {
+  .top-row { grid-template-columns: 2fr 1fr 1fr; }
+  .top-row > :first-child { grid-column: auto; }
+  .map-split { height: calc(100dvh - 190px); }
+  .map-rank { width: 440px; }
+}
+@media (max-width: 899px) {
+  .view-map .map { height: 36dvh; min-height: 240px; }
+  .map-controls { padding: 4px 16px; gap: 4px 10px; }
+  .legend { padding: 4px 16px; }
+  .map-rank { max-height: 46dvh; overflow-y: auto; border-top: 1px solid var(--line); }
+  .map-rank-head { position: sticky; top: 0; background: var(--bg); z-index: 1; padding-bottom: 4px; }
+}

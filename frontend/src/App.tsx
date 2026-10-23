@@ -53,7 +53,7 @@ export default function App() {
   else if (route === "szukaj") view = <SearchView q={q} species={species} setQ={setQ} go={go} />;
   else if (route === "kalendarz") view = <MonthView q={q} placeId={arg ? +arg : undefined} go={go} />;
   else if (route === "porownanie") view = <CompareView q={q} ids={compareIds} open={open} clear={() => { setCompare([]); store.set("compare", []); }} />;
-  else view = <MapView q={q} onOpen={open} />;
+  else view = <MapView q={q} setQ={setQ} onOpen={open} />;
 
   const sp = species.find((s) => s.id === q.species);
   return (

@@ -44,6 +44,7 @@ test("wybór gatunku → ranking → karta miejsca → przełączenie kalendarza
 test("mapa, kalendarz miesięczny i porównanie działają", async ({ page }) => {
   await page.goto("/#/mapa");
   await page.getByTestId("dataset").selectOption("demo");
+  await page.getByTestId("species-top").selectOption("imleria_badia");   // borowik szlachetny w demo bywa poza sezonem
   await expect(page.getByTestId("map")).toBeVisible();
   await page.getByTestId("tab-ranking").click();
   const boxes = page.locator(".rank-item input[type=checkbox]");
@@ -55,4 +56,25 @@ test("mapa, kalendarz miesięczny i porównanie działają", async ({ page }) =>
   await page.locator(".cmp-col").first().click();
   await page.getByRole("button", { name: "Kalendarz miesięczny" }).click();
   await expect(page.getByTestId("month").locator(".md").first()).toBeVisible();
+});
+
+test("mapa i ranking na jednym ekranie: znacznik ↔ pozycja na liście", async ({ page }) => {
+  await page.goto("/#/mapa");
+  await page.getByTestId("dataset").selectOption("demo");
+  await page.getByTestId("species-top").selectOption("imleria_badia");   // borowik szlachetny w demo bywa poza sezonem
+  const rows = page.getByTestId("map-ranking-item");
+  await expect(rows.first()).toBeVisible({ timeout: 20000 });
+  const pins = page.getByTestId("map-pin");
+  await expect(pins.first()).toBeAttached();
+  // znacznik nr 2 → podświetla 2. pozycję listy
+  const pin = pins.nth(1);
+  const id = await pin.getAttribute("data-id");
+  await pin.dispatchEvent("click");
+  await expect(page.locator(`[data-rank-id="${id}"]`)).toHaveClass(/sel/);
+  // pozycja nr 1 na liście → podświetla znacznik nr 1
+  await rows.first().click();
+  await expect(pins.first()).toHaveClass(/sel/);
+  // szczegóły → karta miejsca
+  await page.getByTestId("map-ranking-open").first().click();
+  await expect(page).toHaveURL(/#\/miejsce\/\d+/);
 });
