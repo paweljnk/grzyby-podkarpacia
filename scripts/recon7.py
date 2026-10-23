@@ -19,10 +19,10 @@ import re
 layers = re.findall(r"<Layer[^>]*>\s*<Name>([^<]+)</Name>", res.get("caps", {}).get("body", ""))
 res["layers"] = layers
 # punkty: las (Puszcza Sandomierska k. Głogowa Młp., Bieszczady — Baligród), pole (okolice Rzeszowa, Jarosław)
-pts = {"las_glogow": (50.18, 21.98), "las_baligrod": (49.33, 22.28), "pole_rzeszow": (50.02, 22.08), "pole_jaroslaw": (50.03, 22.68)}
+pts = {}
 for name, (lat, lon) in pts.items():
     d = 0.002
-    for fmt in ("text/html", "application/vnd.ogc.gml", "text/plain"):
+    for fmt in ("text/plain",):
         try:
             r = c.get(W, params={"SERVICE": "WMS", "VERSION": "1.3.0", "REQUEST": "GetFeatureInfo", "CRS": "EPSG:4326",
                                  "BBOX": f"{lat-d},{lon-d},{lat+d},{lon+d}", "WIDTH": 101, "HEIGHT": 101, "I": 50, "J": 50,
