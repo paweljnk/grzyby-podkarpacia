@@ -1,0 +1,92 @@
+{
+ "pakiet": "katalog",
+ "wygenerowano_utc": "2026-10-23T14:37:05+00:00",
+ "wersja": 2,
+ "tabele": {
+  "atlas.katalog": {
+   "pliki": [
+    {
+     "plik": "atlas.katalog.part001.copy.gz",
+     "sha256": "c0434f3affcde5059a7b4ce272349d39bd50767cd0ef88bab4b62ac70466aec9"
+    }
+   ],
+   "kolumny": [
+    "id",
+    "gbif_key",
+    "nazwa_naukowa",
+    "nazwa_polska",
+    "nazwy_polskie",
+    "rodzaj",
+    "rodzina",
+    "rzad",
+    "klasa",
+    "obserwacje_pl",
+    "obserwacje_woj",
+    "wikidata",
+    "wiki_tytul",
+    "wiki_url",
+    "opis_wstep",
+    "opis_budowa",
+    "opis_wystepowanie",
+    "opis_podobne",
+    "opis_ochrona",
+    "cechy",
+    "siedlisko",
+    "zdjecie_url",
+    "zdjecie_miniatura",
+    "zdjecie_strona",
+    "zdjecie_autor",
+    "zdjecie_licencja",
+    "zdjecie_licencja_url",
+    "pobrano_utc"
+   ],
+   "uproszczenie_m": null
+  }
+ },
+ "wiersze": {
+  "atlas.katalog": 448
+ },
+ "importy": [
+  {
+   "source_id": "gbif",
+   "target": "atlas.katalog",
+   "area": "Polska",
+   "status": "ok",
+   "records": 448,
+   "finished_at": "2026-10-23 14:37:05.196046+00:00",
+   "message": null
+  }
+ ],
+ "atrybucja": [
+  {
+   "id": "bdl_ogcapi",
+   "nazwa": "Bank Danych o Lasach — OGC API",
+   "licencja": "CC BY 4.0 (OpenAPI usługi: info.license)",
+   "atrybucja": "Bank Danych o Lasach (BULiGL / Lasy Państwowe), CC BY 4.0"
+  },
+  {
+   "id": "open_meteo_archive",
+   "nazwa": "Open-Meteo Historical Weather API (ERA5 / ERA5-Land)",
+   "licencja": "dane CC BY 4.0; darmowe API niekomercyjnie (10 000 wywołań/dzień)",
+   "atrybucja": "Weather data by Open-Meteo.com; Copernicus Climate Change Service"
+  },
+  {
+   "id": "open_meteo_forecast",
+   "nazwa": "Open-Meteo Forecast API",
+   "licencja": "dane CC BY 4.0 (także komercyjnie z oznaczeniem); darmowe API tylko do użytku niekomercyjnego: 10 000 wywołań/dzień, 5 000/h, bez gwarancji dostępności; użycie komercyjne wymaga płatnego API",
+   "atrybucja": "Weather data by Open-Meteo.com"
+  },
+  {
+   "id": "copernicus_dem_glo30",
+   "nazwa": "Copernicus DEM GLO-30 Public (COG na AWS Open Data)",
+   "licencja": "Copernicus DEM — licencja GLO-30 Public (bezpłatna, z obowiązkiem oznaczenia)",
+   "atrybucja": "© DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved"
+  },
+  {
+   "id": "prg_wojewodztwa",
+   "nazwa": "PRG — Państwowy Rejestr Granic (granice województw)",
+   "licencja": "dane otwarte GUGiK (ustawa Prawo geodezyjne i kartograficzne, bezpłatne udostępnianie PRG)",
+   "atrybucja": "Główny Urząd Geodezji i Kartografii"
+  }
+ ]
+}

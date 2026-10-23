@@ -1,0 +1,5 @@
+2026-10-23 14:30:01,588 INFO grzyby.etl.katalog: GBIF: 450 gatunków
+2026-10-23 14:37:05,195 INFO grzyby.etl.katalog: Katalog: {'gatunki': 448, 'z_artykulem': 405, 'ze_zdjeciem': 412, 'z_cechami': 222, 'z_polska_nazwa': 427}
+{"gatunki": 448, "z_artykulem": 405, "ze_zdjeciem": 412, "z_cechami": 222, "z_polska_nazwa": 427}
+katalog 448
+{'pakiet': 'katalog', 'wygenerowano': '2026-10-23T14:37:05+00:00', 'wiersze': {'atlas.katalog': 448}}
