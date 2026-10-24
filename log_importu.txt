@@ -1,0 +1,5 @@
+2026-10-24 10:15:02,939 INFO grzyby.snapshot: Wczytano paczkę baza z https://raw.githubusercontent.com/paweljnk/grzyby-podkarpacia/dane/baza/ (2026-10-17T18:53:34+00:00)
+{'pakiet': 'baza', 'wczytano': True, 'wygenerowano': '2026-10-17T18:53:34+00:00', 'wiersze': {'ref.obszar_pilotazowy': 1, 'ref.wojewodztwo': 1, 'ref.nadlesnictwo': 38, 'forest.wydzielenie': 244533, 'terrain.wydzielenie_teren': 244533, 'terrain.raster': 3, 'weather.komorka': 268, 'forest.wydzielenie_komorka': 244533, 'protection.forma_ochrony': 0, 'coverage.siatka': 17907}}
+{'w_kraju': 789, 'w_wojewodztwie': 0}
+OK — paczka kompletna
+{'pakiet': 'dzienne', 'wygenerowano': '2026-10-24T08:17:53+00:00', 'wiersze': {'weather.dzien': 20636, 'access.zakaz': 0}}
