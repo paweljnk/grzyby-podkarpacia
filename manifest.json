@@ -1,0 +1,120 @@
+{
+ "pakiet": "dzienne",
+ "wygenerowano_utc": "2026-10-31T09:49:42+00:00",
+ "wersja": 2,
+ "tabele": {
+  "weather.dzien": {
+   "pliki": [
+    {
+     "plik": "weather.dzien.part001.copy.gz",
+     "sha256": "694899435feaae55c2b328fb5a2556adcfb44393b70bb4b00d6116012c88ea5c"
+    }
+   ],
+   "kolumny": [
+    "komorka_id",
+    "data_lokalna",
+    "typ",
+    "model",
+    "rozdzielczosc_km",
+    "godzin",
+    "opad_mm",
+    "temp_min_c",
+    "temp_sr_c",
+    "temp_max_c",
+    "wilg_powietrza_pct",
+    "wilg_gleby_m3m3",
+    "temp_gleby_c",
+    "et0_mm",
+    "pochodzenie",
+    "zrodlo_lat",
+    "zrodlo_lon",
+    "pobrano_utc"
+   ],
+   "uproszczenie_m": null
+  },
+  "access.zakaz": {
+   "pliki": [
+    {
+     "plik": "access.zakaz.part001.copy.gz",
+     "sha256": "9e5d72e77a7cff149e4194f1aa8384bb9a25143dc38bdce339501460204b217d"
+    }
+   ],
+   "kolumny": [
+    "id",
+    "source_id",
+    "rodzaj",
+    "od",
+    "do_dnia",
+    "opis",
+    "attrs",
+    "geom"
+   ],
+   "uproszczenie_m": null
+  }
+ },
+ "wiersze": {
+  "weather.dzien": 20636,
+  "access.zakaz": 0
+ },
+ "importy": [
+  {
+   "source_id": "bdl_rest",
+   "target": "access.zakaz",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 0,
+   "finished_at": "2026-10-31 09:49:36.919135+00:00",
+   "message": null
+  },
+  {
+   "source_id": "open_meteo_archive",
+   "target": "weather.dzien",
+   "area": "268 komórek",
+   "status": "ok",
+   "records": 16080,
+   "finished_at": "2026-10-31 09:48:16.016470+00:00",
+   "message": null
+  },
+  {
+   "source_id": "open_meteo_forecast",
+   "target": "weather.dzien",
+   "area": "268 komórek",
+   "status": "ok",
+   "records": 4556,
+   "finished_at": "2026-10-31 09:49:36.204630+00:00",
+   "message": null
+  }
+ ],
+ "atrybucja": [
+  {
+   "id": "bdl_ogcapi",
+   "nazwa": "Bank Danych o Lasach — OGC API",
+   "licencja": "CC BY 4.0 (OpenAPI usługi: info.license)",
+   "atrybucja": "Bank Danych o Lasach (BULiGL / Lasy Państwowe), CC BY 4.0"
+  },
+  {
+   "id": "open_meteo_archive",
+   "nazwa": "Open-Meteo Historical Weather API (ERA5 / ERA5-Land)",
+   "licencja": "dane CC BY 4.0; darmowe API niekomercyjnie (10 000 wywołań/dzień)",
+   "atrybucja": "Weather data by Open-Meteo.com; Copernicus Climate Change Service"
+  },
+  {
+   "id": "open_meteo_forecast",
+   "nazwa": "Open-Meteo Forecast API",
+   "licencja": "dane CC BY 4.0 (także komercyjnie z oznaczeniem); darmowe API tylko do użytku niekomercyjnego: 10 000 wywołań/dzień, 5 000/h, bez gwarancji dostępności; użycie komercyjne wymaga płatnego API",
+   "atrybucja": "Weather data by Open-Meteo.com"
+  },
+  {
+   "id": "copernicus_dem_glo30",
+   "nazwa": "Copernicus DEM GLO-30 Public (COG na AWS Open Data)",
+   "licencja": "Copernicus DEM — licencja GLO-30 Public (bezpłatna, z obowiązkiem oznaczenia)",
+   "atrybucja": "© DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved"
+  },
+  {
+   "id": "prg_wojewodztwa",
+   "nazwa": "PRG — Państwowy Rejestr Granic (granice województw)",
+   "licencja": "dane otwarte GUGiK (ustawa Prawo geodezyjne i kartograficzne, bezpłatne udostępnianie PRG)",
+   "atrybucja": "Główny Urząd Geodezji i Kartografii"
+  }
+ ]
+}
