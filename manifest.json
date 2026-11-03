@@ -1,0 +1,376 @@
+{
+ "pakiet": "baza",
+ "wygenerowano_utc": "2026-11-03T09:00:18+00:00",
+ "wersja": 2,
+ "tabele": {
+  "ref.obszar_pilotazowy": {
+   "pliki": [
+    {
+     "plik": "ref.obszar_pilotazowy.part001.copy.gz",
+     "sha256": "eb3fc3d1eabe07f598005c20d2a51479fb8cce9f5851a0983f66c8328abd65a7"
+    }
+   ],
+   "kolumny": [
+    "id",
+    "nazwa",
+    "typ_terenu",
+    "geom_origin",
+    "geom"
+   ],
+   "uproszczenie_m": 5.0
+  },
+  "ref.wojewodztwo": {
+   "pliki": [
+    {
+     "plik": "ref.wojewodztwo.part001.copy.gz",
+     "sha256": "e3b4aca247520263d75fc86010c4932939ab482f2b0b4527897b88ad402ba624"
+    }
+   ],
+   "kolumny": [
+    "id",
+    "source_id",
+    "teryt",
+    "nazwa",
+    "attrs",
+    "geom"
+   ],
+   "uproszczenie_m": 5.0
+  },
+  "ref.nadlesnictwo": {
+   "pliki": [
+    {
+     "plik": "ref.nadlesnictwo.part001.copy.gz",
+     "sha256": "4ca3644dc5d9688446868a11632938a08878f73d04a86fd87fbe5e1f57838ba5"
+    }
+   ],
+   "kolumny": [
+    "kod",
+    "nazwa",
+    "rdlp_kod",
+    "powierzchnia_ha",
+    "w_wojewodztwie_ha",
+    "geom"
+   ],
+   "uproszczenie_m": 5.0
+  },
+  "forest.wydzielenie": {
+   "pliki": [
+    {
+     "plik": "forest.wydzielenie.part001.copy.gz",
+     "sha256": "09beb41ac17158cbccbfacb68e8e3edc2c3cfad5cd68e87b372d59ffb55a4d04"
+    },
+    {
+     "plik": "forest.wydzielenie.part002.copy.gz",
+     "sha256": "05cea0eda90472f5dc8fd88920ac289f5b9cb84fec154df744c3fb49b07d14df"
+    }
+   ],
+   "kolumny": [
+    "id",
+    "source_id",
+    "external_id",
+    "obszar_id",
+    "adres_lesny",
+    "gatunek_panujacy",
+    "gatunek_panujacy_pochodzenie",
+    "udzial_gatunkow",
+    "udzial_gatunkow_pochodzenie",
+    "wiek",
+    "wiek_pochodzenie",
+    "typ_siedliskowy",
+    "typ_siedliskowy_pochodzenie",
+    "gleba",
+    "gleba_pochodzenie",
+    "attrs",
+    "geom",
+    "imported_at",
+    "zarzad",
+    "wlasnosc",
+    "nadl_kod",
+    "rok_danych",
+    "w_wojewodztwie_frac",
+    "udzial_panujacego",
+    "udzial_panujacego_pochodzenie",
+    "gleba_gatunek",
+    "uwilgotnienie_kod",
+    "siedlisko_zrodlo",
+    "siedlisko_rok",
+    "siedlisko_pokrycie",
+    "ph_model",
+    "ph_q05",
+    "ph_q95",
+    "ph_pochodzenie",
+    "klasa_danych"
+   ],
+   "uproszczenie_m": 1.0
+  },
+  "terrain.wydzielenie_teren": {
+   "pliki": [
+    {
+     "plik": "terrain.wydzielenie_teren.part001.copy.gz",
+     "sha256": "fcaaa07a42ab903946b895ec890e74b76e513f35f84b5552e0d8afc0e6a77750"
+    }
+   ],
+   "kolumny": [
+    "wydzielenie_id",
+    "dem_source_id",
+    "rozdzielczosc_m",
+    "n_pikseli",
+    "wys_min",
+    "wys_sr",
+    "wys_max",
+    "nachylenie_sr_deg",
+    "nachylenie_max_deg",
+    "ekspozycja_sr_deg",
+    "ekspozycja_klasa",
+    "pochodzenie"
+   ],
+   "uproszczenie_m": null
+  },
+  "terrain.raster": {
+   "pliki": [
+    {
+     "plik": "terrain.raster.part001.copy.gz",
+     "sha256": "bfd1c34a89b108fdd0e04ded9e6b19ffd40b2f9ba4ee000bd5fe64f25735425c"
+    }
+   ],
+   "kolumny": [
+    "id",
+    "source_id",
+    "obszar_id",
+    "warstwa",
+    "sciezka",
+    "crs",
+    "rozdzielczosc_m",
+    "szerokosc_px",
+    "wysokosc_px",
+    "n_nodata",
+    "stat_min",
+    "stat_max",
+    "stat_sr",
+    "zasieg",
+    "pochodzenie"
+   ],
+   "uproszczenie_m": null
+  },
+  "weather.komorka": {
+   "pliki": [
+    {
+     "plik": "weather.komorka.part001.copy.gz",
+     "sha256": "a975c3b563feb89006d3b705029a0e8dbe0fcb24fe41280f11a1299751f706df"
+    }
+   ],
+   "kolumny": [
+    "id",
+    "lat",
+    "lon",
+    "krok_st",
+    "geom"
+   ],
+   "uproszczenie_m": null
+  },
+  "forest.wydzielenie_komorka": {
+   "pliki": [
+    {
+     "plik": "forest.wydzielenie_komorka.part001.copy.gz",
+     "sha256": "d576320786a048a3fa190bc6cef3367f38f72d4e11182a521ff8f7436749774a"
+    }
+   ],
+   "kolumny": [
+    "wydzielenie_id",
+    "komorka_id"
+   ],
+   "uproszczenie_m": null
+  },
+  "protection.forma_ochrony": {
+   "pliki": [
+    {
+     "plik": "protection.forma_ochrony.part001.copy.gz",
+     "sha256": "8c2e3137dbef403a92f167936983a09546507c8f93e3b5988e84f113fdde6d4a"
+    }
+   ],
+   "kolumny": [
+    "id",
+    "source_id",
+    "warstwa",
+    "rodzaj",
+    "nazwa",
+    "kod",
+    "attrs",
+    "geom"
+   ],
+   "uproszczenie_m": null
+  },
+  "coverage.siatka": {
+   "pliki": [
+    {
+     "plik": "coverage.siatka.part001.copy.gz",
+     "sha256": "50158d838ec06d0d8024baa1e04ff4c1c02c331502a136360964ef822cddf314"
+    }
+   ],
+   "kolumny": [
+    "ix",
+    "iy",
+    "las_ref_ha",
+    "bdl_ha",
+    "bdl_pelniejsze_ha",
+    "klasa",
+    "geom"
+   ],
+   "uproszczenie_m": null
+  }
+ },
+ "wiersze": {
+  "ref.obszar_pilotazowy": 1,
+  "ref.wojewodztwo": 1,
+  "ref.nadlesnictwo": 38,
+  "forest.wydzielenie": 244533,
+  "terrain.wydzielenie_teren": 244533,
+  "terrain.raster": 3,
+  "weather.komorka": 268,
+  "forest.wydzielenie_komorka": 244533,
+  "protection.forma_ochrony": 0,
+  "coverage.siatka": 17907
+ },
+ "importy": [
+  {
+   "source_id": "bdl_rest",
+   "target": "access.zakaz",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 0,
+   "finished_at": "2026-11-03 08:53:41.167783+00:00",
+   "message": null
+  },
+  {
+   "source_id": "bdl_rest",
+   "target": "forest.siedlisko",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 97842,
+   "finished_at": "2026-11-03 08:51:48.697524+00:00",
+   "message": null
+  },
+  {
+   "source_id": "bdl_rest",
+   "target": "forest.wydzielenie",
+   "area": "LP",
+   "status": "ok",
+   "records": 99412,
+   "finished_at": "2026-11-03 08:38:46.254209+00:00",
+   "message": null
+  },
+  {
+   "source_id": "bdl_rest",
+   "target": "forest.wydzielenie",
+   "area": "poza_LP",
+   "status": "ok",
+   "records": 145121,
+   "finished_at": "2026-11-03 08:45:32.884185+00:00",
+   "message": null
+  },
+  {
+   "source_id": "bdl_rest",
+   "target": "forest.wydzielenie.gleba",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 80948,
+   "finished_at": "2026-11-03 08:51:48.699390+00:00",
+   "message": null
+  },
+  {
+   "source_id": "bdl_rest",
+   "target": "ref.nadlesnictwo",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 38,
+   "finished_at": "2026-11-03 08:35:23.444070+00:00",
+   "message": null
+  },
+  {
+   "source_id": "copernicus_dem_glo30",
+   "target": "terrain.raster",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 3,
+   "finished_at": "2026-11-03 08:54:30.887812+00:00",
+   "message": null
+  },
+  {
+   "source_id": "copernicus_dem_glo30",
+   "target": "terrain.wydzielenie_teren",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 244533,
+   "finished_at": "2026-11-03 08:57:55.157769+00:00",
+   "message": null
+  },
+  {
+   "source_id": "esa_worldcover_2021",
+   "target": "coverage.siatka",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 17907,
+   "finished_at": "2026-11-03 08:58:59.235896+00:00",
+   "message": null
+  },
+  {
+   "source_id": "pokrycie",
+   "target": "coverage.siatka",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 17907,
+   "finished_at": "2026-11-03 08:59:32.493462+00:00",
+   "message": null
+  },
+  {
+   "source_id": "prg_wojewodztwa",
+   "target": "ref.wojewodztwo",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 1,
+   "finished_at": "2026-11-03 08:35:18.280896+00:00",
+   "message": null
+  },
+  {
+   "source_id": "soilgrids",
+   "target": "forest.wydzielenie.ph",
+   "area": "podkarpackie",
+   "status": "ok",
+   "records": 243640,
+   "finished_at": "2026-11-03 08:58:47.776383+00:00",
+   "message": null
+  }
+ ],
+ "atrybucja": [
+  {
+   "id": "bdl_ogcapi",
+   "nazwa": "Bank Danych o Lasach — OGC API",
+   "licencja": "CC BY 4.0 (OpenAPI usługi: info.license)",
+   "atrybucja": "Bank Danych o Lasach (BULiGL / Lasy Państwowe), CC BY 4.0"
+  },
+  {
+   "id": "open_meteo_archive",
+   "nazwa": "Open-Meteo Historical Weather API (ERA5 / ERA5-Land)",
+   "licencja": "dane CC BY 4.0; darmowe API niekomercyjnie (10 000 wywołań/dzień)",
+   "atrybucja": "Weather data by Open-Meteo.com; Copernicus Climate Change Service"
+  },
+  {
+   "id": "open_meteo_forecast",
+   "nazwa": "Open-Meteo Forecast API",
+   "licencja": "dane CC BY 4.0 (także komercyjnie z oznaczeniem); darmowe API tylko do użytku niekomercyjnego: 10 000 wywołań/dzień, 5 000/h, bez gwarancji dostępności; użycie komercyjne wymaga płatnego API",
+   "atrybucja": "Weather data by Open-Meteo.com"
+  },
+  {
+   "id": "copernicus_dem_glo30",
+   "nazwa": "Copernicus DEM GLO-30 Public (COG na AWS Open Data)",
+   "licencja": "Copernicus DEM — licencja GLO-30 Public (bezpłatna, z obowiązkiem oznaczenia)",
+   "atrybucja": "© DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved"
+  },
+  {
+   "id": "prg_wojewodztwa",
+   "nazwa": "PRG — Państwowy Rejestr Granic (granice województw)",
+   "licencja": "dane otwarte GUGiK (ustawa Prawo geodezyjne i kartograficzne, bezpłatne udostępnianie PRG)",
+   "atrybucja": "Główny Urząd Geodezji i Kartografii"
+  }
+ ]
+}
